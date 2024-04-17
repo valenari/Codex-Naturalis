@@ -37,7 +37,7 @@ public class PannelloGiocatore extends JFrame {
 		contentPane.setBorder(new EmptyBorder(100, 100, 800, 500));
 		
 		RisorsaFungo1 Prova = new RisorsaFungo1();	
-		Prova.setBounds(10, 10, 240, 160);
+		//Prova.setBounds(10, 10, 100, 360);
 		contentPane.add(Prova);
 		
 		setContentPane(contentPane);

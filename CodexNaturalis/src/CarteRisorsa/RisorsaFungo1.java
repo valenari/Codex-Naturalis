@@ -1,22 +1,23 @@
 package CarteRisorsa;
 
-import javax.swing.JPanel;
+import java.awt.FlowLayout;
+
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class RisorsaFungo1 extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Create the panel.
-	 */
 	public RisorsaFungo1() {
-		setLayout(null);
+		
+		setLayout(new FlowLayout(FlowLayout.RIGHT));
+
 		
 		JLabel lblNewLabel = new JLabel();
-		lblNewLabel.setBounds(10, 10, 240, 160);
+		//lblNewLabel.setBounds(10, 10, 240, 360);
+		
 		lblNewLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CarteRisorsa/Scansioni Carte Risorsa/Carta Risorsa Fungo Retro.png")));
-		add(lblNewLabel);
 
 	}
 }
