@@ -6,8 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import CarteRisorsa.RisorsaFungo1;
-
 public class PannelloGiocatore extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -36,9 +34,9 @@ public class PannelloGiocatore extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(100, 100, 800, 500));
 		
-		RisorsaFungo1 Prova = new RisorsaFungo1();	
+		//RisorsaFungo1 Prova = new RisorsaFungo1();	
 		//Prova.setBounds(10, 10, 100, 360);
-		contentPane.add(Prova);
+		//contentPane.add(Prova);
 		
 		setContentPane(contentPane);
 	}

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import game.TavoloDiGioco;
 import ui.SchermataDiGioco;
@@ -9,8 +10,18 @@ public class Main {
     public static void main(String[] args) {
         // Lista dei nomi dei giocatori
         List<String> nomiGiocatori = new ArrayList<>();
-        nomiGiocatori.add("Giocatore 1");
-        nomiGiocatori.add("Giocatore 2");
+        int g;
+        Scanner sc=new Scanner(System.in);
+        do{
+        	System.out.println("Inserisci il numero di giocatori (almeno 2 e massimo 4)");
+            g=sc.nextInt();
+            if(g<2 || g>4)System.out.println("ERRORE: il numero di giocatori non è valido");
+        }while(g<2 || g>4);
+        for(int i=0; i<g; i++) {
+        	System.out.println("Inserisci il nome del Giocatore "+(i+1)+":");
+        	String n=sc.next();
+        	nomiGiocatori.add(n);
+        }
         // Creazione del tavolo di gioco
         TavoloDiGioco tavolo = new TavoloDiGioco(nomiGiocatori);
 

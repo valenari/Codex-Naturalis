@@ -3,22 +3,22 @@ package Base;
 import Base.PedinaC;
 
 public class Tabellone_Punti {
-	// Gioctore
-		private int GioctoreNumber; 
+	// Giocatore
+		private int GiocatoreNumber; 
 		//Points
-	    private int NumPuntiUnGicotore;  // Numero di punti per un giocatore
+	    private int NumPuntiUnGiocatore;  // Numero di punti per un giocatore
 	    
 		//public enum Pedina {ROSSO, BLU, VERDE, GIALLO, NERO}; //public Pedina GioctorePedina;
 		 
 	    //--------------------------------------------------------------------------------------------------//
-	    public int getGioctorePunti(int numDelleGioctore) {
-	        this.GioctoreNumber = numDelleGioctore;
-	         this.NumPuntiUnGicotore = Gioctore.getGioctorePunti(numDelleGioctore); // change in feature
-	    }
+	    /*public int getGiocatorePunti(int numDelleGiocatore) {
+	        this.GiocatoreNumber = numDelleGiocatore;
+	        this.NumPuntiUnGiocatore = Giocatore.getGiocatorePunti(numDelleGiocatore); // change in feature
+	    }*/
 	    
 	    // Prendi il numero di giocatore e ritorna il colore di Pedina
-	    public PedinaC getGioctorePedina() {
-	        switch (GioctoreNumber) {
+	    public PedinaC getGiocatorePedina() {
+	        switch (GiocatoreNumber) {
 	            case 1: return PedinaC.BLU;
 	            case 2: return PedinaC.ROSSO;
 	            case 3: return PedinaC.VERDE;
@@ -28,23 +28,23 @@ public class Tabellone_Punti {
 	    }
 
 	    // get Possession(X, Y) for Pedina for every player
-	    public void setP_X(int NumPuntiUnGicotore) {
-	        switch (NumPuntiUnGicotore) {
-	            case 0: getGioctorePedina().setX(1); break; //Punto 0
-	            case 1: getGioctorePedina().setX(1); break; //Punto 1
-	            case 2: getGioctorePedina().setX(1); break; //....
-	            case 3: getGioctorePedina().setX(1); break; //Punto 29
-	            default: getGioctorePedina().setX(0); break;
+	    public void setP_X(int NumPuntiUnGiocatore) {
+	        switch (NumPuntiUnGiocatore) {
+	            case 0: getGiocatorePedina().setX(1); break; //Punto 0
+	            case 1: getGiocatorePedina().setX(1); break; //Punto 1
+	            case 2: getGiocatorePedina().setX(1); break; //....
+	            case 3: getGiocatorePedina().setX(1); break; //Punto 29
+	            default: getGiocatorePedina().setX(0); break;
 	        }
 	    }
 	    
-	    public void setP_Y(int NumPuntiUnGicotore) {
-	        switch (NumPuntiUnGicotore) {
-	        case 0: getGioctorePedina().setY(1); break; //Punto 0
-	        case 1: getGioctorePedina().setY(1); break; //Punto 1
-	        case 2: getGioctorePedina().setY(1); break; //....
-	        case 3: getGioctorePedina().setY(1); break; //Punto 29
-	        default: getGioctorePedina().setY(0); break;
+	    public void setP_Y(int NumPuntiUnGiocatore) {
+	        switch (NumPuntiUnGiocatore) {
+	        case 0: getGiocatorePedina().setY(1); break; //Punto 0
+	        case 1: getGiocatorePedina().setY(1); break; //Punto 1
+	        case 2: getGiocatorePedina().setY(1); break; //....
+	        case 3: getGiocatorePedina().setY(1); break; //Punto 29
+	        default: getGiocatorePedina().setY(0); break;
 	        }
 	    }
 }
