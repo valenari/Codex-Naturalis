@@ -1,4 +1,7 @@
-package model;
+package Modello_giocatore;
+
+import model.CartaOro;
+import model.CartaRisorsa;
 
 public class ManoGiocatore {
 

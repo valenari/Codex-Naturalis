@@ -3,7 +3,7 @@ package ui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import model.Giocatore;
+import Modello_giocatore.Giocatore;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

@@ -3,7 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Giocatore;
+import Modello_giocatore.Giocatore;
 
 public class TavoloDiGioco {
     private List<Giocatore> giocatori;
