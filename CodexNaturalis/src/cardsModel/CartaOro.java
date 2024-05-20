@@ -1,8 +1,10 @@
 package cardsModel;
 
-public class CartaRisorsa extends Carta{
+public class CartaOro extends Carta{
 	private String tipoRegno;
 	private int punti;
+	private int risorseNecessarie[]; //forse meglio usare string anche qua?
+	private String criterioPunti;
 	private boolean usata = false; // indicatore per verificare se la carta è già stata usata in un obbiettivo di disposizione
 	
 	
@@ -31,4 +33,18 @@ public class CartaRisorsa extends Carta{
 	}
 	
 	
+	public int[] getRisorseNecessarie() {
+		return risorseNecessarie;
+	}
+	public void setRisorseNecessarie(int risorseNecessarie[]) {
+		this.risorseNecessarie = risorseNecessarie;
+	}
+	
+	
+	public String getCriterioPunti() {
+		return criterioPunti;
+	}
+	public void setCriterioPunti(String criterioPunti) {
+		this.criterioPunti = criterioPunti;
+	}
 }

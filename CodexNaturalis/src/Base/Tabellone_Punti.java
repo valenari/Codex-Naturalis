@@ -8,7 +8,7 @@ public class Tabellone_Punti {
 		//Points
 	    private int NumPuntiUnGiocatore;  // Numero di punti per un giocatore
 	    
-		//public enum Pedina {ROSSO, BLU, VERDE, GIALLO, NERO}; //public Pedina GioctorePedina;
+		//public enum Pedina {ROSSO, BLU, VERDE, GIALLO, NERO}; //public Pedina GiocatorePedina;
 		 
 	    //--------------------------------------------------------------------------------------------------//
 	    /*public int getGiocatorePunti(int numDelleGiocatore) {
