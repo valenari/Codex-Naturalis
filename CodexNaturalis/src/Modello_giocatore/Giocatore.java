@@ -12,6 +12,7 @@ public class Giocatore {
     //private ObbiettiPersonale ObbiettivoP;
     private ManoGiocatore manoG;
     private boolean pedinaPrimoGiocatore;
+    private AreaDiGioco areaG;
     // Altri attributi e metodi necessari per gestire lo stato del giocatore
 
     public Giocatore(String nome) {
@@ -25,6 +26,7 @@ public class Giocatore {
         //this.ObbiettivoP = new ObbiettivoPersonale();
         this.manoG = new ManoGiocatore();
         this.pedinaPrimoGiocatore = pedinaPrimoGiocatore;
+        this.areaG= new AreaDiGioco();
         // Inizializza gli altri attributi del giocatore se necessario
     }
 
