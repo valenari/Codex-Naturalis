@@ -1,7 +1,7 @@
 package Modello_giocatore;
 
-import model.CartaOro;
-import model.CartaRisorsa;
+import cardsModel.CartaOro;
+import cardsModel.CartaRisorsa;
 
 public class ManoGiocatore {
 

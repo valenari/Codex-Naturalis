@@ -1,23 +1,27 @@
 package Modello_giocatore;
 
 import Base.PedinaC;
-import model.CartaIniziale;
+import cardsModel.Iniziale;
+
 
 public class Giocatore {
     private String nome;
     private int punti;
     private PedinaC pedina;
-    private CartaIniziale cartaI;
-    //private ObbiettivoPersonale ObbiettivoP;
+    private Iniziale cartaI;
+    //private ObbiettiPersonale ObbiettivoP;
     private ManoGiocatore manoG;
     private boolean pedinaPrimoGiocatore;
     // Altri attributi e metodi necessari per gestire lo stato del giocatore
 
+    public Giocatore(String nome) {
+    	
+    }
     public Giocatore(String nome, PedinaC pedina, boolean pedinaPrimoGiocatore) {
         this.nome = nome;
         this.punti = 0;
         this.pedina = pedina;
-        this.cartaI = new CartaIniziale();
+        this.cartaI = new Iniziale();
         //this.ObbiettivoP = new ObbiettivoPersonale();
         this.manoG = new ManoGiocatore();
         this.pedinaPrimoGiocatore = pedinaPrimoGiocatore;
