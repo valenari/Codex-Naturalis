@@ -5,7 +5,7 @@ public class CartaOro extends Carta{
 	private int punti;
 	private int risorseNecessarie[]; //forse meglio usare string anche qua?
 	private String criterioPunti;
-	private boolean usata = false; // indicatore per verificare se la carta è già stata usata in un obbiettivo di disposizione
+	//private boolean usata = false; // indicatore per verificare se la carta è già stata usata in un obbiettivo di disposizione
 	
 	
 	
@@ -24,7 +24,7 @@ public class CartaOro extends Carta{
 		this.punti = punti;
 	}
 	
-	
+	/*
 	public boolean isUsata() {
 		return usata;
 	}
@@ -32,7 +32,7 @@ public class CartaOro extends Carta{
 		this.usata = true;
 	}
 	
-	
+	*/
 	public int[] getRisorseNecessarie() {
 		return risorseNecessarie;
 	}

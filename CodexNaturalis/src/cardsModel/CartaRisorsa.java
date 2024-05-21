@@ -3,7 +3,7 @@ package cardsModel;
 public class CartaRisorsa extends Carta{
 	private String tipoRegno;
 	private int punti;
-	private boolean usata = false; // indicatore per verificare se la carta è già stata usata in un obbiettivo di disposizione
+	//private boolean usata = false; // indicatore per verificare se la carta è già stata usata in un obbiettivo di disposizione
 	
 	
 	
@@ -22,13 +22,13 @@ public class CartaRisorsa extends Carta{
 		this.punti = punti;
 	}
 	
-	
+	/*
 	public boolean isUsata() {
 		return usata;
 	}
 	public void setUsata(boolean usata) {
 		this.usata = true;
 	}
-	
+	*/
 	
 }
