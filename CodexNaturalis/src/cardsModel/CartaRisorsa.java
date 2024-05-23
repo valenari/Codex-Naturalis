@@ -130,7 +130,7 @@ public class CartaRisorsa extends Carta {
     // Metodo per stampare la rappresentazione grafica della carta risorsa
     @Override
     public void stampaCarta() {
-        System.out.println("CARTA RISORSA: [id " + getIdCarta() + "]");
+        //System.out.println("CARTA RISORSA: [id " + getIdCarta() + "]");
         System.out.println("-------------------------");
         String[] angoli = getFronte().split(" - ");
 
