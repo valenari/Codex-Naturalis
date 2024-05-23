@@ -1,0 +1,285 @@
+N° ORO: 40
+Regno: Fungo
+Angoli Fronte: Nascosto - Visibile - Visibile - Piuma
+Risorse Richieste: Fungo - Fungo - Animale
+Punti: 1
+Criterio Punti: Piuma
+
+N° ORO: 41
+Regno: Fungo
+Angoli Fronte: Visibile - Inchiostro - Nascosto - Visibile
+Risorse Richieste: Fungo - Fungo - Vegetale
+Punti: 1
+Criterio Punti: Inchiostro
+
+N° ORO: 42
+Regno: Fungo
+Angoli Fronte: Pergamena - Visibile - Visibile - Nascosto
+Risorse Richieste: Fungo - Fungo - Insetto
+Punti: 1
+Criterio Punti: Pergamena
+
+N° ORO: 43
+Regno: Fungo
+Angoli Fronte: Visibile - Visibile - Nascosto - Visibile
+Risorse Richieste: Fungo - Fungo - Fungo - Animale
+Punti: 2
+Criterio Punti: Angoli
+
+N° ORO: 44
+Regno: Fungo
+Angoli Fronte: Visibile - Visibile - Visibile - Nascosto
+Risorse Richieste: Fungo - Fungo - Fungo - Vegetale
+Punti: 2
+Criterio Punti: Angoli
+
+N° ORO: 45
+Regno: Fungo
+Angoli Fronte: Visibile - Nascosto - Visibile - Visibile
+Risorse Richieste: Fungo - Fungo - Fungo - Insetto
+Punti: 2
+Criterio Punti: Angoli
+
+N° ORO: 46
+Regno: Fungo
+Angoli Fronte: Visibile - Nascosto - Inchiostro - Nascosto
+Risorse Richieste: Fungo - Fungo - Fungo
+Punti: 3
+Criterio Punti: Nessuno
+
+N° ORO: 47
+Regno: Fungo
+Angoli Fronte: Piuma - Visibile - Nascosto - Nascosto
+Risorse Richieste: Fungo - Fungo - Fungo
+Punti: 3
+Criterio Punti: Nessuno
+
+N° ORO: 48
+Regno: Fungo
+Angoli Fronte: Nascosto - Pergamena - Nascosto - Visibile
+Risorse Richieste: Fungo - Fungo - Fungo
+Punti: 3
+Criterio Punti: Nessuno
+
+N° ORO: 49
+Regno: Fungo
+Angoli Fronte: Visibile - Nascosto - Visibile - Nascosto
+Risorse Richieste: Fungo - Fungo - Fungo - Fungo - Fungo
+Punti: 5
+Criterio Punti: Nessuno
+
+N° ORO: 50
+Regno: Vegetale
+Angoli Fronte: Piuma - Visibile - Visibile - Nascosto
+Risorse Richieste: Vegetale - Vegetale - Insetto
+Punti: 1
+Criterio Punti: Piuma
+
+N° ORO: 51
+Regno: Vegetale
+Angoli Fronte: Visibile - Pergamena - Nascosto - Visibile
+Risorse Richieste: Vegetale - Vegetale - Fungo
+Punti: 1
+Criterio Punti: Pergamena
+
+N° ORO: 52
+Regno: Vegetale
+Angoli Fronte: Visibile - Nascosto - Inchiostro - Visibile
+Risorse Richieste: Vegetale - Vegetale - Animale
+Punti: 1
+Criterio Punti: Inchiostro
+
+N° ORO: 53
+Regno: Vegetale
+Angoli Fronte: Nascosto - Visibile - Visibile - Visibile
+Risorse Richieste: Vegetale - Vegetale - Vegetale - Insetto
+Punti: 2
+Criterio Punti: Angoli
+
+N° ORO: 54
+Regno: Vegetale
+Angoli Fronte: Visibile - Visibile - Visibile - Nascosto
+Risorse Richieste: Vegetale - Vegetale - Vegetale - Animale
+Punti: 2
+Criterio Punti: Angoli
+
+N° ORO: 55
+Regno: Vegetale
+Angoli Fronte: Visibile - Nascosto - Visibile - Visibile
+Risorse Richieste: Vegetale - Vegetale - Vegetale - Fungo
+Punti: 2
+Criterio Punti: Angoli
+
+N° ORO: 56
+Regno: Vegetale
+Angoli Fronte: Visibile - Nascosto - Piuma - Nascosto
+Risorse Richieste: Vegetale - Vegetale - Vegetale
+Punti: 3
+Criterio Punti: Nessuno
+
+N° ORO: 57
+Regno: Vegetale
+Angoli Fronte: Pergamena - Visibile - Nascosto - Nascosto
+Risorse Richieste: Vegetale - Vegetale - Vegetale
+Punti: 3
+Criterio Punti: Nessuno
+
+N° ORO: 58
+Regno: Vegetale
+Angoli Fronte: Nascosto - Inchiostro - Nascosto - Visibile
+Risorse Richieste: Vegetale - Vegetale - Vegetale
+Punti: 3
+Criterio Punti: Nessuno
+
+N° ORO: 59
+Regno: Vegetale
+Angoli Fronte: Visibile - Visibile - Nascosto - Nascosto
+Risorse Richieste: Vegetale - Vegetale - Vegetale - Vegetale - Vegetale
+Punti: 5
+Criterio Punti: Nessuno
+
+N° ORO: 60
+Regno: Animale
+Angoli Fronte: Inchiostro - Visibile - Visibile - Nascosto
+Risorse Richieste: Animale - Animale - Insetto
+Punti: 1
+Criterio Punti: Inchiostro
+
+N° ORO: 61
+Regno: Animale
+Angoli Fronte: Nascosto - Visibile - Visibile - Pergamena
+Risorse Richieste: Animale - Animale - Vegetale
+Punti: 1
+Criterio Punti: Pergamena
+
+N° ORO: 62
+Regno: Animale
+Angoli Fronte: Visibile - Nascosto - Piuma - Visibile
+Risorse Richieste: Animale - Animale - Fungo
+Punti: 1
+Criterio Punti: Piuma
+
+N° ORO: 63
+Regno: Animale
+Angoli Fronte: Visibile - Visibile - Nascosto - Visibile
+Risorse Richieste: Animale - Animale - Animale - Insetto
+Punti: 2
+Criterio Punti: Angoli
+
+N° ORO: 64
+Regno: Animale
+Angoli Fronte: Visibile - Nascosto - Visibile - Visibile
+Risorse Richieste: Animale - Animale - Animale - Fungo
+Punti: 2
+Criterio Punti: Angoli
+
+N° ORO: 65
+Regno: Animale
+Angoli Fronte: Nascosto - Visibile - Visibile - Visibile
+Risorse Richieste: Animale - Animale - Animale - Vegetale
+Punti: 2
+Criterio Punti: Angoli
+
+N° ORO: 66
+Regno: Animale
+Angoli Fronte: Visibile - Nascosto - Pergamena - Nascosto
+Risorse Richieste: Animale - Animale - Animale
+Punti: 3
+Criterio Punti: Nessuno
+
+N° ORO: 67
+Regno: Animale
+Angoli Fronte: Visibile - Inchiostro - Nascosto - Nascosto
+Risorse Richieste: Animale - Animale - Animale
+Punti: 3
+Criterio Punti: Nessuno
+
+N° ORO: 68
+Regno: Animale
+Angoli Fronte: Nascosto - Visibile - Nascosto - Piuma
+Risorse Richieste: Animale - Animale - Animale
+Punti: 3
+Criterio Punti: Nessuno
+
+N° ORO: 69
+Regno: Animale
+Angoli Fronte: Nascosto - Visibile - Nascosto - Visibile
+Risorse Richieste: Animale - Animale - Animale - Animale - Animale
+Punti: 5
+Criterio Punti: Nessuno
+
+N° ORO: 70
+Regno: Insetto
+Angoli Fronte: Visibile - Piuma - Nascosto - Visibile
+Risorse Richieste: Insetto - Insetto - Insetto
+Punti: 1
+Criterio Punti: Piuma
+
+N° ORO: 71
+Regno: Insetto
+Angoli Fronte: Visibile - Nascosto - Pergamena - Visibile
+Risorse Richieste: Insetto - Insetto - Vegetale
+Punti: 1
+Criterio Punti: Pergamena
+
+N° ORO: 72
+Regno: Insetto
+Angoli Fronte: Nascosto - Visibile - Visibile - Inchiostro
+Risorse Richieste: Insetto - Insetto - Fungo
+Punti: 1
+Criterio Punti: Inchiostro
+
+N° ORO: 73
+Regno: Insetto
+Angoli Fronte: Visibile - Visibile - Nascosto - Visibile
+Risorse Richieste: Insetto - Insetto - Insetto - Insetto
+Punti: 2
+Criterio Punti: Angoli
+
+N° ORO: 74
+Regno: Insetto
+Angoli Fronte: Visibile - Visibile - Visibile - Nascosto
+Risorse Richieste: Insetto - Insetto - Insetto - Fungo
+Punti: 2
+Criterio Punti: Angoli
+
+N° ORO: 75
+Regno: Insetto
+Angoli Fronte: Visibile - Nascosto - Visibile - Visibile
+Risorse Richieste: Insetto - Insetto - Insetto - Vegetale
+Punti: 2
+Criterio Punti: Angoli
+
+N° ORO: 76
+Regno: Insetto
+Angoli Fronte: Inchiostro - Nascosto - Visibile - Nascosto
+Risorse Richieste: Insetto - Insetto - Insetto
+Punti: 3
+Criterio Punti: Nessuno
+
+N° ORO: 77
+Regno: Insetto
+Angoli Fronte: Visibile - Pergamena - Nascosto - Nascosto
+Risorse Richieste: Insetto - Insetto - Insetto
+Punti: 3
+Criterio Punti: Nessuno
+
+N° ORO: 78
+Regno: Insetto
+Angoli Fronte: Nascosto - Nascosto - Piuma - Visibile
+Risorse Richieste: Insetto - Insetto - Insetto
+Punti: 3
+Criterio Punti: Nessuno
+
+N° ORO: 79
+Regno: Insetto
+Angoli Fronte: Visibile - Visibile - Nascosto - Nascosto
+Risorse Richieste: Insetto - Insetto - Insetto - Insetto - Insetto
+Punti: 5
+Criterio Punti: Nessuno
+
+
+
+
+
+

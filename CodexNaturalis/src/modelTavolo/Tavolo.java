@@ -1,7 +1,5 @@
 package modelTavolo;
 
-import java.util.List;
-
 public class Tavolo {
     private TracciatoSegnapunti tracciatoSegnapunti;
     private AreaDiPesca areaDiPesca;
@@ -34,4 +32,5 @@ public class Tavolo {
         tracciatoSegnapunti.aggiornaPunti(giocatore, punti);
     }
 }
+
 

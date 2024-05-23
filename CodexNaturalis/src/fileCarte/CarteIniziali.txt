@@ -1,0 +1,29 @@
+Id: 0
+Fronte: Visibile - Vegetale - Insetto - Visibile 
+Centrale: Insetto
+Retro: Fungo - Vegetale - Insetto - Animale
+
+Id: 1
+Fronte: Animale - Visibile - Visibile - Fungo
+Centrale: Fungo
+Retro: Vegetale - Animale - Fungo - Insetto
+
+Id: 2
+Fronte: Visibile - Visibile - Visibile - Visibile 
+Centrale: Vegetale - Fungo
+Retro: Insetto - Animale - Fungo - Vegetale
+
+Id: 3
+Fronte: Visibile - Visibile - Visibile - Visibile 
+Centrale: Animale - Insetto
+Retro: Vegetale - Insetto - Animale - Fungo
+
+Id: 4
+Fronte: Visibile - Visibile - Nascosto - Nascosto
+Centrale: Animale - Insetto - Vegetale
+Retro: Insetto - Fungo - Vegetale - Animale
+
+Id: 5
+Fronte: Visibile - Visibile - Nascosto - Nascosto
+Centrale: Vegetale - Animale - Fungo
+Retro: Fungo - Animale - Vegetale - Insetto

@@ -1,0 +1,199 @@
+N° Risorsa: 00
+Regno: Fungo
+Angoli Fronte: Fungo - Visibile - Fungo - Nascosto
+Punti: 0
+
+N° Risorsa: 01
+Regno: Fungo
+Angoli Fronte: Fungo - Fungo - Nascosto - Visibile
+Punti: 0
+
+N° Risorsa: 02
+Regno: Fungo
+Angoli Fronte: Visibile - Nascosto - Fungo - Fungo
+Punti: 0
+
+N° Risorsa: 03
+Regno: Fungo
+Angoli Fronte: Nascosto - Fungo - Visibile - Fungo
+Punti: 0
+
+N° Risorsa: 04
+Regno: Fungo
+Angoli Fronte: Nascosto - Piuma - Vegetale - Fungo
+Punti: 0
+
+N° Risorsa: 05
+Regno: Fungo
+Angoli Fronte: Inchiostro - Fungo - Nascosto - Animale
+Punti: 0
+
+N° Risorsa: 06
+Regno: Fungo
+Angoli Fronte: Fungo - Insetto - Pergamena - Visibile
+Punti: 0
+
+N° Risorsa: 07
+Regno: Fungo
+Angoli Fronte: Visibile - Fungo - Visibile - Nascosto
+Punti: 1
+
+N° Risorsa: 08
+Regno: Fungo
+Angoli Fronte: Fungo - Nascosto - Visibile - Visibile
+Punti: 1
+
+N° Risorsa: 09
+Regno: Fungo
+Angoli Fronte: Nascosto - Visibile - Fungo - Visibile
+Punti: 1
+
+N° Risorsa: 10
+Regno: Vegetale
+Angoli Fronte: Vegetale - Visibile - Vegetale - Nascosto
+Punti: 0
+
+N° Risorsa: 11
+Regno: Vegetale
+Angoli Fronte: Vegetale - Vegetale - Nascosto - Visibile
+Punti: 0
+
+N° Risorsa: 12
+Regno: Vegetale
+Angoli Fronte: Visibile - Nascosto - Vegetale - Vegetale
+Punti: 0
+
+N° Risorsa: 13
+Regno: Vegetale
+Angoli Fronte: Nascosto - Vegetale - Visibile - Vegetale
+Punti: 0
+
+N° Risorsa: 14
+Regno: Vegetale
+Angoli Fronte: Nascosto - Insetto - Piuma - Vegetale
+Punti: 0
+
+N° Risorsa: 15
+Regno: Vegetale
+Angoli Fronte: Fungo - Vegetale - Nascosto - Inchiostro
+Punti: 0
+
+N° Risorsa: 16
+Regno: Vegetale
+Angoli Fronte: Pergamena - Nascosto - Vegetale - Animale
+Punti: 0
+
+N° Risorsa: 17
+Regno: Vegetale
+Angoli Fronte: Visibile - Visibile - Vegetale - Nascosto
+Punti: 1
+
+N° Risorsa: 18
+Regno: Vegetale
+Angoli Fronte: Visibile - Visibile - Nascosto - Vegetale
+Punti: 1
+
+N° Risorsa: 19
+Regno: Vegetale
+Angoli Fronte: Nascosto - Vegetale - Visibile - Visibile
+Punti: 1
+
+N° Risorsa: 20
+Regno: Animale
+Angoli Fronte: Animale - Animale - Visibile - Nascosto
+Punti: 0
+
+N° Risorsa: 21
+Regno: Animale
+Angoli Fronte: Nascosto - Visibile - Animale - Animale
+Punti: 0
+
+N° Risorsa: 22
+Regno: Animale
+Angoli Fronte: Animale - Nascosto - Animale - Visibile
+Punti: 0
+
+N° Risorsa: 23
+Regno: Animale
+Angoli Fronte: Visibile - Animale - Nascosto - Animale
+Punti: 0
+
+N° Risorsa: 24
+Regno: Animale
+Angoli Fronte: Nascosto - Insetto - Inchiostro - Animale
+Punti: 0
+
+N° Risorsa: 25
+Regno: Animale
+Angoli Fronte: Vegetale - Animale - Nascosto - Pergamena
+Punti: 0
+
+N° Risorsa: 26
+Regno: Animale
+Angoli Fronte: Piuma - Nascosto - Animale - Fungo
+Punti: 0
+
+N° Risorsa: 27
+Regno: Animale
+Angoli Fronte: Nascosto - Visibile - Animale - Visibile
+Punti: 1
+
+N° Risorsa: 28
+Regno: Animale
+Angoli Fronte: Visibile - Nascosto - Visibile - Animale
+Punti: 1
+
+N° Risorsa: 29
+Regno: Animale
+Angoli Fronte: Visibile - Animale - Visibile - Nascosto
+Punti: 1
+
+N° Risorsa: 30
+Regno: Insetto
+Angoli Fronte: Insetto - Insetto - Visibile - Nascosto
+Punti: 0
+
+N° Risorsa: 31
+Regno: Insetto
+Angoli Fronte: Nascosto - Visibile - Insetto - Insetto
+Punti: 0
+
+N° Risorsa: 32
+Regno: Insetto
+Angoli Fronte: Insetto - Nascosto - Insetto - Visibile
+Punti: 0
+
+N° Risorsa: 33
+Regno: Insetto
+Angoli Fronte: Visibile - Insetto - Nascosto - Insetto
+Punti: 0
+
+N° Risorsa: 34
+Regno: Insetto
+Angoli Fronte: Nascosto - Piuma - Animale - Insetto
+Punti: 0
+
+N° Risorsa: 35
+Regno: Insetto
+Angoli Fronte: Pergamena - Insetto - Nascosto - Fungo
+Punti: 0
+
+N° Risorsa: 36
+Regno: Insetto
+Angoli Fronte: Insetto - Vegetale - Inchiostro - Nascosto
+Punti: 0
+
+N° Risorsa: 37
+Regno: Insetto
+Angoli Fronte: Insetto - Nascosto - Visibile - Visibile
+Punti: 1
+
+N° Risorsa: 38
+Regno: Insetto
+Angoli Fronte: Visibile - Visibile - Nascosto - Insetto
+Punti: 1
+
+N° Risorsa: 39
+Regno: Insetto
+Angoli Fronte: Nascosto - Insetto - Visibile - Visibile
+Punti: 1
