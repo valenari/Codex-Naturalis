@@ -105,7 +105,7 @@ public class CartaRisorsa extends Carta {
             case "Insetto":
                 return "🦋";
             case "Piuma":
-                return "𓆰";
+                return " 𓆰";
             case "Pergamena":
                 return "📜";
             case "Inchiostro":
