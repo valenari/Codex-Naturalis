@@ -18,20 +18,22 @@ public class CartaRisorsa extends Carta {
         this.punti = punti;
     }
 
-    // Getter e setter per tipoRegno
+    // Getter per tipoRegno
     public String getTipoRegno() {
         return tipoRegno;
     }
 
+    // Setter per tipoRegno
     public void setTipoRegno(String tipoRegno) {
         this.tipoRegno = tipoRegno;
     }
 
-    // Getter e setter per punti
+    // Getter per punti
     public int getPunti() {
         return punti;
     }
 
+    // Setter per punti
     public void setPunti(int punti) {
         this.punti = punti;
     }
@@ -73,5 +75,63 @@ public class CartaRisorsa extends Carta {
             e.printStackTrace();
         }
         return carte;
+    }
+
+    // Metodo per ottenere l'emoji del tipo di regno
+    private String getEmojiRegno(String regno) {
+        switch (regno) {
+            case "Vegetale":
+                return "☘️";
+            case "Fungo":
+                return "🍄";
+            case "Animale":
+                return "🐺";
+            case "Insetto":
+                return "🪰";
+            default:
+                return "";
+        }
+    }
+
+    // Metodo per ottenere l'emoji dell'angolo
+    private String getEmojiAngolo(String angolo) {
+        switch (angolo) {
+            case "Vegetale":
+                return "☘️";
+            case "Fungo":
+                return "🍄";
+            case "Animale":
+                return "🐺";
+            case "Insetto":
+                return "🪰";
+            case "Piuma":
+                return "🪶";
+            case "Pergamena":
+                return "📜";
+            case "Inchiostro":
+                return "🫙";
+            case "Visibile":
+                return " ";
+            case "Nascosto":
+                return "";
+            default:
+                return "";
+        }
+    }
+
+    // Metodo per stampare la rappresentazione grafica della carta risorsa
+    @Override
+    public void stampaCarta() {
+        System.out.println("CARTA RISORSA: [id " + getIdCarta() + "]");
+        System.out.println("——————————————————————————————————");
+        String[] angoli = getFronte().split(" - ");
+        System.out.printf("|  %s  |%24s|  %s  |\n", getEmojiAngolo(angoli[0]), "", getEmojiAngolo(angoli[1]));
+        System.out.printf("|———————————————|———————————————|\n");
+        System.out.printf("|%40s|\n", "");
+        System.out.printf("|%20s%s%20s|\n", "", getEmojiRegno(tipoRegno), "");
+        System.out.printf("|%40s|\n", "");
+        System.out.printf("|———————————————|———————————————|\n");
+        System.out.printf("|  %s  |%24s|  %s  |\n", getEmojiAngolo(angoli[2]), "", getEmojiAngolo(angoli[3]));
+        System.out.println("——————————————————————————————————");
     }
 }

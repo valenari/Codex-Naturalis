@@ -18,48 +18,62 @@ public class Carta {
         this.caselle = caselle;
     }
 
-    // Getter e setter per idCarta
+    // Getter per idCarta
     public int getIdCarta() {
         return idCarta;
     }
 
+    // Setter per idCarta
     public void setIdCarta(int idCarta) {
         this.idCarta = idCarta;
     }
 
-    // Getter e setter per tipoCarta
+    // Getter per tipoCarta
     public String getTipoCarta() {
         return tipoCarta;
     }
 
+    // Setter per tipoCarta
     public void setTipoCarta(String tipoCarta) {
         this.tipoCarta = tipoCarta;
     }
 
-    // Getter e setter per fronte
+    // Getter per fronte
     public String getFronte() {
         return fronte;
     }
 
+    // Setter per fronte
     public void setFronte(String fronte) {
         this.fronte = fronte;
     }
 
-    // Getter e setter per retro
+    // Getter per retro
     public String getRetro() {
         return retro;
     }
 
+    // Setter per retro
     public void setRetro(String retro) {
         this.retro = retro;
     }
 
-    // Getter e setter per caselle
+    // Getter per caselle
     public Caselleproibite getCaselle() {
         return caselle;
     }
 
+    // Setter per caselle
     public void setCaselle(Caselleproibite caselle) {
         this.caselle = caselle;
+    }
+
+    // Metodo per stampare le informazioni della carta
+    public void stampaCarta() {
+        System.out.println("ID: " + idCarta);
+        System.out.println("Tipo Carta: " + tipoCarta);
+        System.out.println("Fronte: " + fronte);
+        System.out.println("Retro: " + retro);
+        System.out.println("Caselle: " + caselle);
     }
 }
