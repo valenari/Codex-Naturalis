@@ -175,7 +175,7 @@ public class CartaOro extends Carta {
             case "Inchiostro":
                 return "🧪";
             case "Angoli":
-                return "『』";
+                return "A";
             case "Nessuno":
                 return "";
             default:
@@ -188,7 +188,21 @@ public class CartaOro extends Carta {
         if (angolo.equals("Nascosto")) {
             return " ";
         }
-        return interno ? "I" : "";
+        return interno ? "|" : "";
+    }
+
+ // Metodo per centrare una stringa in uno spazio di larghezza fissa
+    private String centraStringa(String str, int width) {
+        int padding = (width - str.length()) / 2;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < padding; i++) {
+            sb.append(" ");
+        }
+        sb.append(str);
+        while (sb.length() < width) {
+            sb.append(" ");
+        }
+        return sb.toString();
     }
 
     // Metodo per stampare la rappresentazione grafica della carta oro
@@ -198,27 +212,32 @@ public class CartaOro extends Carta {
         System.out.println("-------------------------");
         String[] angoli = getFronte().split(" - ");
 
-        // Riga superiore con punti e criterio
-        String topLine = String.format("|%-3s%-3s%s%10s%s%s%s|\n", 
-            getSimboloPunti(punti), getEmojiCriterio(criterioPunti), getBordoAngolo(angoli[0], true),
-            "", 
+        // Riga superiore con punti, criterio e angoli superiori
+        String puntiECriterio = getSimboloPunti(punti) + " " + getEmojiCriterio(criterioPunti);
+        String topLine = String.format("|%s%s%2s%2s%s%s|\n", 
+            getBordoAngolo(angoli[0], false), getEmojiAngolo(angoli[0]), getBordoAngolo(angoli[0], true),
+            centraStringa(puntiECriterio, 16), 
             getBordoAngolo(angoli[1], true), getEmojiAngolo(angoli[1]), getBordoAngolo(angoli[1], false)
         );
 
         // Riga centrale con il tipo di regno
-        String midLine = String.format("|          %s          |\n", getEmojiRegno(tipoRegno));
+        String midLine1 = String.format("|%22s|\n", "");
+        String midLine2 = String.format("|          %s          |\n", getEmojiRegno(tipoRegno));
+        String midLine3 = String.format("|%22s|\n", "");
 
-        // Riga inferiore con risorse richieste
-        String risorseRichiesteStr = String.join("", risorseNecessarie.stream().map(this::getEmojiAngolo).toArray(String[]::new));
-        String bottomLine = String.format("|%-3s%-3s%s%10s%s%s%s|\n", 
-            getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], true),
-            "", 
-            getBordoAngolo(angoli[3], true), risorseRichiesteStr, getBordoAngolo(angoli[3], false)
+        // Riga inferiore con angoli inferiori e risorse richieste
+        String risorseRichiesteStr = String.join(" ", risorseNecessarie.stream().map(this::getEmojiAngolo).toArray(String[]::new));
+        String bottomLine = String.format("|%s%s%2s%2s%s%s%s|\n", 
+            getBordoAngolo(angoli[2], false), getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], true),
+            centraStringa(risorseRichiesteStr, 16), 
+            getBordoAngolo(angoli[3], true), getEmojiAngolo(angoli[3]), getBordoAngolo(angoli[3], false)
         );
 
         // Stampa le linee
         System.out.print(topLine);
-        System.out.print(midLine);
+        System.out.print(midLine1);
+        System.out.print(midLine2);
+        System.out.print(midLine3);
         System.out.print(bottomLine);
         System.out.println("-------------------------");
     }
