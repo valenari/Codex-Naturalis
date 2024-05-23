@@ -87,7 +87,7 @@ public class CartaRisorsa extends Carta {
             case "Animale":
                 return "🐺";
             case "Insetto":
-                return "🪰";
+                return "🦋";
             default:
                 return "";
         }
@@ -103,35 +103,60 @@ public class CartaRisorsa extends Carta {
             case "Animale":
                 return "🐺";
             case "Insetto":
-                return "🪰";
+                return "🦋";
             case "Piuma":
-                return "🪶";
+                return "𓆰";
             case "Pergamena":
                 return "📜";
             case "Inchiostro":
-                return "🫙";
+                return "🧪";
             case "Visibile":
-                return " ";
+                return "  ";
             case "Nascosto":
-                return "";
+                return " ";
             default:
                 return "";
         }
+    }
+
+ // Metodo per ottenere il carattere di bordo per un angolo
+    private String getBordoAngolo(String angolo, boolean interno) {
+        if (angolo.equals("Nascosto")) {
+            return " ";
+        }
+        return interno ? "|" : "";
     }
 
     // Metodo per stampare la rappresentazione grafica della carta risorsa
     @Override
     public void stampaCarta() {
         System.out.println("CARTA RISORSA: [id " + getIdCarta() + "]");
-        System.out.println("——————————————————————————————————");
+        System.out.println("-------------------------");
         String[] angoli = getFronte().split(" - ");
-        System.out.printf("|  %s  |%24s|  %s  |\n", getEmojiAngolo(angoli[0]), "", getEmojiAngolo(angoli[1]));
-        System.out.printf("|———————————————|———————————————|\n");
-        System.out.printf("|%40s|\n", "");
-        System.out.printf("|%20s%s%20s|\n", "", getEmojiRegno(tipoRegno), "");
-        System.out.printf("|%40s|\n", "");
-        System.out.printf("|———————————————|———————————————|\n");
-        System.out.printf("|  %s  |%24s|  %s  |\n", getEmojiAngolo(angoli[2]), "", getEmojiAngolo(angoli[3]));
-        System.out.println("——————————————————————————————————");
+
+        // Costruisci le linee con le condizioni sugli angoli nascosti
+        String topLine = String.format("|%s%s%s%17s%s%s%s|\n", 
+            getBordoAngolo(angoli[0], false), getEmojiAngolo(angoli[0]), getBordoAngolo(angoli[0], true),
+            "", 
+            getBordoAngolo(angoli[1], true), getEmojiAngolo(angoli[1]), getBordoAngolo(angoli[1], false)
+        );
+
+        String midLine1 = String.format("|%23s|\n", "");
+        String midLine2 = String.format("|          %s           |\n", getEmojiRegno(tipoRegno));
+        String midLine3 = String.format("|%23s|\n", "");
+
+        String bottomLine = String.format("|%s%s%s%17s%s%s%s|\n", 
+            getBordoAngolo(angoli[2], false), getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], true),
+            "", 
+            getBordoAngolo(angoli[3], true), getEmojiAngolo(angoli[3]), getBordoAngolo(angoli[3], false)
+        );
+
+        // Stampa le linee
+        System.out.print(topLine);
+        System.out.print(midLine1);
+        System.out.print(midLine2);
+        System.out.print(midLine3);
+        System.out.print(bottomLine);
+        System.out.println("-------------------------");
     }
 }
