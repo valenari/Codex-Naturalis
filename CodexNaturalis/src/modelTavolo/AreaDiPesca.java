@@ -3,48 +3,74 @@ package modelTavolo;
 import java.util.ArrayList;
 import java.util.List;
 
+import cardsModel.Carta;
+import cardsModel.MazzoCarte;
+
 public class AreaDiPesca {
-    private MazzoCarte mazzoRisorse;
+    private MazzoCarte mazzoRisorsa;
     private MazzoCarte mazzoOro;
-    private List<Carta> carteVisibiliRisorse;
+    private List<Carta> carteVisibiliRisorsa;
     private List<Carta> carteVisibiliOro;
 
     // Costruttore della classe AreaDiPesca
-    public AreaDiPesca(MazzoCarte mazzoRisorse, MazzoCarte mazzoOro) {
-        this.mazzoRisorse = mazzoRisorse;
+    public AreaDiPesca(MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro, MazzoCarte mazzoIniziale) {
+        this.mazzoRisorsa = mazzoRisorsa;
         this.mazzoOro = mazzoOro;
-        carteVisibiliRisorse = new ArrayList<>();
-        carteVisibiliOro = new ArrayList<>();
+        this.carteVisibiliRisorsa = new ArrayList<>();
+        this.carteVisibiliOro = new ArrayList<>();
     }
 
-    // Metodo per inizializzare l'area di pesca
-    public void inizializza() {
-        carteVisibiliRisorse.clear();
-        carteVisibiliOro.clear();
-        for (int i = 0; i < 2; i++) {
-            carteVisibiliRisorse.add(mazzoRisorse.pescaCarta());
-            carteVisibiliOro.add(mazzoOro.pescaCarta());
-        }
+    // Metodo per inizializzare le carte visibili nell'area di pesca
+    public void inizializzaPesca() {
+        aggiornaCarteVisibiliRisorsa();
+        aggiornaCarteVisibiliOro();
     }
 
     // Metodo per pescare una carta risorsa
     public Carta pescaCartaRisorsa() {
-        return mazzoRisorse.pescaCarta();
+        Carta carta = mazzoRisorsa.pescaCarta();
+        aggiornaCarteVisibiliRisorsa();
+        return carta;
     }
 
     // Metodo per pescare una carta oro
     public Carta pescaCartaOro() {
-        return mazzoOro.pescaCarta();
+        Carta carta = mazzoOro.pescaCarta();
+        aggiornaCarteVisibiliOro();
+        return carta;
     }
 
-    // Getter per ottenere le carte visibili delle risorse
-    public List<Carta> getCarteVisibiliRisorse() {
-        return carteVisibiliRisorse;
+    // Metodo per aggiornare le carte risorsa visibili
+    private void aggiornaCarteVisibiliRisorsa() {
+        carteVisibiliRisorsa.clear();
+        for (int i = 0; i < 2; i++) {
+            Carta carta = mazzoRisorsa.pescaCarta();
+            if (carta != null) {
+                carteVisibiliRisorsa.add(carta);
+            }
+        }
     }
 
-    // Getter per ottenere le carte visibili dell'oro
+    // Metodo per aggiornare le carte oro visibili
+    private void aggiornaCarteVisibiliOro() {
+        carteVisibiliOro.clear();
+        for (int i = 0; i < 2; i++) {
+            Carta carta = mazzoOro.pescaCarta();
+            if (carta != null) {
+                carteVisibiliOro.add(carta);
+            }
+        }
+    }
+
+    // Getter per le carte visibili risorsa
+    public List<Carta> getCarteVisibiliRisorsa() {
+        return carteVisibiliRisorsa;
+    }
+
+    // Getter per le carte visibili oro
     public List<Carta> getCarteVisibiliOro() {
         return carteVisibiliOro;
     }
 }
+
 
