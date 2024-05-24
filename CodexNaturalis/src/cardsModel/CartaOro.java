@@ -214,7 +214,7 @@ public class CartaOro extends Carta {
     // Metodo per stampare la rappresentazione grafica della carta oro
     @Override
     public void stampaCarta() {
-        System.out.println("CARTA ORO: [id " + getIdCarta() + "]");
+        //System.out.println("CARTA ORO: [id " + getIdCarta() + "]");
         System.out.println("-------------------------");
         String[] angoli = getFronte().split(" - ");
 
@@ -250,7 +250,7 @@ public class CartaOro extends Carta {
 
     // Metodo per stampare la rappresentazione grafica del retro della carta
     public void stampaRetro() {
-        System.out.println("RETRO CARTA: [id " + getIdCarta() + "]");
+        //System.out.println("RETRO CARTA: [id " + getIdCarta() + "]");
         System.out.println("-------------------------");
         String[] angoli = getRetro().split(" - ");
 
