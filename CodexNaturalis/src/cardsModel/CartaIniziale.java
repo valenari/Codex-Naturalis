@@ -11,55 +11,56 @@ public class CartaIniziale extends Carta {
     private List<String> centrale;
 
     // Costruttore della classe CartaIniziale
-    public CartaIniziale(int idCarta, String fronte, String retro, Caselleproibite caselle, List<String> centrale) {
+    public CartaIniziale(int idCarta, String fronte, Caselleproibite caselle, List<String> centrale, String retro) {
         super(idCarta, "Iniziale", fronte, retro, caselle);
         this.centrale = centrale;
     }
 
-    // Getter e Setter per centrale
+    // Getter per la lista centrale
     public List<String> getCentrale() {
         return centrale;
     }
 
+    // Setter per la lista centrale
     public void setCentrale(List<String> centrale) {
         this.centrale = centrale;
     }
 
-    // Metodo statico per leggere carte iniziali dal file
+    // Metodo statico per leggere le carte iniziali dal file
     public static List<CartaIniziale> leggiCarteIniziali(String filename) {
         List<CartaIniziale> carte = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String linea;
             int idCarta = -1;
-            String angoliFronte = null;
-            String angoliRetro = null;
+            String fronte = null;
             List<String> centrale = new ArrayList<>();
+            String retro = null;
             Caselleproibite caselle = Caselleproibite.NULL; // Placeholder, modificare secondo necessità
 
             while ((linea = br.readLine()) != null) {
                 if (linea.startsWith("Id: ")) {
                     if (idCarta != -1) {
                         // Aggiungi la carta precedente alla lista
-                        CartaIniziale carta = new CartaIniziale(idCarta, angoliFronte, angoliRetro, caselle, centrale);
+                        CartaIniziale carta = new CartaIniziale(idCarta, fronte, caselle, centrale, retro);
                         carte.add(carta);
                     }
                     // Inizia a leggere una nuova carta
                     idCarta = Integer.parseInt(linea.split(": ")[1]);
                     centrale = new ArrayList<>();
                 } else if (linea.startsWith("Fronte: ")) {
-                    angoliFronte = linea.split(": ")[1];
+                    fronte = linea.split(": ")[1];
                 } else if (linea.startsWith("Centrale: ")) {
                     String[] centrali = linea.split(": ")[1].split(" - ");
                     for (String c : centrali) {
                         centrale.add(c);
                     }
                 } else if (linea.startsWith("Retro: ")) {
-                    angoliRetro = linea.split(": ")[1];
+                    retro = linea.split(": ")[1];
                 }
             }
             // Aggiungi l'ultima carta letta
             if (idCarta != -1) {
-                CartaIniziale carta = new CartaIniziale(idCarta, angoliFronte, angoliRetro, caselle, centrale);
+                CartaIniziale carta = new CartaIniziale(idCarta, fronte, caselle, centrale, retro);
                 carte.add(carta);
             }
         } catch (IOException e) {
@@ -68,9 +69,9 @@ public class CartaIniziale extends Carta {
         return carte;
     }
 
-    // Metodo per ottenere l'emoji dell'angolo e centrale
-    private String getEmoji(String tipo) {
-        switch (tipo) {
+    // Metodo per ottenere l'emoji del tipo di regno
+    private String getEmojiRegno(String regno) {
+        switch (regno) {
             case "Vegetale":
                 return "☘️";
             case "Fungo":
@@ -79,6 +80,28 @@ public class CartaIniziale extends Carta {
                 return "🐺";
             case "Insetto":
                 return "🦋";
+            default:
+                return "";
+        }
+    }
+
+    // Metodo per ottenere l'emoji dell'angolo
+    private String getEmojiAngolo(String angolo) {
+        switch (angolo) {
+            case "Vegetale":
+                return "☘️";
+            case "Fungo":
+                return "🍄";
+            case "Animale":
+                return "🐺";
+            case "Insetto":
+                return "🦋";
+            case "Piuma":
+                return "𓆰";
+            case "Pergamena":
+                return "📜";
+            case "Inchiostro":
+                return "🧪";
             case "Visibile":
                 return "  ";
             case "Nascosto":
@@ -89,67 +112,100 @@ public class CartaIniziale extends Carta {
     }
 
     // Metodo per ottenere il carattere di bordo per un angolo
-    private String getBordoAngolo(String angolo, boolean interno) {
+    private String getBordoAngolo(String angolo, boolean sinistra) {
         if (angolo.equals("Nascosto")) {
-            return " ";
+            return "  ";
         }
-        return interno ? "|" : "";
+        return sinistra ? "[" : "]";
     }
 
-    // Metodo per centrare una stringa in uno spazio di larghezza fissa
-    private String centraStringa(String str, int width) {
-        int padding = (width - str.length()) / 2;
+    // Metodo per centrare una stringa
+    private String centraStringa(String str, int larghezza) {
+        int spazi = larghezza - str.length();
+        if (spazi <= 0) {
+            return str;
+        }
+        int spaziPrima = spazi / 2;
+        int spaziDopo = spazi - spaziPrima;
+        return " ".repeat(spaziPrima) + str + " ".repeat(spaziDopo);
+    }
+
+    @Override
+    public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < padding; i++) {
-            sb.append(" ");
+        String[] angoli = getFronte().split(" - ");
+        List<String> centrale = getCentrale();
+
+        sb.append("-------------------------\n");
+
+        sb.append(String.format("[%s%s%17s%s%s]\n", 
+            getEmojiAngolo(angoli[0]), getBordoAngolo(angoli[0], false),
+            "", 
+            getBordoAngolo(angoli[1], true), getEmojiAngolo(angoli[1])
+        ));
+
+        if (centrale.size() == 1) {
+            sb.append(String.format("[%23s]\n", ""));
+            sb.append(String.format("[%s]\n", centraStringa(getEmojiRegno(centrale.get(0)), 23)));
+            sb.append(String.format("[%23s]\n", ""));
+        } else if (centrale.size() == 2) {
+            sb.append(String.format("[%23s]\n", centraStringa(getEmojiRegno(centrale.get(0)), 23)));
+            sb.append(String.format("[%23s]\n", ""));
+            sb.append(String.format("[%23s]\n", centraStringa(getEmojiRegno(centrale.get(1)), 23)));
+        } else if (centrale.size() == 3) {
+            sb.append(String.format("[%23s]\n", centraStringa(getEmojiRegno(centrale.get(0)), 23)));
+            sb.append(String.format("[%23s]\n", centraStringa(getEmojiRegno(centrale.get(1)), 23)));
+            sb.append(String.format("[%23s]\n", centraStringa(getEmojiRegno(centrale.get(2)), 23)));
+        } else {
+            sb.append(String.format("[%23s]\n", ""));
+            sb.append(String.format("[%23s]\n", ""));
+            sb.append(String.format("[%23s]\n", ""));
         }
-        sb.append(str);
-        while (sb.length() < width) {
-            sb.append(" ");
-        }
+
+        sb.append(String.format("[%s%s%17s%s%s]\n", 
+            getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], false),
+            "", 
+            getBordoAngolo(angoli[3], true), getEmojiAngolo(angoli[3])
+        ));
+
+        sb.append("-------------------------\n");
         return sb.toString();
     }
 
-    // Metodo per stampare la rappresentazione grafica della carta iniziale
-    @Override
+    public String toStringRetro() {
+        StringBuilder sb = new StringBuilder();
+        String[] angoli = getRetro().split(" - ");
+
+        sb.append("-------------------------\n");
+
+        sb.append(String.format("[%s%s%17s%s%s]\n", 
+            getEmojiAngolo(angoli[0]), getBordoAngolo(angoli[0], false),
+            "", 
+            getBordoAngolo(angoli[1], true), getEmojiAngolo(angoli[1])
+        ));
+
+        sb.append(String.format("[%23s]\n", ""));
+        sb.append(String.format("[%23s]\n", ""));
+        sb.append(String.format("[%23s]\n", ""));
+
+        sb.append(String.format("[%s%s%17s%s%s]\n", 
+            getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], false),
+            "", 
+            getBordoAngolo(angoli[3], true), getEmojiAngolo(angoli[3])
+        ));
+
+        sb.append("-------------------------\n");
+        return sb.toString();
+    }
+
     public void stampaCarta() {
         System.out.println("CARTA INIZIALE: [id " + getIdCarta() + "]");
         System.out.println("FRONTE:");
-        stampaLato(getFronte(), centrale);
-        System.out.println("RETRO:");
-        stampaLato(getRetro(), null);
+        System.out.println(this.toString());
     }
 
-    private void stampaLato(String lato, List<String> centrale) {
-        String[] angoli = lato.split(" - ");
-
-        System.out.println("-------------------------");
-        // Riga superiore con angoli superiori
-        String topLine = String.format("|%s%s%s%16s%s%s%s|\n", 
-            getBordoAngolo(angoli[0], false), getEmoji(angoli[0]), getBordoAngolo(angoli[0], true),
-            "", 
-            getBordoAngolo(angoli[1], true), getEmoji(angoli[1]), getBordoAngolo(angoli[1], false)
-        );
-
-        // Riga centrale con il tipo centrale
-        String midLine1 = String.format("|%22s|\n", centrale != null && centrale.size() > 0 ? centraStringa(getEmoji(centrale.get(0)), 22) : "");
-        String midLine2 = String.format("|%22s|\n", centrale != null && centrale.size() > 1 ? centraStringa(getEmoji(centrale.get(1)), 22) : "");
-        String midLine3 = String.format("|%22s|\n", centrale != null && centrale.size() > 2 ? centraStringa(getEmoji(centrale.get(2)), 22) : "");
-
-        // Riga inferiore con angoli inferiori
-        String bottomLine = String.format("|%s%s%s%16s%s%s%s|\n", 
-            getBordoAngolo(angoli[2], false), getEmoji(angoli[2]), getBordoAngolo(angoli[2], true),
-            "", 
-            getBordoAngolo(angoli[3], true), getEmoji(angoli[3]), getBordoAngolo(angoli[3], false)
-        );
-
-        bottomLine = bottomLine.replaceAll("\\|\\|", "|  |");
-        // Stampa le linee
-        System.out.print(topLine);
-        System.out.print(midLine1);
-        System.out.print(midLine2);
-        System.out.print(midLine3);
-        System.out.print(bottomLine);
-        System.out.println("-------------------------");
+    public void stampaRetro() {
+        System.out.println("RETRO:");
+        System.out.println(this.toStringRetro());
     }
 }

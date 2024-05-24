@@ -1,7 +1,9 @@
 package modelTavolo;
 
+import cardsModel.Carta;
 import cardsModel.CartaOro;
 import cardsModel.CartaRisorsa;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,23 +46,47 @@ public class AreaDiPesca {
 
     // Metodo per mostrare lo stato attuale dell'area di pesca
     public void mostraAreaDiPesca() {
-        System.out.println("Carte Risorsa Visibili:");
-        for (CartaRisorsa carta : carteRisorsaVisibili) {
-            carta.stampaCarta();
-        }
-        if (!mazzoRisorsaCoperto.isEmpty()) {
-            System.out.println("Prossima Carta Risorsa del Mazzo:");
-            mazzoRisorsaCoperto.get(0).stampaRetro();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Area di Pesca:\n");
+        sb.append("Carte Risorsa Visibili:\n");
+        sb.append(stampaCarteOrizzontali(carteRisorsaVisibili, !mazzoRisorsaCoperto.isEmpty() ? mazzoRisorsaCoperto.get(0).toStringRetro() : null));
+        sb.append("\nCarte Oro Visibili:\n");
+        sb.append(stampaCarteOrizzontali(carteOroVisibili, !mazzoOroCoperto.isEmpty() ? mazzoOroCoperto.get(0).toStringRetro() : null));
+
+        System.out.println(sb.toString());
+    }
+
+    // Metodo per stampare le carte in orizzontale con il mazzo coperto
+    private String stampaCarteOrizzontali(List<? extends Carta> carteVisibili, String cartaCoperta) {
+        StringBuilder sb = new StringBuilder();
+        int maxRighe = 7; // Numero massimo di righe per la rappresentazione grafica di una carta
+        List<String[]> carteRighe = new ArrayList<>();
+
+        // Aggiungi la carta coperta se presente
+        if (cartaCoperta != null) {
+            String[] righeCoperta = cartaCoperta.split("\n");
+            carteRighe.add(righeCoperta);
         }
 
-        System.out.println("\nCarte Oro Visibili:");
-        for (CartaOro carta : carteOroVisibili) {
-            carta.stampaCarta();
+        // Aggiungi le carte visibili
+        for (Carta carta : carteVisibili) {
+            String[] righe = carta.toString().split("\n");
+            carteRighe.add(righe);
         }
-        if (!mazzoOroCoperto.isEmpty()) {
-            System.out.println("Prossima Carta Oro del Mazzo:");
-            mazzoOroCoperto.get(0).stampaRetro();
+
+        // Costruisci le righe orizzontali
+        for (int i = 0; i < maxRighe; i++) {
+            for (String[] righeCarta : carteRighe) {
+                if (i < righeCarta.length) {
+                    sb.append(righeCarta[i]).append("  "); // Aggiungi due spazi tra le carte
+                } else {
+                    sb.append(" ".repeat(26)).append("  "); // Aggiungi spazi vuoti per allineare
+                }
+            }
+            sb.append("\n");
         }
+
+        return sb.toString();
     }
 
     // Getter per le carte risorsa visibili

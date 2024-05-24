@@ -76,4 +76,9 @@ public class Carta {
         System.out.println("Retro: " + retro);
         System.out.println("Caselle: " + caselle);
     }
+
+    @Override
+    public String toString() {
+        return "ID: " + idCarta + "\nTipo Carta: " + tipoCarta + "\nFronte: " + fronte + "\nRetro: " + retro + "\nCaselle: " + caselle;
+    }
 }
