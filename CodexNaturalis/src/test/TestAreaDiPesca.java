@@ -1,20 +1,25 @@
 package test;
 
-import cardsModel.CartaRisorsa;
-import cardsModel.CartaOro;
+import cardsModel.MazzoCarte;
 import modelTavolo.AreaDiPesca;
-import java.util.List;
 
 public class TestAreaDiPesca {
     public static void main(String[] args) {
-        // Carica le carte dai file
-        List<CartaRisorsa> mazzoRisorsa = CartaRisorsa.leggiCarteRisorsa("src/fileCarte/CarteRisorsa.txt");
-        List<CartaOro> mazzoOro = CartaOro.leggiCarteOro("src/fileCarte/CarteOro.txt");
+        // Creare i mazzi e caricare le carte dai file
+        MazzoCarte mazzoRisorsa = new MazzoCarte("Risorsa");
+        MazzoCarte mazzoOro = new MazzoCarte("Oro");
 
-        // Crea l'area di pesca
+        mazzoRisorsa.caricaCarteDaFile("src/fileCarte/CarteRisorsa.txt");
+        mazzoOro.caricaCarteDaFile("src/fileCarte/CarteOro.txt");
+
+        // Mescolare i mazzi
+        mazzoRisorsa.mescolaMazzo();
+        mazzoOro.mescolaMazzo();
+
+        // Creare l'area di pesca
         AreaDiPesca areaDiPesca = new AreaDiPesca(mazzoRisorsa, mazzoOro);
 
-        // Mostra l'area di pesca iniziale
+        // Mostrare lo stato dell'area di pesca
         areaDiPesca.mostraAreaDiPesca();
     }
 }

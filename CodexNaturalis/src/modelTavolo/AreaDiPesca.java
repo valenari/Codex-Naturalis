@@ -1,28 +1,24 @@
 package modelTavolo;
 
+import cardsModel.Carta;
 import cardsModel.CartaOro;
 import cardsModel.CartaRisorsa;
-import cardsModel.Carta;
+import cardsModel.MazzoCarte;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class AreaDiPesca {
+    private MazzoCarte mazzoRisorsa;
+    private MazzoCarte mazzoOro;
     private List<CartaRisorsa> carteRisorsaVisibili;
     private List<CartaOro> carteOroVisibili;
-    private List<CartaRisorsa> mazzoRisorsaCoperto;
-    private List<CartaOro> mazzoOroCoperto;
 
     // Costruttore della classe AreaDiPesca
-    public AreaDiPesca(List<CartaRisorsa> mazzoRisorsa, List<CartaOro> mazzoOro) {
-        this.mazzoRisorsaCoperto = new ArrayList<>(mazzoRisorsa);
-        this.mazzoOroCoperto = new ArrayList<>(mazzoOro);
+    public AreaDiPesca(MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro) {
+        this.mazzoRisorsa = mazzoRisorsa;
+        this.mazzoOro = mazzoOro;
         this.carteRisorsaVisibili = new ArrayList<>();
         this.carteOroVisibili = new ArrayList<>();
-
-        // Mescola i mazzi
-        Collections.shuffle(mazzoRisorsaCoperto);
-        Collections.shuffle(mazzoOroCoperto);
 
         // Pesca le prime due carte per ogni tipo e mettile tra le visibili
         pescaCarteRisorsa(2);
@@ -31,42 +27,56 @@ public class AreaDiPesca {
 
     // Metodo per pescare un certo numero di carte risorsa
     private void pescaCarteRisorsa(int numero) {
-        for (int i = 0; i < numero && !mazzoRisorsaCoperto.isEmpty(); i++) {
-            carteRisorsaVisibili.add(mazzoRisorsaCoperto.remove(0));
+        for (int i = 0; i < numero; i++) {
+            CartaRisorsa carta = (CartaRisorsa) mazzoRisorsa.pescaCarta();
+            if (carta != null) {
+                carteRisorsaVisibili.add(carta);
+            }
         }
     }
 
     // Metodo per pescare un certo numero di carte oro
     private void pescaCarteOro(int numero) {
-        for (int i = 0; i < numero && !mazzoOroCoperto.isEmpty(); i++) {
-            carteOroVisibili.add(mazzoOroCoperto.remove(0));
+        for (int i = 0; i < numero; i++) {
+            CartaOro carta = (CartaOro) mazzoOro.pescaCarta();
+            if (carta != null) {
+                carteOroVisibili.add(carta);
+            }
         }
     }
 
-    // Metodo per stampare le righe delle carte
-    private void stampaCarteOrizzontalmente(List<? extends Carta> carte, boolean mostraRetroMazzo) {
-        String[][] carteStringhe = new String[carte.size() + (mostraRetroMazzo ? 1 : 0)][];
+    // Metodo per aggiungere un numero alla rappresentazione della carta
+    private String toStringConNumero(Carta carta, int numero, boolean isRetro) {
+        String cartaStr = isRetro ? carta.toStringRetro() : carta.toString();
+        String[] lineeCarta = cartaStr.split("\n");
+        String numeroStr = String.format("{%d}", numero);
+        String lineaConNumero = lineeCarta[lineeCarta.length - 1];
+        int pos = (lineaConNumero.length() - numeroStr.length()) / 2;
+
+        // Aggiungi il numero al centro della riga inferiore
+        lineeCarta[lineeCarta.length - 1] = lineaConNumero.substring(0, pos) + numeroStr + lineaConNumero.substring(pos + numeroStr.length());
+        return String.join("\n", lineeCarta);
+    }
+
+    // Metodo per stampare le carte orizzontalmente
+    private void stampaCarteOrizzontalmente(List<String> carteStringhe) {
         int maxLines = 0;
+        List<String[]> carteLinee = new ArrayList<>();
 
-        // Aggiungi la prossima carta del mazzo (retro) se necessario
-        if (mostraRetroMazzo) {
-            carteStringhe[0] = carte.get(0).toStringRetro().split("\n");
-            maxLines = Math.max(maxLines, carteStringhe[0].length);
-        }
-
-        // Converti ogni carta in un array di righe
-        for (int i = 0; i < carte.size(); i++) {
-            carteStringhe[i + (mostraRetroMazzo ? 1 : 0)] = carte.get(i).toString().split("\n");
-            maxLines = Math.max(maxLines, carteStringhe[i + (mostraRetroMazzo ? 1 : 0)].length);
+        // Converti ogni rappresentazione della carta in un array di righe
+        for (String cartaStr : carteStringhe) {
+            String[] linee = cartaStr.split("\n");
+            carteLinee.add(linee);
+            maxLines = Math.max(maxLines, linee.length);
         }
 
         // Stampa le righe delle carte con uno spazio tra di loro
         for (int line = 0; line < maxLines; line++) {
-            for (int i = 0; i < carteStringhe.length; i++) {
-                if (line < carteStringhe[i].length) {
-                    System.out.print(carteStringhe[i][line]);
+            for (String[] linee : carteLinee) {
+                if (line < linee.length) {
+                    System.out.print(linee[line]);
                 } else {
-                    System.out.print(" ".repeat(carteStringhe[0][0].length())); // Spazio vuoto se la carta ha meno righe
+                    System.out.print(" ".repeat(linee[0].length())); // Spazio vuoto se la carta ha meno righe
                 }
                 System.out.print("\t"); // Spazio tra le carte
             }
@@ -76,21 +86,35 @@ public class AreaDiPesca {
 
     // Metodo per mostrare lo stato attuale dell'area di pesca
     public void mostraAreaDiPesca() {
-        System.out.println("Carte Risorsa Visibili:");
-        List<Carta> risorsaConRetro = new ArrayList<>();
-        if (!mazzoRisorsaCoperto.isEmpty()) {
-            risorsaConRetro.add(mazzoRisorsaCoperto.get(0));
-        }
-        risorsaConRetro.addAll(carteRisorsaVisibili);
-        stampaCarteOrizzontalmente(risorsaConRetro, false);
+        List<String> rappresentazioneCarteRisorsa = new ArrayList<>();
+        List<String> rappresentazioneCarteOro = new ArrayList<>();
 
-        System.out.println("\nCarte Oro Visibili:");
-        List<Carta> oroConRetro = new ArrayList<>();
-        if (!mazzoOroCoperto.isEmpty()) {
-            oroConRetro.add(mazzoOroCoperto.get(0));
+        // Aggiungi il retro della prossima carta risorsa
+        if (mazzoRisorsa.getCarte().size() > mazzoRisorsa.getPuntatore()) {
+            rappresentazioneCarteRisorsa.add(toStringConNumero(mazzoRisorsa.getCarte().get(mazzoRisorsa.getPuntatore()), 1, true));
         }
-        oroConRetro.addAll(carteOroVisibili);
-        stampaCarteOrizzontalmente(oroConRetro, false);
+
+        // Aggiungi le carte risorsa visibili
+        for (int i = 0; i < carteRisorsaVisibili.size(); i++) {
+            rappresentazioneCarteRisorsa.add(toStringConNumero(carteRisorsaVisibili.get(i), i + 2, false));
+        }
+
+        // Aggiungi il retro della prossima carta oro
+        if (mazzoOro.getCarte().size() > mazzoOro.getPuntatore()) {
+            rappresentazioneCarteOro.add(toStringConNumero(mazzoOro.getCarte().get(mazzoOro.getPuntatore()), 4, true));
+        }
+
+        // Aggiungi le carte oro visibili
+        for (int i = 0; i < carteOroVisibili.size(); i++) {
+            rappresentazioneCarteOro.add(toStringConNumero(carteOroVisibili.get(i), i + 5, false));
+        }
+
+        // Stampa le carte risorsa e oro su due righe separate
+        System.out.println("Carte Risorsa:");
+        stampaCarteOrizzontalmente(rappresentazioneCarteRisorsa);
+
+        System.out.println("\nCarte Oro:");
+        stampaCarteOrizzontalmente(rappresentazioneCarteOro);
     }
 
     // Getter per le carte risorsa visibili

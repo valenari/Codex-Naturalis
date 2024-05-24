@@ -56,4 +56,9 @@ public class MazzoCarte {
     public String getTipoMazzo() {
         return tipoMazzo;
     }
+
+    // Getter per il puntatore
+    public int getPuntatore() {
+        return puntatore;
+    }
 }
