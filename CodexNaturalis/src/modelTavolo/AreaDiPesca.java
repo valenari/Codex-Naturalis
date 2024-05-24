@@ -1,9 +1,8 @@
 package modelTavolo;
 
-import cardsModel.Carta;
 import cardsModel.CartaOro;
 import cardsModel.CartaRisorsa;
-
+import cardsModel.Carta;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,49 +43,54 @@ public class AreaDiPesca {
         }
     }
 
-    // Metodo per mostrare lo stato attuale dell'area di pesca
-    public void mostraAreaDiPesca() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Area di Pesca:\n");
-        sb.append("Carte Risorsa Visibili:\n");
-        sb.append(stampaCarteOrizzontali(carteRisorsaVisibili, !mazzoRisorsaCoperto.isEmpty() ? mazzoRisorsaCoperto.get(0).toStringRetro() : null));
-        sb.append("\nCarte Oro Visibili:\n");
-        sb.append(stampaCarteOrizzontali(carteOroVisibili, !mazzoOroCoperto.isEmpty() ? mazzoOroCoperto.get(0).toStringRetro() : null));
+    // Metodo per stampare le righe delle carte
+    private void stampaCarteOrizzontalmente(List<? extends Carta> carte, boolean mostraRetroMazzo) {
+        String[][] carteStringhe = new String[carte.size() + (mostraRetroMazzo ? 1 : 0)][];
+        int maxLines = 0;
 
-        System.out.println(sb.toString());
+        // Aggiungi la prossima carta del mazzo (retro) se necessario
+        if (mostraRetroMazzo) {
+            carteStringhe[0] = carte.get(0).toStringRetro().split("\n");
+            maxLines = Math.max(maxLines, carteStringhe[0].length);
+        }
+
+        // Converti ogni carta in un array di righe
+        for (int i = 0; i < carte.size(); i++) {
+            carteStringhe[i + (mostraRetroMazzo ? 1 : 0)] = carte.get(i).toString().split("\n");
+            maxLines = Math.max(maxLines, carteStringhe[i + (mostraRetroMazzo ? 1 : 0)].length);
+        }
+
+        // Stampa le righe delle carte con uno spazio tra di loro
+        for (int line = 0; line < maxLines; line++) {
+            for (int i = 0; i < carteStringhe.length; i++) {
+                if (line < carteStringhe[i].length) {
+                    System.out.print(carteStringhe[i][line]);
+                } else {
+                    System.out.print(" ".repeat(carteStringhe[0][0].length())); // Spazio vuoto se la carta ha meno righe
+                }
+                System.out.print("\t"); // Spazio tra le carte
+            }
+            System.out.println();
+        }
     }
 
-    // Metodo per stampare le carte in orizzontale con il mazzo coperto
-    private String stampaCarteOrizzontali(List<? extends Carta> carteVisibili, String cartaCoperta) {
-        StringBuilder sb = new StringBuilder();
-        int maxRighe = 7; // Numero massimo di righe per la rappresentazione grafica di una carta
-        List<String[]> carteRighe = new ArrayList<>();
-
-        // Aggiungi la carta coperta se presente
-        if (cartaCoperta != null) {
-            String[] righeCoperta = cartaCoperta.split("\n");
-            carteRighe.add(righeCoperta);
+    // Metodo per mostrare lo stato attuale dell'area di pesca
+    public void mostraAreaDiPesca() {
+        System.out.println("Carte Risorsa Visibili:");
+        List<Carta> risorsaConRetro = new ArrayList<>();
+        if (!mazzoRisorsaCoperto.isEmpty()) {
+            risorsaConRetro.add(mazzoRisorsaCoperto.get(0));
         }
+        risorsaConRetro.addAll(carteRisorsaVisibili);
+        stampaCarteOrizzontalmente(risorsaConRetro, false);
 
-        // Aggiungi le carte visibili
-        for (Carta carta : carteVisibili) {
-            String[] righe = carta.toString().split("\n");
-            carteRighe.add(righe);
+        System.out.println("\nCarte Oro Visibili:");
+        List<Carta> oroConRetro = new ArrayList<>();
+        if (!mazzoOroCoperto.isEmpty()) {
+            oroConRetro.add(mazzoOroCoperto.get(0));
         }
-
-        // Costruisci le righe orizzontali
-        for (int i = 0; i < maxRighe; i++) {
-            for (String[] righeCarta : carteRighe) {
-                if (i < righeCarta.length) {
-                    sb.append(righeCarta[i]).append("  "); // Aggiungi due spazi tra le carte
-                } else {
-                    sb.append(" ".repeat(26)).append("  "); // Aggiungi spazi vuoti per allineare
-                }
-            }
-            sb.append("\n");
-        }
-
-        return sb.toString();
+        oroConRetro.addAll(carteOroVisibili);
+        stampaCarteOrizzontalmente(oroConRetro, false);
     }
 
     // Getter per le carte risorsa visibili

@@ -2,7 +2,7 @@ package cardsModel;
 
 import Modello_giocatore.Caselleproibite;
 
-public class Carta {
+public abstract class Carta {
     private int idCarta;
     private String tipoCarta;
     private String fronte;
@@ -81,4 +81,7 @@ public class Carta {
     public String toString() {
         return "ID: " + idCarta + "\nTipo Carta: " + tipoCarta + "\nFronte: " + fronte + "\nRetro: " + retro + "\nCaselle: " + caselle;
     }
+    
+    // Metodo astratto per stampare il retro della carta
+    public abstract String toStringRetro();
 }
