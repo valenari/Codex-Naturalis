@@ -12,10 +12,15 @@ public class CartaRisorsa extends Carta {
     private int punti;
 
     // Costruttore della classe CartaRisorsa
-    public CartaRisorsa(int idCarta, String fronte, String retro, Caselleproibite caselle, String tipoRegno, int punti) {
-        super(idCarta, "Risorsa", fronte, retro, caselle);
+    public CartaRisorsa(int idCarta, String fronte, Caselleproibite caselle, String tipoRegno, int punti) {
+        super(idCarta, "Risorsa", fronte, generaRetro(tipoRegno), caselle);
         this.tipoRegno = tipoRegno;
         this.punti = punti;
+    }
+
+    // Metodo statico per generare il retro della carta
+    private static String generaRetro(String tipoRegno) {
+        return "Visibile - Visibile - Visibile - Visibile - " + tipoRegno;
     }
 
     // Getter per tipoRegno
@@ -48,12 +53,12 @@ public class CartaRisorsa extends Carta {
             String angoliFronte = null;
             int punti = 0;
             Caselleproibite caselle = Caselleproibite.NULL; // Placeholder, modificare secondo necessità
-            
+
             while ((linea = br.readLine()) != null) {
                 if (linea.startsWith("N° Risorsa: ")) {
                     if (idCarta != -1) {
                         // Aggiungi la carta precedente alla lista
-                        CartaRisorsa carta = new CartaRisorsa(idCarta, angoliFronte, "", caselle, tipoRegno, punti);
+                        CartaRisorsa carta = new CartaRisorsa(idCarta, angoliFronte, caselle, tipoRegno, punti);
                         carte.add(carta);
                     }
                     // Inizia a leggere una nuova carta
@@ -68,7 +73,7 @@ public class CartaRisorsa extends Carta {
             }
             // Aggiungi l'ultima carta letta
             if (idCarta != -1) {
-                CartaRisorsa carta = new CartaRisorsa(idCarta, angoliFronte, "", caselle, tipoRegno, punti);
+                CartaRisorsa carta = new CartaRisorsa(idCarta, angoliFronte, caselle, tipoRegno, punti);
                 carte.add(carta);
             }
         } catch (IOException e) {
@@ -119,7 +124,7 @@ public class CartaRisorsa extends Carta {
         }
     }
 
- // Metodo per ottenere il carattere di bordo per un angolo
+    // Metodo per ottenere il carattere di bordo per un angolo
     private String getBordoAngolo(String angolo, boolean interno) {
         if (angolo.equals("Nascosto")) {
             return " ";
@@ -130,22 +135,58 @@ public class CartaRisorsa extends Carta {
     // Metodo per stampare la rappresentazione grafica della carta risorsa
     @Override
     public void stampaCarta() {
-        //System.out.println("CARTA RISORSA: [id " + getIdCarta() + "]");
+        System.out.println("CARTA RISORSA: [id " + getIdCarta() + "]");
         System.out.println("-------------------------");
         String[] angoli = getFronte().split(" - ");
 
-        // Costruisci le linee con le condizioni sugli angoli nascosti
-        String topLine = String.format("|%s%s%s%17s%s%s%s|\n", 
+        // Riga superiore con angoli superiori
+        String topLine = String.format("|%s%s%s%16s%s%s%s|\n", 
             getBordoAngolo(angoli[0], false), getEmojiAngolo(angoli[0]), getBordoAngolo(angoli[0], true),
             "", 
             getBordoAngolo(angoli[1], true), getEmojiAngolo(angoli[1]), getBordoAngolo(angoli[1], false)
         );
 
-        String midLine1 = String.format("|%23s|\n", "");
-        String midLine2 = String.format("|          %s           |\n", getEmojiRegno(tipoRegno));
-        String midLine3 = String.format("|%23s|\n", "");
+        // Riga centrale con il tipo centrale
+        String midLine1 = String.format("|%22s|\n", "");
+        String midLine2 = String.format("|          %s          |\n", getEmojiRegno(tipoRegno));
+        String midLine3 = String.format("|%22s|\n", "");
 
-        String bottomLine = String.format("|%s%s%s%17s%s%s%s|\n", 
+        // Riga inferiore con angoli inferiori
+        String bottomLine = String.format("|%s%s%s%16s%s%s%s|\n", 
+            getBordoAngolo(angoli[2], false), getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], true),
+            "", 
+            getBordoAngolo(angoli[3], true), getEmojiAngolo(angoli[3]), getBordoAngolo(angoli[3], false)
+        );
+
+        // Stampa le linee
+        System.out.print(topLine);
+        System.out.print(midLine1);
+        System.out.print(midLine2);
+        System.out.print(midLine3);
+        System.out.print(bottomLine);
+        System.out.println("-------------------------");
+    }
+
+    // Metodo per stampare la rappresentazione grafica del retro della carta
+    public void stampaRetro() {
+        System.out.println("RETRO CARTA: [id " + getIdCarta() + "]");
+        System.out.println("-------------------------");
+        String[] angoli = getRetro().split(" - ");
+
+        // Riga superiore con angoli superiori
+        String topLine = String.format("|%s%s%s%16s%s%s%s|\n", 
+            getBordoAngolo(angoli[0], false), getEmojiAngolo(angoli[0]), getBordoAngolo(angoli[0], true),
+            "", 
+            getBordoAngolo(angoli[1], true), getEmojiAngolo(angoli[1]), getBordoAngolo(angoli[1], false)
+        );
+
+        // Riga centrale con il tipo centrale
+        String midLine1 = String.format("|%22s|\n", "");
+        String midLine2 = String.format("|          %s          |\n", getEmojiRegno(tipoRegno));
+        String midLine3 = String.format("|%22s|\n", "");
+
+        // Riga inferiore con angoli inferiori
+        String bottomLine = String.format("|%s%s%s%16s%s%s%s|\n", 
             getBordoAngolo(angoli[2], false), getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], true),
             "", 
             getBordoAngolo(angoli[3], true), getEmojiAngolo(angoli[3]), getBordoAngolo(angoli[3], false)
