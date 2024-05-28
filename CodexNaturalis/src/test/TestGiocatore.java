@@ -2,35 +2,59 @@ package test;
 
 import Modello_giocatore.Giocatore;
 import cardsModel.MazzoCarte;
-import cardsModel.Carta;
-import cardsModel.CartaIniziale;
+
+import java.util.Scanner;
 
 public class TestGiocatore {
     public static void main(String[] args) {
-        // Carica i mazzi dalle carte
         MazzoCarte mazzoIniziale = new MazzoCarte("Iniziale");
-        mazzoIniziale.caricaCarteDaFile("src/fileCarte/CarteIniziali.txt");
-        mazzoIniziale.mescolaMazzo();
-
         MazzoCarte mazzoRisorsa = new MazzoCarte("Risorsa");
-        mazzoRisorsa.caricaCarteDaFile("src/fileCarte/CarteRisorsa.txt");
-        mazzoRisorsa.mescolaMazzo();
-
         MazzoCarte mazzoOro = new MazzoCarte("Oro");
+
+        mazzoIniziale.caricaCarteDaFile("src/fileCarte/CarteIniziali.txt");
+        mazzoRisorsa.caricaCarteDaFile("src/fileCarte/CarteRisorsa.txt");
         mazzoOro.caricaCarteDaFile("src/fileCarte/CarteOro.txt");
+
+        mazzoIniziale.mescolaMazzo();
+        mazzoRisorsa.mescolaMazzo();
         mazzoOro.mescolaMazzo();
 
-        // Crea un giocatore con i mazzi caricati
-        Giocatore giocatore = new Giocatore("Mario", mazzoIniziale, mazzoRisorsa, mazzoOro);
-        
-        // Stampa le informazioni del giocatore
-        giocatore.stampaInfoGiocatore();
+        Giocatore giocatore = new Giocatore("Giocatore1", mazzoIniziale, mazzoRisorsa, mazzoOro);
 
-        // Gioca una carta
-        Carta cartaDaGiocare = giocatore.getManoGiocatore().getCarte().get(0);  // Prendi la prima carta dalla mano
-        giocatore.giocaCarta(cartaDaGiocare, 1, 1);  // Posiziona la carta nella posizione (1, 1)
+        Scanner scanner = new Scanner(System.in);
+        boolean continua = true;
 
-        // Stampa le informazioni del giocatore dopo aver giocato la carta
-        giocatore.stampaInfoGiocatore();
+        while (continua) {
+            System.out.println("Area di Gioco:");
+            giocatore.mostraAreaDiGioco();
+
+            System.out.println("\nMano Giocatore:");
+            giocatore.mostraMano();
+
+            System.out.println("\nScegli una carta da giocare (1-3):");
+            int cartaDaGiocare = scanner.nextInt() - 1;
+
+            System.out.println("Scegli la posizione (numero casella disponibile):");
+            int indicePosizioneVuota = scanner.nextInt();
+
+            giocatore.giocaCarta(giocatore.getCartaDallaMano(cartaDaGiocare), indicePosizioneVuota);
+
+            System.out.println("\nArea di Pesca:");
+            giocatore.mostraAreaDiPesca();
+
+            System.out.println("\nScegli una carta da pescare (1-6):");
+            int cartaDaPescare = scanner.nextInt();
+
+            giocatore.pescaCarta(cartaDaPescare);
+
+            System.out.println("\nMano Giocatore aggiornata:");
+            giocatore.mostraMano();
+
+            System.out.println("\nVuoi continuare? (s/n):");
+            String risposta = scanner.next();
+            continua = risposta.equalsIgnoreCase("s");
+        }
+
+        scanner.close();
     }
 }

@@ -3,65 +3,76 @@ package Modello_giocatore;
 import cardsModel.Carta;
 import cardsModel.CartaOro;
 import cardsModel.CartaRisorsa;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ManoGiocatore {
-    private CartaRisorsa cartaR1;
-    private CartaRisorsa cartaR2;
-    private CartaOro cartaO1;
+    private List<Carta> carte;
 
     public ManoGiocatore() {
-        this.cartaR1 = null;
-        this.cartaR2 = null;
-        this.cartaO1 = null;
+        this.carte = new ArrayList<>();
     }
 
-    public void creaMano(CartaRisorsa cartaR1, CartaRisorsa cartaR2, CartaOro cartaO1) {
-        this.cartaR1 = cartaR1;
-        this.cartaR2 = cartaR2;
-        this.cartaO1 = cartaO1;
-    }
-
-    public void rimuoviCarta(CartaRisorsa carta) {
-        if (carta == cartaR1) {
-            cartaR1 = null;
-        } else if (carta == cartaR2) {
-            cartaR2 = null;
+    public void aggiungiCarta(Carta carta) {
+        if (carte.size() < 3) {
+            carte.add(carta);
+        } else {
+            System.out.println("Hai già 3 carte in mano.");
         }
     }
 
-    public void aggiungiCarta(CartaRisorsa carta) {
-        if (cartaR1 == null) {
-            cartaR1 = carta;
-        } else if (cartaR2 == null) {
-            cartaR2 = carta;
-        }
+    public void rimuoviCarta(Carta carta) {
+        carte.remove(carta);
     }
 
-    public void rimuoviCarta(CartaOro carta) {
-        if (carta == cartaO1) {
-            cartaO1 = null;
+    public Carta getCarta(int indice) {
+        if (indice >= 0 && indice < carte.size()) {
+            return carte.get(indice);
         }
+        return null;
     }
 
-    public void aggiungiCarta(CartaOro carta) {
-        if (cartaO1 == null) {
-            cartaO1 = carta;
+    public void stampaMano() {
+        System.out.println("Carte nella mano:");
+        stampaCarteOrizzontalmenteConNumeri(carte);
+    }
+
+    private void stampaCarteOrizzontalmenteConNumeri(List<Carta> carte) {
+        String[][] carteStringhe = new String[carte.size()][];
+        int maxLines = 0;
+
+        // Converti ogni carta in un array di righe
+        for (int i = 0; i < carte.size(); i++) {
+            carteStringhe[i] = carte.get(i).toString().split("\n");
+            maxLines = Math.max(maxLines, carteStringhe[i].length);
+        }
+
+        // Stampa le righe delle carte con uno spazio tra di loro
+        for (int line = 0; line < maxLines; line++) {
+            for (int i = 0; i < carteStringhe.length; i++) {
+                if (line < carteStringhe[i].length) {
+                    if (line == carteStringhe[i].length - 1) {
+                        String riga = carteStringhe[i][line];
+                        int centerIndex = riga.length() / 2;
+                        String numeroCarta = "{" + (i + 1) + "}";
+                        int start = centerIndex - numeroCarta.length() / 2;
+                        StringBuilder sb = new StringBuilder(riga);
+                        sb.replace(start, start + numeroCarta.length(), numeroCarta);
+                        System.out.print(sb.toString());
+                    } else {
+                        System.out.print(carteStringhe[i][line]);
+                    }
+                } else {
+                    System.out.print(" ".repeat(carteStringhe[0][0].length())); // Spazio vuoto se la carta ha meno righe
+                }
+                System.out.print("\t"); // Spazio tra le carte
+            }
+            System.out.println();
         }
     }
 
     public List<Carta> getCarte() {
-        List<Carta> carte = new ArrayList<>();
-        if (cartaR1 != null) carte.add(cartaR1);
-        if (cartaR2 != null) carte.add(cartaR2);
-        if (cartaO1 != null) carte.add(cartaO1);
         return carte;
-    }
-
-    public void stampaMano() {
-        for (Carta carta : getCarte()) {
-            carta.stampaCarta();
-        }
     }
 }

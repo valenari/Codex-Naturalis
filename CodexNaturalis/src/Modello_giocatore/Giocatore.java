@@ -1,70 +1,58 @@
 package Modello_giocatore;
 
-import Base.PedinaC;
 import cardsModel.Carta;
 import cardsModel.CartaIniziale;
 import cardsModel.CartaOro;
 import cardsModel.CartaRisorsa;
 import cardsModel.MazzoCarte;
 import modelTavolo.AreaDiPesca;
-import java.util.Scanner;
 
 public class Giocatore {
     private String nome;
     private int punti;
-    private PedinaC pedina;
-    private ManoGiocatore manoGiocatore;
+    private ManoGiocatore manoG;
     private AreaDiGioco areaDiGioco;
     private AreaDiPesca areaDiPesca;
 
     public Giocatore(String nome, MazzoCarte mazzoIniziale, MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro) {
         this.nome = nome;
         this.punti = 0;
-        //this.pedina = new PedinaC();
-        this.manoGiocatore = new ManoGiocatore();
+        this.manoG = new ManoGiocatore();
         this.areaDiGioco = new AreaDiGioco((CartaIniziale) mazzoIniziale.pescaCarta());
-        this.areaDiPesca = new AreaDiPesca(mazzoRisorsa.getCarte(), mazzoOro.getCarte());
-
-        // Inizializza la mano del giocatore con carte iniziali
-        this.manoGiocatore.creaMano(
-                (CartaRisorsa) mazzoRisorsa.pescaCarta(),
-                (CartaRisorsa) mazzoRisorsa.pescaCarta(),
-                (CartaOro) mazzoOro.pescaCarta()
-        );
+        this.areaDiPesca = new AreaDiPesca(mazzoRisorsa.pescaCarte(3), mazzoOro.pescaCarte(3));
+        this.manoG.aggiungiCarta((CartaRisorsa) mazzoRisorsa.pescaCarta());
+        this.manoG.aggiungiCarta((CartaRisorsa) mazzoRisorsa.pescaCarta());
+        this.manoG.aggiungiCarta((CartaOro) mazzoOro.pescaCarta());
     }
 
-    public void giocaCarta(Carta carta, int x, int y) {
-        areaDiGioco.giocaCarta(carta, x, y);
-        manoGiocatore.rimuoviCarta(carta);
-        selezionaNuovaCarta();
-    }
-
-    public void selezionaNuovaCarta() {
-        Scanner scanner = new Scanner(System.in);
-        areaDiPesca.mostraAreaDiPesca();
-        System.out.println("Seleziona una carta da pescare (1-6):");
-        int scelta = scanner.nextInt();
-        Carta nuovaCarta = null;
-        if (scelta >= 1 && scelta <= 3) {
-            nuovaCarta = areaDiPesca.pescaCartaRisorsa(scelta - 1);
-        } else if (scelta >= 4 && scelta <= 6) {
-            nuovaCarta = areaDiPesca.pescaCartaOro(scelta - 4);
-        }
-        if (nuovaCarta != null) {
-            manoGiocatore.aggiungiCarta(nuovaCarta);
-        }
-    }
-
-    public void stampaInfoGiocatore() {
-        System.out.println("Giocatore: " + nome);
-        System.out.println("Punti: " + punti);
-        System.out.println("Area di Gioco:");
+    public void mostraAreaDiGioco() {
         areaDiGioco.visualizzaGriglia();
-        System.out.println("Mano del Giocatore:");
-        manoGiocatore.stampaMano();
     }
 
-    public ManoGiocatore getManoGiocatore() {
-        return manoGiocatore;
+    public void mostraMano() {
+        manoG.stampaMano();
+    }
+
+    public void giocaCarta(Carta carta, int indicePosizioneVuota) {
+        areaDiGioco.posizionaCarta(carta, indicePosizioneVuota);
+        manoG.rimuoviCarta(carta);
+    }
+
+    public void mostraAreaDiPesca() {
+        areaDiPesca.mostraAreaDiPesca();
+    }
+
+    public void pescaCarta(int indice) {
+        Carta cartaPescata = areaDiPesca.pescaCarta(indice);
+        if (cartaPescata instanceof CartaRisorsa) {
+            manoG.aggiungiCarta((CartaRisorsa) cartaPescata);
+        } else if (cartaPescata instanceof CartaOro) {
+            manoG.aggiungiCarta((CartaOro) cartaPescata);
+        }
+        areaDiPesca.aggiornaPesca();
+    }
+
+    public Carta getCartaDallaMano(int indice) {
+        return manoG.getCarta(indice);
     }
 }

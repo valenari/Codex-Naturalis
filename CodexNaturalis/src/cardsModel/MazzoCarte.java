@@ -9,34 +9,37 @@ public class MazzoCarte {
     private int puntatore;
     private String tipoMazzo;
 
-    // Costruttore della classe MazzoCarte
     public MazzoCarte(String tipoMazzo) {
         this.carte = new ArrayList<>();
         this.tipoMazzo = tipoMazzo;
         this.puntatore = 0;
     }
 
-    // Metodo per aggiungere una carta al mazzo
     public void aggiungiCarta(Carta carta) {
         if (carta.getTipoCarta().equals(tipoMazzo)) {
             carte.add(carta);
         }
     }
 
-    // Metodo per pescare una carta dal mazzo
     public Carta pescaCarta() {
         if (puntatore < carte.size()) {
             return carte.get(puntatore++);
         }
-        return null; // Se il mazzo è vuoto, ritorna null
+        return null;
     }
 
-    // Metodo per mescolare le carte nel mazzo
+    public List<Carta> pescaCarte(int numero) {
+        List<Carta> pescate = new ArrayList<>();
+        for (int i = 0; i < numero && puntatore < carte.size(); i++) {
+            pescate.add(carte.get(puntatore++));
+        }
+        return pescate;
+    }
+
     public void mescolaMazzo() {
         Collections.shuffle(carte);
     }
 
-    // Metodo per caricare le carte da un file
     public void caricaCarteDaFile(String filename) {
         if (tipoMazzo.equals("Risorsa")) {
             carte.addAll(CartaRisorsa.leggiCarteRisorsa(filename));
@@ -47,34 +50,11 @@ public class MazzoCarte {
         }
     }
 
-    // Metodo per ottenere la lista di carte nel mazzo
     public List<Carta> getCarte() {
         return carte;
     }
 
-    // Metodo per ottenere il tipo di mazzo
     public String getTipoMazzo() {
         return tipoMazzo;
-    }
-
-    // Metodi specifici per ottenere le carte risorsa e oro
-    public List<CartaRisorsa> getCarteRisorsa() {
-        List<CartaRisorsa> carteRisorsa = new ArrayList<>();
-        for (Carta carta : carte) {
-            if (carta instanceof CartaRisorsa) {
-                carteRisorsa.add((CartaRisorsa) carta);
-            }
-        }
-        return carteRisorsa;
-    }
-
-    public List<CartaOro> getCarteOro() {
-        List<CartaOro> carteOro = new ArrayList<>();
-        for (Carta carta : carte) {
-            if (carta instanceof CartaOro) {
-                carteOro.add((CartaOro) carta);
-            }
-        }
-        return carteOro;
     }
 }
