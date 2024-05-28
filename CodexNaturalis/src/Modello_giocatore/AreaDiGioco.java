@@ -3,9 +3,6 @@ package Modello_giocatore;
 import cardsModel.Carta;
 import cardsModel.CartaIniziale;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AreaDiGioco {
     private Carta[][] griglia;
     private int dimensione;
@@ -20,8 +17,8 @@ public class AreaDiGioco {
         int count = 1;
         for (int i = 0; i < dimensione; i++) {
             for (int j = 0; j < dimensione; j++) {
-                if (griglia[i][j] == null && ((i + j) % 2 == 0) && (i + j != 0) && (i != dimensione - 1 || j != dimensione - 1)) {
-                    if (count == posizione) {
+                if (griglia[i][j] == null && ((i + j) % 2 == 0) && (i + j != 0) && isDiagonallyAdjacentAndValid(i, j)) {
+                    if (count == posizione) { // Numerazione corretta
                         griglia[i][j] = carta;
                         espandiGrigliaSeNecessario();
                         return;
@@ -78,7 +75,7 @@ public class AreaDiGioco {
                             }
                         }
                     }
-                } else if (isDiagonallyAdjacent(i, j)) {
+                } else if (isDiagonallyAdjacentAndValid(i, j)) {
                     String[] cellaVuota = {
                             "----------------------------",
                             "[                          ]",
@@ -107,7 +104,7 @@ public class AreaDiGioco {
         }
     }
 
-    private boolean isDiagonallyAdjacent(int i, int j) {
+    private boolean isDiagonallyAdjacentAndValid(int i, int j) {
         int[][] directions = {
                 {-1, -1}, {-1, 1}, {1, -1}, {1, 1}
         };
@@ -115,7 +112,12 @@ public class AreaDiGioco {
             int newRow = i + direction[0];
             int newCol = j + direction[1];
             if (newRow >= 0 && newRow < dimensione && newCol >= 0 && newCol < dimensione && griglia[newRow][newCol] != null) {
-                return true;
+                Carta carta = griglia[newRow][newCol];
+                String[] angoli = carta.getFronte().split(" - ");
+                int angoloIndex = ((direction[0] + 1) / 2) * 2 + ((direction[1] + 1) / 2);
+                if (!angoli[angoloIndex].equals("Nascosto")) {
+                    return true;
+                }
             }
         }
         return false;
