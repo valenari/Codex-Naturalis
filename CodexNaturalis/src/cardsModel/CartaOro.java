@@ -162,15 +162,15 @@ public class CartaOro extends Carta {
     private String getEmojiPunti(int punti) {
         switch (punti) {
             case 1:
-                return "❶";
+                return "1";
             case 2:
-                return "❷";
+                return "2";
             case 3:
-                return "❸";
+                return "3";
             case 4:
-                return "❹";
+                return "4";
             case 5:
-                return "❺";
+                return "5";
             default:
                 return "";
         }
@@ -218,25 +218,30 @@ public class CartaOro extends Carta {
         String puntiECriterio = getEmojiPunti(punti) + " " + getEmojiCriterio(criterioPunti);
         String risorseRichiesteStr = String.join(" ", risorseRichieste.stream().map(this::getEmojiAngolo).toArray(String[]::new));
 
-        sb.append("-------------------------\n");
+        sb.append("----------------------------\n");
 
-        sb.append(String.format("[%s%s%18s%s%s]\n", 
+        sb.append(String.format("[%s%s%21s%s%s]\n", 
             getEmojiAngolo(angoli[0]), getBordoAngolo(angoli[0], false),
-            centraStringa(puntiECriterio, 17), 
+            centraStringa(puntiECriterio, 18), 
             getBordoAngolo(angoli[1], true), getEmojiAngolo(angoli[1])
         ));
 
-        sb.append(String.format("[%23s]\n", ""));
-        sb.append(String.format("[%s]\n", centraStringa(getEmojiRegno(tipoRegno), 23)));
-        sb.append(String.format("[%23s]\n", ""));
+        sb.append(String.format("[%26s]\n", ""));
+        sb.append(String.format("[%s]\n", centraStringa(getEmojiRegno(tipoRegno), 26)));
+        sb.append(String.format("[%26s]\n", ""));
 
-        sb.append(String.format("[%s%s%18s%s%s]\n", 
+        String angoloDxBasso = getBordoAngolo(angoli[3], true) + getEmojiAngolo(angoli[3]);
+        if (angoloDxBasso.trim().length() == 2) {
+            angoloDxBasso = getBordoAngolo(angoli[3], true) + " " + getEmojiAngolo(angoli[3]);
+        }
+
+        sb.append(String.format("[%s%s%21s%s]\n", 
             getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], false),
-            centraStringa(risorseRichiesteStr, 17), 
-            getBordoAngolo(angoli[3], true), getEmojiAngolo(angoli[3])
+            centraStringa(risorseRichiesteStr, 18), 
+            angoloDxBasso
         ));
 
-        sb.append("-------------------------\n");
+        sb.append("----------------------------\n");
         return sb.toString();
     }
 
@@ -244,25 +249,30 @@ public class CartaOro extends Carta {
         StringBuilder sb = new StringBuilder();
         String[] angoli = getRetro().split(" - ");
 
-        sb.append("-------------------------\n");
+        sb.append("----------------------------\n");
 
-        sb.append(String.format("[%s%s%18s%s%s]\n", 
+        sb.append(String.format("[%s%s%20s%s%s]\n", 
             getEmojiAngolo(angoli[0]), getBordoAngolo(angoli[0], false),
             "", 
             getBordoAngolo(angoli[1], true), getEmojiAngolo(angoli[1])
         ));
 
-        sb.append(String.format("[%23s]\n", ""));
-        sb.append(String.format("[%s]\n", centraStringa(getEmojiRegno(tipoRegno), 23)));
-        sb.append(String.format("[%23s]\n", ""));
+        sb.append(String.format("[%26s]\n", ""));
+        sb.append(String.format("[%s]\n", centraStringa(getEmojiRegno(tipoRegno), 26)));
+        sb.append(String.format("[%26s]\n", ""));
 
-        sb.append(String.format("[%s%s%18s%s%s]\n", 
+        String angoloDxBasso = getBordoAngolo(angoli[3], true) + getEmojiAngolo(angoli[3]);
+        if (angoloDxBasso.trim().length() == 2) {
+            angoloDxBasso = getBordoAngolo(angoli[3], true) + " " + getEmojiAngolo(angoli[3]);
+        }
+
+        sb.append(String.format("[%s%s%20s%s]\n", 
             getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], false),
             "", 
-            getBordoAngolo(angoli[3], true), getEmojiAngolo(angoli[3])
+            angoloDxBasso
         ));
 
-        sb.append("-------------------------\n");
+        sb.append("----------------------------\n");
         return sb.toString();
     }
 

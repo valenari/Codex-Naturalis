@@ -1,57 +1,67 @@
 package Modello_giocatore;
 
+import cardsModel.Carta;
 import cardsModel.CartaOro;
 import cardsModel.CartaRisorsa;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ManoGiocatore {
+    private CartaRisorsa cartaR1;
+    private CartaRisorsa cartaR2;
+    private CartaOro cartaO1;
 
-	private CartaRisorsa CartaR1;
-	private CartaRisorsa CartaR2;
-	private CartaOro CartaO1;
-	
-	public ManoGiocatore() {
-		this.CartaR1=new CartaRisorsa();
-		this.CartaR2=new CartaRisorsa();
-		this.CartaO1=new CartaOro();
-	}
-	
-	public void creaMano (CartaRisorsa CartaR1, CartaRisorsa CartaR2, CartaOro CartaO1) {
-		this.CartaR1=CartaR1;
-		this.CartaR2=CartaR2;
-		this.CartaO1=CartaO1;
-	}
-	
-	public void rimuoviCartaR (CartaRisorsa CR) {
-		if(CR==CartaR1)
-		{
-			CartaR1=null;
-		}
-		else
-		{
-			CartaR2=null;
-		}
-	}
-	
-	public void aggiungiCartaR (CartaRisorsa CR) {
-		if(CartaR1==null)
-		{
-			CartaR1=CR;
-		}
-		else
-		{
-			CartaR2=CR;
-		}
-	}
-	
-	public void rimuoviCartaO (CartaOro CO) {
-		CartaO1=null;
-	}
-	
-	public void aggiungiCartaO (CartaOro CO) {
-		CartaO1=CO;
-	}
-	
-	//creare stampa mano se non c'è l'interfaccia
+    public ManoGiocatore() {
+        this.cartaR1 = null;
+        this.cartaR2 = null;
+        this.cartaO1 = null;
+    }
 
-		
+    public void creaMano(CartaRisorsa cartaR1, CartaRisorsa cartaR2, CartaOro cartaO1) {
+        this.cartaR1 = cartaR1;
+        this.cartaR2 = cartaR2;
+        this.cartaO1 = cartaO1;
+    }
+
+    public void rimuoviCarta(CartaRisorsa carta) {
+        if (carta == cartaR1) {
+            cartaR1 = null;
+        } else if (carta == cartaR2) {
+            cartaR2 = null;
+        }
+    }
+
+    public void aggiungiCarta(CartaRisorsa carta) {
+        if (cartaR1 == null) {
+            cartaR1 = carta;
+        } else if (cartaR2 == null) {
+            cartaR2 = carta;
+        }
+    }
+
+    public void rimuoviCarta(CartaOro carta) {
+        if (carta == cartaO1) {
+            cartaO1 = null;
+        }
+    }
+
+    public void aggiungiCarta(CartaOro carta) {
+        if (cartaO1 == null) {
+            cartaO1 = carta;
+        }
+    }
+
+    public List<Carta> getCarte() {
+        List<Carta> carte = new ArrayList<>();
+        if (cartaR1 != null) carte.add(cartaR1);
+        if (cartaR2 != null) carte.add(cartaR2);
+        if (cartaO1 != null) carte.add(cartaO1);
+        return carte;
+    }
+
+    public void stampaMano() {
+        for (Carta carta : getCarte()) {
+            carta.stampaCarta();
+        }
+    }
 }

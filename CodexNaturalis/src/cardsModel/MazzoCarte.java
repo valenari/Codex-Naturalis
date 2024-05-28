@@ -57,8 +57,24 @@ public class MazzoCarte {
         return tipoMazzo;
     }
 
-    // Getter per il puntatore
-    public int getPuntatore() {
-        return puntatore;
+    // Metodi specifici per ottenere le carte risorsa e oro
+    public List<CartaRisorsa> getCarteRisorsa() {
+        List<CartaRisorsa> carteRisorsa = new ArrayList<>();
+        for (Carta carta : carte) {
+            if (carta instanceof CartaRisorsa) {
+                carteRisorsa.add((CartaRisorsa) carta);
+            }
+        }
+        return carteRisorsa;
+    }
+
+    public List<CartaOro> getCarteOro() {
+        List<CartaOro> carteOro = new ArrayList<>();
+        for (Carta carta : carte) {
+            if (carta instanceof CartaOro) {
+                carteOro.add((CartaOro) carta);
+            }
+        }
+        return carteOro;
     }
 }

@@ -1,25 +1,47 @@
 package test;
 
-import cardsModel.MazzoCarte;
 import modelTavolo.AreaDiPesca;
+import cardsModel.CartaOro;
+import cardsModel.CartaRisorsa;
+import cardsModel.MazzoCarte;
 
 public class TestAreaDiPesca {
     public static void main(String[] args) {
-        // Creare i mazzi e caricare le carte dai file
+        // Carica i mazzi dalle carte
         MazzoCarte mazzoRisorsa = new MazzoCarte("Risorsa");
-        MazzoCarte mazzoOro = new MazzoCarte("Oro");
-
         mazzoRisorsa.caricaCarteDaFile("src/fileCarte/CarteRisorsa.txt");
-        mazzoOro.caricaCarteDaFile("src/fileCarte/CarteOro.txt");
-
-        // Mescolare i mazzi
         mazzoRisorsa.mescolaMazzo();
+
+        MazzoCarte mazzoOro = new MazzoCarte("Oro");
+        mazzoOro.caricaCarteDaFile("src/fileCarte/CarteOro.txt");
         mazzoOro.mescolaMazzo();
 
-        // Creare l'area di pesca
-        AreaDiPesca areaDiPesca = new AreaDiPesca(mazzoRisorsa, mazzoOro);
+        // Crea l'area di pesca con i mazzi caricati
+        AreaDiPesca areaDiPesca = new AreaDiPesca(mazzoRisorsa.getCarteRisorsa(), mazzoOro.getCarteOro());
 
-        // Mostrare lo stato dell'area di pesca
+        // Mostra l'area di pesca
+        areaDiPesca.mostraAreaDiPesca();
+
+        // Pesca una carta risorsa e una carta oro
+        CartaRisorsa cartaRisorsaPescata = areaDiPesca.pescaCartaRisorsa(1); // esempio per pescare la prima carta visibile
+        CartaOro cartaOroPescata = areaDiPesca.pescaCartaOro(1); // esempio per pescare la prima carta visibile
+
+        // Stampa le carte pescate
+        System.out.println("\nCarta Risorsa Pescata:");
+        if (cartaRisorsaPescata != null) {
+            cartaRisorsaPescata.stampaCarta();
+        } else {
+            System.out.println("Nessuna carta risorsa pescata.");
+        }
+
+        System.out.println("\nCarta Oro Pescata:");
+        if (cartaOroPescata != null) {
+            cartaOroPescata.stampaCarta();
+        } else {
+            System.out.println("Nessuna carta oro pescata.");
+        }
+
+        // Mostra l'area di pesca aggiornata
         areaDiPesca.mostraAreaDiPesca();
     }
 }

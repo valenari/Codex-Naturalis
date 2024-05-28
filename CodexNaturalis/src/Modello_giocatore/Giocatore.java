@@ -1,56 +1,70 @@
 package Modello_giocatore;
 
 import Base.PedinaC;
-import cardsModel.Iniziale;
-
+import cardsModel.Carta;
+import cardsModel.CartaIniziale;
+import cardsModel.CartaOro;
+import cardsModel.CartaRisorsa;
+import cardsModel.MazzoCarte;
+import modelTavolo.AreaDiPesca;
+import java.util.Scanner;
 
 public class Giocatore {
     private String nome;
     private int punti;
     private PedinaC pedina;
-    private Iniziale cartaI;
-    //private ObbiettiPersonale ObbiettivoP;
-    private ManoGiocatore manoG;
-    private boolean pedinaPrimoGiocatore;
-    private AreaDiGioco areaG;
-    // Altri attributi e metodi necessari per gestire lo stato del giocatore
+    private ManoGiocatore manoGiocatore;
+    private AreaDiGioco areaDiGioco;
+    private AreaDiPesca areaDiPesca;
 
-    public Giocatore(String nome) {
-    	
-    }
-    public Giocatore(String nome, PedinaC pedina, boolean pedinaPrimoGiocatore) {
+    public Giocatore(String nome, MazzoCarte mazzoIniziale, MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro) {
         this.nome = nome;
         this.punti = 0;
-        this.pedina = pedina;
-        this.cartaI = new Iniziale();
-        //this.ObbiettivoP = new ObbiettivoPersonale();
-        this.manoG = new ManoGiocatore();
-        this.pedinaPrimoGiocatore = pedinaPrimoGiocatore;
-        this.areaG= new AreaDiGioco();
-        // Inizializza gli altri attributi del giocatore se necessario
+        //this.pedina = new PedinaC();
+        this.manoGiocatore = new ManoGiocatore();
+        this.areaDiGioco = new AreaDiGioco((CartaIniziale) mazzoIniziale.pescaCarta());
+        this.areaDiPesca = new AreaDiPesca(mazzoRisorsa.getCarte(), mazzoOro.getCarte());
+
+        // Inizializza la mano del giocatore con carte iniziali
+        this.manoGiocatore.creaMano(
+                (CartaRisorsa) mazzoRisorsa.pescaCarta(),
+                (CartaRisorsa) mazzoRisorsa.pescaCarta(),
+                (CartaOro) mazzoOro.pescaCarta()
+        );
     }
 
-    // Metodo per ottenere il nome del giocatore
-    public String getNome() {
-        return nome;
+    public void giocaCarta(Carta carta, int x, int y) {
+        areaDiGioco.giocaCarta(carta, x, y);
+        manoGiocatore.rimuoviCarta(carta);
+        selezionaNuovaCarta();
     }
 
-    // Metodo per ottenere i punti del giocatore
-    public int getPunti() {
-        return punti;
+    public void selezionaNuovaCarta() {
+        Scanner scanner = new Scanner(System.in);
+        areaDiPesca.mostraAreaDiPesca();
+        System.out.println("Seleziona una carta da pescare (1-6):");
+        int scelta = scanner.nextInt();
+        Carta nuovaCarta = null;
+        if (scelta >= 1 && scelta <= 3) {
+            nuovaCarta = areaDiPesca.pescaCartaRisorsa(scelta - 1);
+        } else if (scelta >= 4 && scelta <= 6) {
+            nuovaCarta = areaDiPesca.pescaCartaOro(scelta - 4);
+        }
+        if (nuovaCarta != null) {
+            manoGiocatore.aggiungiCarta(nuovaCarta);
+        }
     }
 
-    // Metodo per aggiungere punti al giocatore
-    public void aggiungiPunti(int puntiDaAggiungere) {
-        this.punti += puntiDaAggiungere;
-    }
-    
-    public boolean controlloPunteggio() {
-    	if(this.punti>=20) {
-    		return true;
-    	}
-    	return false;
+    public void stampaInfoGiocatore() {
+        System.out.println("Giocatore: " + nome);
+        System.out.println("Punti: " + punti);
+        System.out.println("Area di Gioco:");
+        areaDiGioco.visualizzaGriglia();
+        System.out.println("Mano del Giocatore:");
+        manoGiocatore.stampaMano();
     }
 
-    // Altri metodi per gestire le azioni del giocatore, come giocare una carta, ottenere carte bonus, ecc.
+    public ManoGiocatore getManoGiocatore() {
+        return manoGiocatore;
+    }
 }

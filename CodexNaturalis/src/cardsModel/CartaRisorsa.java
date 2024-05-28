@@ -110,7 +110,7 @@ public class CartaRisorsa extends Carta {
             case "Insetto":
                 return "🦋";
             case "Piuma":
-                return " 𓆰";
+                return "𓆰";
             case "Pergamena":
                 return "📜";
             case "Inchiostro":
@@ -148,25 +148,25 @@ public class CartaRisorsa extends Carta {
         StringBuilder sb = new StringBuilder();
         String[] angoli = getFronte().split(" - ");
 
-        sb.append("-------------------------\n");
+        sb.append("----------------------------\n");
 
-        sb.append(String.format("[%s%s%18s%s%s]\n", 
+        sb.append(String.format("[%s%s%20s%s%s]\n", 
             getEmojiAngolo(angoli[0]), getBordoAngolo(angoli[0], false),
             "", 
             getBordoAngolo(angoli[1], true), getEmojiAngolo(angoli[1])
         ));
 
-        sb.append(String.format("[%23s]\n", ""));
-        sb.append(String.format("[%s]\n", centraStringa(getEmojiRegno(tipoRegno), 23)));
-        sb.append(String.format("[%23s]\n", ""));
+        sb.append(String.format("[%26s]\n", ""));
+        sb.append(String.format("[%s]\n", centraStringa(getEmojiRegno(tipoRegno), 26)));
+        sb.append(String.format("[%26s]\n", ""));
 
-        sb.append(String.format("[%s%s%18s%s%s]\n", 
+        sb.append(String.format("[%s%s%20s%s%s]\n", 
             getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], false),
             "", 
             getBordoAngolo(angoli[3], true), getEmojiAngolo(angoli[3])
         ));
 
-        sb.append("-------------------------\n");
+        sb.append("----------------------------\n");
         return sb.toString();
     }
 
@@ -174,25 +174,25 @@ public class CartaRisorsa extends Carta {
         StringBuilder sb = new StringBuilder();
         String[] angoli = getRetro().split(" - ");
 
-        sb.append("-------------------------\n");
+        sb.append("----------------------------\n");
 
-        sb.append(String.format("[%s%s%18s%s%s]\n", 
+        sb.append(String.format("[%s%s%20s%s%s]\n", 
             getEmojiAngolo(angoli[0]), getBordoAngolo(angoli[0], false),
             "", 
             getBordoAngolo(angoli[1], true), getEmojiAngolo(angoli[1])
         ));
 
-        sb.append(String.format("[%23s]\n", ""));
-        sb.append(String.format("[%s]\n", centraStringa(getEmojiRegno(tipoRegno), 23)));
-        sb.append(String.format("[%23s]\n", ""));
+        sb.append(String.format("[%26s]\n", ""));
+        sb.append(String.format("[%s]\n", centraStringa(getEmojiRegno(tipoRegno), 26)));
+        sb.append(String.format("[%26s]\n", ""));
 
-        sb.append(String.format("[%s%s%18s%s%s]\n", 
+        sb.append(String.format("[%s%s%20s%s%s]\n", 
             getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], false),
             "", 
             getBordoAngolo(angoli[3], true), getEmojiAngolo(angoli[3])
         ));
 
-        sb.append("-------------------------\n");
+        sb.append("----------------------------\n");
         return sb.toString();
     }
 
