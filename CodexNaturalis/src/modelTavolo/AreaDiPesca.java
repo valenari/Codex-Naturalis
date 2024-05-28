@@ -16,65 +16,53 @@ public class AreaDiPesca {
     public AreaDiPesca(List<Carta> carteRisorsa, List<Carta> carteOro) {
         this.mazzoRisorsaCoperto = new ArrayList<>();
         this.mazzoOroCoperto = new ArrayList<>();
-        
         for (Carta carta : carteRisorsa) {
             this.mazzoRisorsaCoperto.add((CartaRisorsa) carta);
         }
-        
         for (Carta carta : carteOro) {
             this.mazzoOroCoperto.add((CartaOro) carta);
         }
-        
         this.carteRisorsaVisibili = new ArrayList<>();
         this.carteOroVisibili = new ArrayList<>();
-        
-        pescaCarteRisorsa(2);
-        pescaCarteOro(2);
+
+        pescaCarteIniziali();
     }
 
-    public void pescaCarteRisorsa(int numero) {
-        for (int i = 0; i < numero && !mazzoRisorsaCoperto.isEmpty(); i++) {
+    private void pescaCarteIniziali() {
+        pescaCartaDalMazzoRisorsa();
+        pescaCartaDalMazzoRisorsa();
+        pescaCartaDalMazzoOro();
+        pescaCartaDalMazzoOro();
+    }
+
+    private void pescaCartaDalMazzoRisorsa() {
+        if (!mazzoRisorsaCoperto.isEmpty()) {
             carteRisorsaVisibili.add(mazzoRisorsaCoperto.remove(0));
         }
     }
 
-    public void pescaCarteOro(int numero) {
-        for (int i = 0; i < numero && !mazzoOroCoperto.isEmpty(); i++) {
+    private void pescaCartaDalMazzoOro() {
+        if (!mazzoOroCoperto.isEmpty()) {
             carteOroVisibili.add(mazzoOroCoperto.remove(0));
         }
     }
 
     public Carta pescaCarta(int indice) {
         Carta cartaPescata = null;
-        
-        if (indice == 1) {
+        if (indice == 0) {
             cartaPescata = mazzoRisorsaCoperto.remove(0);
-        } else if (indice == 2 || indice == 3) {
-            cartaPescata = carteRisorsaVisibili.remove(indice - 2);
-        } else if (indice == 4) {
+            pescaCartaDalMazzoRisorsa();
+        } else if (indice == 1 || indice == 2) {
+            cartaPescata = carteRisorsaVisibili.remove(indice - 1);
+            pescaCartaDalMazzoRisorsa();
+        } else if (indice == 3) {
             cartaPescata = mazzoOroCoperto.remove(0);
-        } else if (indice == 5 || indice == 6) {
-            cartaPescata = carteOroVisibili.remove(indice - 5);
+            pescaCartaDalMazzoOro();
+        } else if (indice == 4 || indice == 5) {
+            cartaPescata = carteOroVisibili.remove(indice - 4);
+            pescaCartaDalMazzoOro();
         }
-        
-        aggiornaPesca();
         return cartaPescata;
-    }
-
-    public void aggiornaPesca() {
-        // Stampa di debug per verificare lo stato delle carte visibili e coperte
-        System.out.println("Aggiornamento pesca...");
-        System.out.println("Carte Risorsa Visibili: " + carteRisorsaVisibili.size());
-        System.out.println("Carte Oro Visibili: " + carteOroVisibili.size());
-        System.out.println("Mazzo Risorsa Coperto: " + mazzoRisorsaCoperto.size());
-        System.out.println("Mazzo Oro Coperto: " + mazzoOroCoperto.size());
-
-        while (carteRisorsaVisibili.size() < 2 && !mazzoRisorsaCoperto.isEmpty()) {
-            carteRisorsaVisibili.add(mazzoRisorsaCoperto.remove(0));
-        }
-        while (carteOroVisibili.size() < 2 && !mazzoOroCoperto.isEmpty()) {
-            carteOroVisibili.add(mazzoOroCoperto.remove(0));
-        }
     }
 
     public void mostraAreaDiPesca() {
@@ -85,7 +73,7 @@ public class AreaDiPesca {
         stampaCarteOrizzontalmente(carteOroVisibili, mazzoOroCoperto, false);
     }
 
-    private void stampaCarteOrizzontalmente(List<? extends Carta> carteVisibili, List<? extends Carta> mazzoCoperto, boolean isRisorsa) {
+    private void stampaCarteOrizzontalmente(List<? extends Carta> carte, List<? extends Carta> mazzoCoperto, boolean isRisorsa) {
         List<String[]> carteStringhe = new ArrayList<>();
         int maxLines = 0;
 
@@ -94,8 +82,8 @@ public class AreaDiPesca {
             maxLines = Math.max(maxLines, carteStringhe.get(0).length);
         }
 
-        for (int i = 0; i < carteVisibili.size(); i++) {
-            String[] righe = aggiungiNumeroAStringa(carteVisibili.get(i).toString().split("\n"), isRisorsa ? i + 2 : i + 5);
+        for (int i = 0; i < carte.size(); i++) {
+            String[] righe = aggiungiNumeroAStringa(carte.get(i).toString().split("\n"), isRisorsa ? i + 2 : i + 5);
             carteStringhe.add(righe);
             maxLines = Math.max(maxLines, righe.length);
         }

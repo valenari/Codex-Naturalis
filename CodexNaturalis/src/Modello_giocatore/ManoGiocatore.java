@@ -1,78 +1,63 @@
 package Modello_giocatore;
 
 import cardsModel.Carta;
-import cardsModel.CartaOro;
-import cardsModel.CartaRisorsa;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ManoGiocatore {
-    private List<Carta> carte;
+    private List<Carta> carteInMano;
 
     public ManoGiocatore() {
-        this.carte = new ArrayList<>();
+        this.carteInMano = new ArrayList<>();
     }
 
     public void aggiungiCarta(Carta carta) {
-        if (carte.size() < 3) {
-            carte.add(carta);
+        if (carteInMano.size() < 3) {
+            carteInMano.add(carta);
         } else {
-            System.out.println("Hai già 3 carte in mano.");
+            System.out.println("Non puoi aggiungere più di tre carte nella mano.");
         }
     }
 
-    public void rimuoviCarta(Carta carta) {
-        carte.remove(carta);
-    }
-
-    public Carta getCarta(int indice) {
-        if (indice >= 0 && indice < carte.size()) {
-            return carte.get(indice);
+    public Carta rimuoviCarta(int indice) {
+        if (indice >= 0 && indice < carteInMano.size()) {
+            return carteInMano.remove(indice);
         }
         return null;
     }
 
     public void stampaMano() {
-        System.out.println("Carte nella mano:");
-        stampaCarteOrizzontalmenteConNumeri(carte);
-    }
-
-    private void stampaCarteOrizzontalmenteConNumeri(List<Carta> carte) {
-        String[][] carteStringhe = new String[carte.size()][];
+        List<String[]> carteStringhe = new ArrayList<>();
         int maxLines = 0;
 
-        // Converti ogni carta in un array di righe
-        for (int i = 0; i < carte.size(); i++) {
-            carteStringhe[i] = carte.get(i).toString().split("\n");
-            maxLines = Math.max(maxLines, carteStringhe[i].length);
+        for (int i = 0; i < carteInMano.size(); i++) {
+            String[] righe = aggiungiNumeroAStringa(carteInMano.get(i).toString().split("\n"), i + 1);
+            carteStringhe.add(righe);
+            maxLines = Math.max(maxLines, righe.length);
         }
 
-        // Stampa le righe delle carte con uno spazio tra di loro
         for (int line = 0; line < maxLines; line++) {
-            for (int i = 0; i < carteStringhe.length; i++) {
-                if (line < carteStringhe[i].length) {
-                    if (line == carteStringhe[i].length - 1) {
-                        String riga = carteStringhe[i][line];
-                        int centerIndex = riga.length() / 2;
-                        String numeroCarta = "{" + (i + 1) + "}";
-                        int start = centerIndex - numeroCarta.length() / 2;
-                        StringBuilder sb = new StringBuilder(riga);
-                        sb.replace(start, start + numeroCarta.length(), numeroCarta);
-                        System.out.print(sb.toString());
-                    } else {
-                        System.out.print(carteStringhe[i][line]);
-                    }
+            for (int i = 0; i < carteStringhe.size(); i++) {
+                String[] righe = carteStringhe.get(i);
+                if (line < righe.length) {
+                    System.out.print(righe[line]);
                 } else {
-                    System.out.print(" ".repeat(carteStringhe[0][0].length())); // Spazio vuoto se la carta ha meno righe
+                    System.out.print(" ".repeat(28));
                 }
-                System.out.print("\t"); // Spazio tra le carte
+                System.out.print("\t");
             }
             System.out.println();
         }
     }
 
-    public List<Carta> getCarte() {
-        return carte;
+    private String[] aggiungiNumeroAStringa(String[] righe, int numero) {
+        String numeroStringa = "{" + numero + "}";
+        int centro = righe[righe.length - 1].length() / 2;
+        int start = centro - numeroStringa.length() / 2;
+        StringBuilder sb = new StringBuilder(righe[righe.length - 1]);
+        sb.replace(start, start + numeroStringa.length(), numeroStringa);
+        righe[righe.length - 1] = sb.toString();
+        return righe;
     }
 }
