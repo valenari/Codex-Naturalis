@@ -10,15 +10,15 @@ public class AreaDiGioco {
     public AreaDiGioco(CartaIniziale cartaIniziale) {
         this.dimensione = 3;
         this.griglia = new Carta[dimensione][dimensione];
-        griglia[1][1] = cartaIniziale;
+        griglia[dimensione / 2][dimensione / 2] = cartaIniziale;
     }
 
     public void posizionaCarta(Carta carta, int posizione) {
         int count = 1;
         for (int i = 0; i < dimensione; i++) {
             for (int j = 0; j < dimensione; j++) {
-                if (griglia[i][j] == null && ((i + j) % 2 == 0) && (i + j != 0) && isDiagonallyAdjacentAndValid(i, j)) {
-                    if (count == posizione) { // Numerazione corretta
+                if (griglia[i][j] == null && isDiagonallyAdjacentAndValid(i, j)) {
+                    if (count == posizione) {
                         griglia[i][j] = carta;
                         espandiGrigliaSeNecessario();
                         return;
@@ -87,8 +87,8 @@ public class AreaDiGioco {
                     };
                     for (int r = 0; r < 7; r++) {
                         for (int c = 0; c < 28; c++) {
-                            if (r == 3 && c == 13) {
-                                grigliaVisualizzazione[i * 7 + r][j * 28 + c] = Character.forDigit(count, 10);
+                            if (r == 3 && c >= 13 && c < 13 + Integer.toString(count).length()) {
+                                grigliaVisualizzazione[i * 7 + r][j * 28 + c] = Integer.toString(count).charAt(c - 13);
                             } else {
                                 grigliaVisualizzazione[i * 7 + r][j * 28 + c] = cellaVuota[r].charAt(c);
                             }
@@ -112,14 +112,25 @@ public class AreaDiGioco {
             int newRow = i + direction[0];
             int newCol = j + direction[1];
             if (newRow >= 0 && newRow < dimensione && newCol >= 0 && newCol < dimensione && griglia[newRow][newCol] != null) {
-                Carta carta = griglia[newRow][newCol];
-                String[] angoli = carta.getFronte().split(" - ");
-                int angoloIndex = ((direction[0] + 1) / 2) * 2 + ((direction[1] + 1) / 2);
-                if (!angoli[angoloIndex].equals("Nascosto")) {
+                if (!isAngoloNascosto(griglia[newRow][newCol], direction)) {
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    private boolean isAngoloNascosto(Carta carta, int[] direction) {
+        String angolo = "";
+        if (direction[0] == -1 && direction[1] == -1) {
+            angolo = carta.getAngolo(3);
+        } else if (direction[0] == -1 && direction[1] == 1) {
+            angolo = carta.getAngolo(2);
+        } else if (direction[0] == 1 && direction[1] == -1) {
+            angolo = carta.getAngolo(1);
+        } else if (direction[0] == 1 && direction[1] == 1) {
+            angolo = carta.getAngolo(0);
+        }
+        return angolo.equals("Nascosto");
     }
 }

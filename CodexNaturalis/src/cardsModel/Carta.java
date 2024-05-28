@@ -67,6 +67,17 @@ public abstract class Carta {
     public void setCaselle(Caselleproibite caselle) {
         this.caselle = caselle;
     }
+    
+ // Metodo per verificare se un angolo specifico è nascosto
+    public String getAngolo(int indice) {
+        String[] angoli = getFronte().split(" - ");
+        return angoli[indice];
+    }
+
+    // Metodo per verificare se l'angolo è nascosto
+    public boolean isAngoloNascosto(String angolo) {
+        return "Nascosto".equals(angolo);
+    }
 
     // Metodo per stampare le informazioni della carta
     public void stampaCarta() {
