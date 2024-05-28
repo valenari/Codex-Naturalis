@@ -1,4 +1,4 @@
-package cardsModel;
+package obiettiviModels;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -6,39 +6,41 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Modello_giocatore.Caselleproibite;
+public class CartaObiettivo {
+	private int id;
+	private String tipo;
+	private int punti;
 
-public class CartaObiettivo extends Carta {
-    private String tipoRegno;
-    private int punti;
+	//Costruttore della classe CartaObiettivo
+	public CartaObiettivo(int id, String tipo, int punti) {
+		this.setId(id);
+		this.setTipo(tipo);
+		this.setPunti(punti);
+	}
+	
+	//Diversi Getter e Setter
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	public int getPunti() {
+	    return punti;
+	}
+	public void setPunti(int punti) {
+	    this.punti = punti;
+	}
 
-    // Costruttore della classe CartaObiettivo
-    public CartaObiettivo(int idCarta, String tipoCarta, String fronte, String retro, Caselleproibite caselle, int punti, String tipoRegno) {
-        super(idCarta, tipoCarta, fronte, retro, caselle);
-        this.punti = punti;
-        this.tipoRegno = tipoRegno;
-    }
-
-    // Getter per punti
-    public int getPunti() {
-        return punti;
-    }
-
-    // Setter per punti
-    public void setPunti(int punti) {
-        this.punti = punti;
-    }
-
-    // Getter per tipoRegno
-    public String getTipoRegno() {
-        return tipoRegno;
-    }
-
-    // Setter per tipoRegno
-    public void setTipoRegno(String tipoRegno) {
-        this.tipoRegno = tipoRegno;
-    }
-
+	
+}
+/*
     // Metodo statico per leggere carte risorsa dal file
     public static List<CartaObiettivo> leggiObiettivi(String filename) {
         List<CartaObiettivo> obbiettivi = new ArrayList<>();
@@ -115,28 +117,4 @@ public class CartaObiettivo extends Carta {
         }
     }
     
-    @Override
-    public String toString() {
-        return "CartaObiettivo{" +
-                "idCarta=" + getIdCarta() +
-                ", tipoCarta='" + getTipoCarta() + '\'' +
-                ", fronte='" + getFronte() + '\'' +
-                ", retro='" + getRetro() + '\'' +
-                ", caselle=" + getCaselle() +
-                ", tipoRegno='" + tipoRegno + '\'' +
-                ", punti=" + punti +
-                '}';
-    }
-
-	@Override
-	public String toStringRetro() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public void stampaCarta() {
-        System.out.println(this.toString());
-    }
-    
-    
-}
+*/

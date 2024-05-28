@@ -1,4 +1,4 @@
-package cardsModel;
+package obiettiviModels;
 
 import java.util.ArrayList;
 import java.util.Collections;

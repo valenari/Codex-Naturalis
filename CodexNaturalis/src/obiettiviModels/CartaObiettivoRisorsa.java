@@ -1,22 +1,23 @@
-package cardsModel;
+package obiettiviModels;
 
 import Modello_giocatore.Caselleproibite;
+import cardsModel.Carta;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartaObiettivoRisorsa extends Carta {
-    private String tipoRegno;
+public class CartaObiettivoRisorsa {
     private int punti;
     private int quantita;
     private String tipoRisorsa;
 
+}
+    /*
     // Costruttore della classe CartaObiettivoRisorsa
-    public CartaObiettivoRisorsa(int idCarta, String fronte, Caselleproibite caselle, String tipoRegno, int quantita, String tipoRisorsa, int punti) {
-        super(idCarta, "Obiettivo", fronte, generaRetro(tipoRegno), caselle);
-        this.tipoRegno = tipoRegno;
+    public CartaObiettivoRisorsa( int punti) {
         this.quantita = quantita;
         this.tipoRisorsa = tipoRisorsa;
         this.punti = punti;
@@ -28,13 +29,6 @@ public class CartaObiettivoRisorsa extends Carta {
     }
 
     // Getter e Setter
-    public String getTipoRegno() {
-        return tipoRegno;
-    }
-
-    public void setTipoRegno(String tipoRegno) {
-        this.tipoRegno = tipoRegno;
-    }
 
     public int getPunti() {
         return punti;
@@ -101,55 +95,4 @@ public class CartaObiettivoRisorsa extends Carta {
         }
         return obiettivi;
     }
-
-    // Metodo per ottenere l'emoji 
-    private String getEmoji(String emoji) {
-        switch (emoji) {
-        case "Vegetale":
-            return "☘️";
-        case "Fungo":
-            return "🍄";
-        case "Animale":
-            return "🐺";
-        case "Insetto":
-            return "🦋";
-        case "Piuma":
-            return " 𓆰";
-        case "Pergamena":
-            return "📜";
-        case "Inchiostro":
-            return "🧪";
-        case "Visibile":
-            return "  ";
-        case "Nascosto":
-            return " ";
-        default:
-            return "";
-        }
-    }
-    
-    @Override
-    public String toString() {
-        return "CartaObiettivoRisorsa{" +
-                "idCarta=" + getIdCarta() +
-                ", tipoCarta='" + getTipoCarta() + '\'' +
-                ", fronte='" + getFronte() + '\'' +
-                ", retro='" + getRetro() + '\'' +
-                ", caselle=" + getCaselle() +
-                ", tipoRegno='" + tipoRegno + '\'' +
-                ", quantita=" + quantita +
-                ", tipoRisorsa='" + tipoRisorsa + '\'' +
-                ", punti=" + punti +
-                '}';
-    }
-
-    public void stampaCarta() {
-        System.out.println(this.toString());
-    }
-
-	@Override
-	public String toStringRetro() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-}
+*/
