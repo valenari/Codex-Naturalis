@@ -3,6 +3,9 @@ package modelTavolo;
 import java.util.ArrayList;
 import java.util.List;
 
+import obiettiviModels.CartaObiettivo;
+import obiettiviModels.MazzoObiettivo;
+
 public class ObiettiviComuni {
     private MazzoObiettivo mazzoObiettivi;
     private List<CartaObiettivo> obiettivi;

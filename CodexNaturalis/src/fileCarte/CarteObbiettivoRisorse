@@ -1,55 +1,47 @@
-	Obbiettivo 9
-	Tipo/Regno: Fungo
-	Regole di Risorse:
-	 - Quantità:	3	
-	 - Tipo:	Fungo
-	Punti: 2
-	
-	Obbiettivo 10
-	Tipo/Regno: Vegetale
-	Regole di Risorse:
-	 - Quantità:	3
-	 - Tipo:	Vegetale
-	Punti: 2
-	
-	Obbiettivo 11
-	Tipo/Regno: Animale
-	Regole di Risorse:
-	 - Quantità:	3
-	 - Tipo:	Animale
-	Punti: 2
-	
-	Obbiettivo 12
-	Tipo/Regno: Insetto
-	Regole di Risorse:
-	 - Quantità:	3
-	 - Tipo:	Insetto
-	Punti: 2
-	
-	Obbiettivo 13
-	Tipo/Regno: base
-	Regole di Risorse:
-	 - Quantità:	1,      1,          1.
-	 - Tipo:	Piuma,  Inchiostro, Pergamena
-	Punti: 3
-	
-	Obbiettivo 14
-	Tipo/Regno: base
-	Regole di Risorse:
-	 - Quantità:	3
-	 - Tipo:	Pergamena
-	Punti: 2
-	
-	Obbiettivo 15
-	Tipo/Regno: base
-	Regole di Risorse:
-	 - Quantità:	3
-	 - Tipo:	Inchiostro
-	Punti: 2
-	
-	Obbiettivo 16
-	Tipo/Regno: base
-	Regole di Risorse:
-	 - Quantità:	3
-	 - Tipo:	Piuma
-	Punti: 2
+Obbiettivo 9
+Regole di Risorse:
+ - Quantità:	3	
+ - Tipo:	Fungo
+Punti: 2
+
+Obbiettivo 10
+Regole di Risorse:
+ - Quantità:	3
+ - Tipo:	Vegetale
+Punti: 2
+
+Obbiettivo 11
+Regole di Risorse:
+ - Quantità:	3
+ - Tipo:	Animale
+Punti: 2
+
+Obbiettivo 12
+Regole di Risorse:
+ - Quantità:	3
+ - Tipo:	Insetto
+Punti: 2
+
+Obbiettivo 13
+Regole di Risorse:
+ - Quantità:	1,      1,          1.
+ - Tipo:	Piuma,  Inchiostro, Pergamena
+Punti: 3
+
+Obbiettivo 14
+Regole di Risorse:
+ - Quantità:	3
+ - Tipo:	Pergamena
+Punti: 2
+
+Obbiettivo 15
+Regole di Risorse:
+ - Quantità:	3
+ - Tipo:	Inchiostro
+Punti: 2
+
+Obbiettivo 16
+Regole di Risorse:
+ - Quantità:	3
+ - Tipo:	Piuma
+Punti: 2
