@@ -3,12 +3,12 @@ package modelTavolo;
 import java.util.ArrayList;
 import java.util.List;
 
-import obiettiviModels.CartaObiettivo;
+import obiettiviModels.CartaObiettivoDisp;
 import obiettiviModels.MazzoObiettivo;
 
 public class ObiettiviComuni {
     private MazzoObiettivo mazzoObiettivi;
-    private List<CartaObiettivo> obiettivi;
+    private List<CartaObiettivoDisp> obiettivi;
 
     // Costruttore della classe ObiettiviComuni
     public ObiettiviComuni(MazzoObiettivo mazzoObiettivi) {
@@ -25,7 +25,7 @@ public class ObiettiviComuni {
     }
 
     // Getter per ottenere gli obiettivi comuni
-    public List<CartaObiettivo> getObiettivi() {
+    public List<CartaObiettivoDisp> getObiettivi() {
         return obiettivi;
     }
 }

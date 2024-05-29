@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartaObiettivo {
+public class CartaObiettivoDisp {
 	private int id;
 	private String tipo;
 	private int punti;
 
 	//Costruttore della classe CartaObiettivo
-	public CartaObiettivo(int id, String tipo, int punti) {
+	public CartaObiettivoDisp(int id, String tipo, int punti) {
 		this.setId(id);
 		this.setTipo(tipo);
 		this.setPunti(punti);

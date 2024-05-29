@@ -9,10 +9,14 @@ public class MazzoCarte {
     private int puntatore;
     private String tipoMazzo;
 
-    public MazzoCarte(String tipoMazzo) {
+    public MazzoCarte(String tipoMazzo, String filename) {
         this.carte = new ArrayList<>();
         this.tipoMazzo = tipoMazzo;
         this.puntatore = 0;
+        //Riempimento Mazzo da file
+        this.caricaCarteDaFile(filename);
+        //Mescola il Mazzo
+        this.mescolaMazzo();
     }
 
     public void aggiungiCarta(Carta carta) {

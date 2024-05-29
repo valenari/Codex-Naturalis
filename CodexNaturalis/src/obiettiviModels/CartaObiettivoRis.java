@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartaObiettivoRisorsa {
+public class CartaObiettivoRis {
     private int punti;
     private int quantita;
     private String tipoRisorsa;

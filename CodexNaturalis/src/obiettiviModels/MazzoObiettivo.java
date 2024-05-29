@@ -5,18 +5,18 @@ import java.util.Collections;
 import java.util.List;
 
 public class MazzoObiettivo {
-	private List<CartaObiettivo> obiettivi;
+	private List<CartaObiettivoDisp> obiettivi;
 	private int puntatore;
 	
 	// Costruttore del Mazzo di obiettivi + carica le carte da un file
 	public MazzoObiettivo(String filename) {
 		this.obiettivi = new ArrayList<>();
 		this.puntatore = 0;
-		obiettivi.addAll(CartaObiettivo.leggiObiettivi(filename));
+		obiettivi.addAll(CartaObiettivoDisp.leggiObiettivi(filename));
 	}
 	
 	// Metodo per pescare una carta dal mazzo
-	public CartaObiettivo pescaObiettivo(){
+	public CartaObiettivoDisp pescaObiettivo(){
 		if (puntatore < obiettivi.size()) {
 			return obiettivi.get(puntatore++);
 		}
@@ -29,7 +29,7 @@ public class MazzoObiettivo {
 	}
 	
 	// Metodo per ottenere la lista di obiettivi nel mazzo
-	public List<CartaObiettivo> getObiettivi() {
+	public List<CartaObiettivoDisp> getObiettivi() {
 		return obiettivi;
 	}
 
