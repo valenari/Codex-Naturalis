@@ -60,4 +60,8 @@ public class ManoGiocatore {
         righe[righe.length - 1] = sb.toString();
         return righe;
     }
+
+    public Carta getCarta(int indice) {
+    	return carteInMano.get(indice);
+    }
 }

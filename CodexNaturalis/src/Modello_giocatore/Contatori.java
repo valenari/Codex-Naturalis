@@ -6,6 +6,7 @@ import cardsModel.CartaOro;
 import cardsModel.CartaRisorsa;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Contatori {
@@ -87,5 +88,16 @@ public class Contatori {
         for (Map.Entry<String, Integer> entry : contatori.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
+    }
+    
+    public boolean verificaRisorse(List<String> risorseRichieste) {
+        Map<String, Integer> contatoriTemp = new HashMap<>(contatori);
+        for (String risorsa : risorseRichieste) {
+            if (contatoriTemp.getOrDefault(risorsa, 0) == 0) {
+                return false;
+            }
+            contatoriTemp.put(risorsa, contatoriTemp.get(risorsa) - 1);
+        }
+        return true;
     }
 }

@@ -55,14 +55,34 @@ public class Giocatore {
         manoGiocatore.stampaMano();
     }
 
-    public void giocaCarta(int indiceCartaMano, int posizioneGriglia, boolean fronte) {
+    public boolean giocaCarta(int indiceCartaMano, int posizioneGriglia, boolean fronte) {
+        Carta cartaDaGiocare = manoGiocatore.getCarta(indiceCartaMano);
+
+        if (cartaDaGiocare instanceof CartaOro && fronte) {
+            if (!verificaRisorse((CartaOro) cartaDaGiocare)) {
+                System.out.println("Non hai abbastanza risorse per giocare questa carta oro di fronte.");
+                return false;
+            }
+        }
+
         Carta cartaGiocata = manoGiocatore.rimuoviCarta(indiceCartaMano);
         if (cartaGiocata != null) {
+            if (!fronte) {
+                cartaGiocata.giraCarta();
+            }
             areaDiGioco.posizionaCarta(cartaGiocata, posizioneGriglia, fronte);
+            return true;
         } else {
             System.out.println("Carta non valida.");
+            return false;
         }
     }
+
+    private boolean verificaRisorse(CartaOro cartaOro) {
+        return contatori.verificaRisorse(cartaOro.getRisorseRichieste());
+    }
+
+
 
     private void aggiornaContatori() {
         contatori.aggiornaContatori(areaDiGioco);
