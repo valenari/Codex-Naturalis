@@ -17,6 +17,12 @@ public abstract class Carta {
         this.retro = retro;
         this.caselle = caselle;
     }
+    
+    public void giraCarta() {
+        String temp = this.fronte;
+        this.fronte = this.retro;
+        this.retro = temp;
+    }
 
     // Getter per idCarta
     public int getIdCarta() {
@@ -94,5 +100,7 @@ public abstract class Carta {
     }
     
     // Metodo astratto per stampare il retro della carta
-    public abstract String toStringRetro();
+    public String toStringRetro() {
+        return retro;
+    }
 }

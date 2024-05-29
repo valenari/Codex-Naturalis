@@ -10,6 +10,7 @@ import modelTavolo.AreaDiPesca;
 public class Giocatore {
     private String nome;
     private int punti;
+    private Contatori contatori;
     private ManoGiocatore manoGiocatore;
     private AreaDiGioco areaDiGioco;
     private AreaDiPesca areaDiPesca;
@@ -17,6 +18,7 @@ public class Giocatore {
     public Giocatore(String nome, MazzoCarte mazzoIniziale, MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro) {
         this.nome = nome;
         this.punti = 0;
+        this.contatori = new Contatori();
         this.manoGiocatore = new ManoGiocatore();
         this.areaDiGioco = new AreaDiGioco((CartaIniziale) mazzoIniziale.pescaCarta());
         this.areaDiPesca = new AreaDiPesca(mazzoRisorsa.getCarte(), mazzoOro.getCarte());
@@ -28,21 +30,41 @@ public class Giocatore {
         manoGiocatore.aggiungiCarta((CartaOro) mazzoOro.pescaCarta());
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public int getPunti() {
+        return punti;
+    }
+
+    public void aggiungiPunti(int puntiDaAggiungere) {
+        this.punti += puntiDaAggiungere;
+    }
+
     public void mostraAreaDiGioco() {
         areaDiGioco.visualizzaGriglia();
+        aggiornaContatori();
     }
 
     public void mostraMano() {
         manoGiocatore.stampaMano();
     }
 
-    public void giocaCarta(int indiceCartaMano, int posizioneGriglia) {
+    public void giocaCarta(int indiceCartaMano, int posizioneGriglia, boolean fronte) {
         Carta cartaGiocata = manoGiocatore.rimuoviCarta(indiceCartaMano);
         if (cartaGiocata != null) {
+            if (!fronte) {
+                cartaGiocata.giraCarta();
+            }
             areaDiGioco.posizionaCarta(cartaGiocata, posizioneGriglia);
         } else {
             System.out.println("Carta non valida.");
         }
+    }
+
+    private void aggiornaContatori() {
+        contatori.aggiornaContatori(areaDiGioco);
     }
 
     public void mostraAreaDiPesca() {
@@ -52,5 +74,9 @@ public class Giocatore {
     public void pescaCarta(int indiceCartaPesca) {
         Carta cartaPescata = areaDiPesca.pescaCarta(indiceCartaPesca);
         manoGiocatore.aggiungiCarta(cartaPescata);
+    }
+
+    public void mostraContatori() {
+        contatori.mostraContatori();
     }
 }

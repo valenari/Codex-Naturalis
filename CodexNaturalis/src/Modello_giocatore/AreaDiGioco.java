@@ -1,5 +1,8 @@
 package Modello_giocatore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cardsModel.Carta;
 import cardsModel.CartaIniziale;
 
@@ -133,4 +136,20 @@ public class AreaDiGioco {
         }
         return angolo.equals("Nascosto");
     }
+    
+    public List<Carta> getCarteVisibili() {
+        List<Carta> carteVisibili = new ArrayList<>();
+        for (int i = 0; i < dimensione; i++) {
+            for (int j = 0; j < dimensione; j++) {
+                if (griglia[i][j] != null) {
+                    carteVisibili.add(griglia[i][j]);
+                }
+            }
+        }
+        return carteVisibili;
+    }
+
+	public Carta[][] getGriglia() {
+		return griglia;
+	}
 }

@@ -27,6 +27,7 @@ public class TestGiocatore {
         while (continua) {
             System.out.println("Area di Gioco:");
             giocatore.mostraAreaDiGioco();
+            giocatore.mostraContatori();
 
             System.out.println("\nMano Giocatore:");
             giocatore.mostraMano();
@@ -34,10 +35,13 @@ public class TestGiocatore {
             System.out.println("\nScegli una carta da giocare (1-3):");
             int cartaDaGiocare = scanner.nextInt() - 1;
 
+            System.out.println("Vuoi giocare la carta di fronte (1) o di retro (2)?");
+            boolean fronte = scanner.nextInt() == 1;
+            
             System.out.println("Scegli la posizione (numero casella disponibile):");
             int posizione = scanner.nextInt();
 
-            giocatore.giocaCarta(cartaDaGiocare, posizione);
+            giocatore.giocaCarta(cartaDaGiocare, posizione, fronte);
 
             System.out.println("\nArea di Pesca:");
             giocatore.mostraAreaDiPesca();

@@ -124,6 +124,24 @@ public class CartaRisorsa extends Carta {
         }
     }
 
+    // Metodo per ottenere l'emoji dei punti
+    private String getEmojiPunti(int punti) {
+        switch (punti) {
+            case 1:
+                return "1";
+            case 2:
+                return "2";
+            case 3:
+                return "3";
+            case 4:
+                return "4";
+            case 5:
+                return "5";
+            default:
+                return "";
+        }
+    }
+
     // Metodo per ottenere il carattere di bordo per un angolo
     private String getBordoAngolo(String angolo, boolean sinistra) {
         if (angolo.equals("Nascosto")) {
@@ -147,12 +165,13 @@ public class CartaRisorsa extends Carta {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         String[] angoli = getFronte().split(" - ");
-
+        String puntiStr = getEmojiPunti(punti);
+        
         sb.append("----------------------------\n");
 
         sb.append(String.format("[%s%s%20s%s%s]\n", 
             getEmojiAngolo(angoli[0]), getBordoAngolo(angoli[0], false),
-            "", 
+            centraStringa(puntiStr, 18), 
             getBordoAngolo(angoli[1], true), getEmojiAngolo(angoli[1])
         ));
 
@@ -160,10 +179,15 @@ public class CartaRisorsa extends Carta {
         sb.append(String.format("[%s]\n", centraStringa(getEmojiRegno(tipoRegno), 26)));
         sb.append(String.format("[%26s]\n", ""));
 
-        sb.append(String.format("[%s%s%20s%s%s]\n", 
+        String angoloDxBasso = getBordoAngolo(angoli[3], true) + getEmojiAngolo(angoli[3]);
+        if (angoloDxBasso.trim().length() == 2) {
+            angoloDxBasso = getBordoAngolo(angoli[3], true) + " " + getEmojiAngolo(angoli[3]);
+        }
+
+        sb.append(String.format("[%s%s%20s%s]\n", 
             getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], false),
             "", 
-            getBordoAngolo(angoli[3], true), getEmojiAngolo(angoli[3])
+            angoloDxBasso
         ));
 
         sb.append("----------------------------\n");
@@ -186,10 +210,15 @@ public class CartaRisorsa extends Carta {
         sb.append(String.format("[%s]\n", centraStringa(getEmojiRegno(tipoRegno), 26)));
         sb.append(String.format("[%26s]\n", ""));
 
-        sb.append(String.format("[%s%s%20s%s%s]\n", 
+        String angoloDxBasso = getBordoAngolo(angoli[3], true) + getEmojiAngolo(angoli[3]);
+        if (angoloDxBasso.trim().length() == 2) {
+            angoloDxBasso = getBordoAngolo(angoli[3], true) + " " + getEmojiAngolo(angoli[3]);
+        }
+
+        sb.append(String.format("[%s%s%20s%s]\n", 
             getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], false),
             "", 
-            getBordoAngolo(angoli[3], true), getEmojiAngolo(angoli[3])
+            angoloDxBasso
         ));
 
         sb.append("----------------------------\n");
