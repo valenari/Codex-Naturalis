@@ -7,14 +7,17 @@ import java.util.Scanner;
 
 public class TestGiocatore {
     public static void main(String[] args) {
-        MazzoCarte mazzoIniziale = new MazzoCarte("Iniziale");
+        //Creazione dei diversi mazzi
+    	MazzoCarte mazzoIniziale = new MazzoCarte("Iniziale");
         MazzoCarte mazzoRisorsa = new MazzoCarte("Risorsa");
         MazzoCarte mazzoOro = new MazzoCarte("Oro");
 
+        //Caricamento delle carte dai file nei mazzi
         mazzoIniziale.caricaCarteDaFile("src/fileCarte/CarteIniziali.txt");
         mazzoRisorsa.caricaCarteDaFile("src/fileCarte/CarteRisorsa.txt");
         mazzoOro.caricaCarteDaFile("src/fileCarte/CarteOro.txt");
 
+        //Mescola i mazzi
         mazzoIniziale.mescolaMazzo();
         mazzoRisorsa.mescolaMazzo();
         mazzoOro.mescolaMazzo();
