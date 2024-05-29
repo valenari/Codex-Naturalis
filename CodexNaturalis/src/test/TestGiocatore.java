@@ -47,7 +47,8 @@ public class TestGiocatore {
                 System.out.println("Scegli la posizione (numero casella disponibile):");
                 int posizione = scanner.nextInt();
 
-                cartaGiocata = giocatore.giocaCarta(cartaDaGiocare, posizione, fronte);
+                giocatore.giocaCarta(cartaDaGiocare, posizione, fronte);
+                cartaGiocata = true;
             }
 
             System.out.println("\nArea di Pesca:");

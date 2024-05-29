@@ -7,7 +7,7 @@ import cardsModel.Carta;
 import cardsModel.CartaIniziale;
 
 public class AreaDiGioco {
-    private Carta[][] griglia;
+    private Carta[][] griglia; 
     private int dimensione;
     private Contatori contatori;
 
@@ -36,6 +36,7 @@ public class AreaDiGioco {
             for (int j = 0; j < dimensione; j++) {
                 if (griglia[i][j] == null && isDiagonallyAdjacentAndValid(i, j)) {
                     if (count == posizione) {
+                        
                         griglia[i][j] = carta;
                         copriAngoliAdiacenti(i, j);
                         espandiGrigliaSeNecessario();

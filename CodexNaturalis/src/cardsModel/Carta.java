@@ -21,15 +21,18 @@ public abstract class Carta {
     }
 
     public void giraCarta() {
-        this.fronteCarta = !this.fronteCarta;
+        String temp = this.fronte;
+        this.fronte = this.retro;
+        this.retro = temp;
     }
 
     public boolean isFronte() {
         return fronteCarta;
     }
 
-    public void setFronte(boolean fronte) {
-        this.fronteCarta = fronte;
+ // Setter per fronte
+    public void setFronte(String fronte) {
+        this.fronte = fronte;
     }
 
     // Getter e setter per gli altri attributi
@@ -51,10 +54,6 @@ public abstract class Carta {
 
     public String getFronte() {
         return fronte;
-    }
-
-    public void setFronte(String fronte) {
-        this.fronte = fronte;
     }
 
     public String getRetro() {
@@ -105,7 +104,5 @@ public abstract class Carta {
         return "ID: " + idCarta + "\nTipo Carta: " + tipoCarta + "\nFronte: " + fronte + "\nRetro: " + retro + "\nCaselle: " + caselle;
     }
 
-    public String toStringRetro() {
-        return retro;
-    }
+    public abstract String toStringRetro();
 }
