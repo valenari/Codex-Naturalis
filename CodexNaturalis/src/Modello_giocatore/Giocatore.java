@@ -15,12 +15,16 @@ public class Giocatore {
     private AreaDiGioco areaDiGioco;
     private AreaDiPesca areaDiPesca;
 
-    public Giocatore(String nome, MazzoCarte mazzoIniziale, MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro) {
+    public Giocatore(String nome, MazzoCarte mazzoIniziale, MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro, boolean fronteIniziale) {
         this.nome = nome;
         this.punti = 0;
         this.contatori = new Contatori();
         this.manoGiocatore = new ManoGiocatore();
-        this.areaDiGioco = new AreaDiGioco((CartaIniziale) mazzoIniziale.pescaCarta());
+        CartaIniziale cartaIniziale = (CartaIniziale) mazzoIniziale.pescaCarta();
+        if (!fronteIniziale) {
+            cartaIniziale.giraCarta();
+        }
+        this.areaDiGioco = new AreaDiGioco(cartaIniziale);
         this.areaDiPesca = new AreaDiPesca(mazzoRisorsa.getCarte(), mazzoOro.getCarte());
 
         // Pesca le prime carte per la mano del giocatore

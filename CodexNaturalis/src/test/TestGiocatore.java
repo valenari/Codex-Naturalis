@@ -19,9 +19,13 @@ public class TestGiocatore {
         mazzoRisorsa.mescolaMazzo();
         mazzoOro.mescolaMazzo();
 
-        Giocatore giocatore = new Giocatore("Giocatore1", mazzoIniziale, mazzoRisorsa, mazzoOro);
-
         Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Vuoi posizionare la carta iniziale di fronte (1) o di retro (2)?");
+        boolean fronteIniziale = scanner.nextInt() == 1;
+
+        Giocatore giocatore = new Giocatore("Giocatore1", mazzoIniziale, mazzoRisorsa, mazzoOro, fronteIniziale);
+
         boolean continua = true;
 
         while (continua) {

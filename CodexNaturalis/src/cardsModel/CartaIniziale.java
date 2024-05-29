@@ -9,24 +9,34 @@ import java.util.List;
 
 public class CartaIniziale extends Carta {
     private List<String> centrale;
+    private boolean fronte;
 
-    // Costruttore della classe CartaIniziale
     public CartaIniziale(int idCarta, String fronte, List<String> centrale, Caselleproibite caselle, String retro) {
         super(idCarta, "Iniziale", fronte, retro, caselle);
         this.centrale = centrale;
+        this.fronte = true; // Default to fronte
     }
 
-    // Getter per centrale
     public List<String> getCentrale() {
         return centrale;
     }
 
-    // Setter per centrale
     public void setCentrale(List<String> centrale) {
         this.centrale = centrale;
     }
 
-    // Metodo statico per leggere carte iniziali dal file
+    public boolean isFronte() {
+        return fronte;
+    }
+
+    public void setFronte(boolean fronte) {
+        this.fronte = fronte;
+    }
+
+    public void giraCarta() {
+        this.fronte = !this.fronte;
+    }
+
     public static List<CartaIniziale> leggiCarteIniziali(String filename) {
         List<CartaIniziale> carte = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
@@ -65,7 +75,6 @@ public class CartaIniziale extends Carta {
         return carte;
     }
 
-    // Metodo per ottenere l'emoji del tipo di regno
     private String getEmojiRegno(String regno) {
         switch (regno) {
             case "Vegetale":
@@ -81,7 +90,6 @@ public class CartaIniziale extends Carta {
         }
     }
 
-    // Metodo per ottenere l'emoji dell'angolo
     private String getEmojiAngolo(String angolo) {
         switch (angolo) {
             case "Vegetale":
@@ -107,7 +115,6 @@ public class CartaIniziale extends Carta {
         }
     }
 
-    // Metodo per ottenere il carattere di bordo per un angolo
     private String getBordoAngolo(String angolo, boolean sinistra) {
         if (angolo.equals("Nascosto")) {
             return "  ";
@@ -115,7 +122,6 @@ public class CartaIniziale extends Carta {
         return sinistra ? "[" : "]";
     }
 
-    // Metodo per centrare una stringa
     private String centraStringa(String str, int larghezza) {
         int spazi = larghezza - str.length();
         if (spazi <= 0) {
@@ -128,31 +134,30 @@ public class CartaIniziale extends Carta {
 
     @Override
     public String toString() {
+        if (!fronte) {
+            return toStringRetro();
+        }
+
         StringBuilder sb = new StringBuilder();
         String[] angoli = getFronte().split(" - ");
         List<String> centraleList = getCentrale();
 
         sb.append("----------------------------\n");
 
-        sb.append(String.format("[%s%s%20s%s%s]\n", 
-            getEmojiAngolo(angoli[0]), getBordoAngolo(angoli[0], false),
-            "", 
-            getBordoAngolo(angoli[1], true), getEmojiAngolo(angoli[1])
+        sb.append(String.format("[%s%s%20s%s%s]\n",
+                getEmojiAngolo(angoli[0]), getBordoAngolo(angoli[0], false),
+                "",
+                getBordoAngolo(angoli[1], true), getEmojiAngolo(angoli[1])
         ));
 
         sb.append(String.format("[%s]\n", centraStringa(centraleList.size() > 0 ? getEmojiRegno(centraleList.get(0)) : "", 26)));
         sb.append(String.format("[%s]\n", centraStringa(centraleList.size() > 1 ? getEmojiRegno(centraleList.get(1)) : "", 26)));
         sb.append(String.format("[%s]\n", centraStringa(centraleList.size() > 2 ? getEmojiRegno(centraleList.get(2)) : "", 26)));
-        
-        String angoloDxBasso = getBordoAngolo(angoli[3], true) + getEmojiAngolo(angoli[3]);
-        if (angoloDxBasso.trim().length() == 2) {
-            angoloDxBasso = getBordoAngolo(angoli[3], true) + " " + getEmojiAngolo(angoli[3]);
-        }
 
-        sb.append(String.format("[%s%s%20s%s]\n", 
-            getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], false),
-            "", 
-            angoloDxBasso
+        sb.append(String.format("[%s%s%20s%s%s]\n",
+                getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], false),
+                "",
+                getBordoAngolo(angoli[3], true), getEmojiAngolo(angoli[3])
         ));
 
         sb.append("----------------------------\n");
@@ -165,25 +170,20 @@ public class CartaIniziale extends Carta {
 
         sb.append("----------------------------\n");
 
-        sb.append(String.format("[%s%s%20s%s%s]\n", 
-            getEmojiAngolo(angoli[0]), getBordoAngolo(angoli[0], false),
-            "", 
-            getBordoAngolo(angoli[1], true), getEmojiAngolo(angoli[1])
+        sb.append(String.format("[%s%s%20s%s%s]\n",
+                getEmojiAngolo(angoli[0]), getBordoAngolo(angoli[0], false),
+                "",
+                getBordoAngolo(angoli[1], true), getEmojiAngolo(angoli[1])
         ));
 
         sb.append(String.format("[%26s]\n", ""));
         sb.append(String.format("[%26s]\n", ""));
         sb.append(String.format("[%26s]\n", ""));
-        
-        String angoloDxBasso = getBordoAngolo(angoli[3], true) + getEmojiAngolo(angoli[3]);
-        if (angoloDxBasso.trim().length() == 2) {
-            angoloDxBasso = getBordoAngolo(angoli[3], true) + " " + getEmojiAngolo(angoli[3]);
-        }
 
-        sb.append(String.format("[%s%s%20s%s]\n", 
-            getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], false),
-            "", 
-            angoloDxBasso
+        sb.append(String.format("[%s%s%20s%s%s]\n",
+                getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], false),
+                "",
+                getBordoAngolo(angoli[3], true), getEmojiAngolo(angoli[3])
         ));
 
         sb.append("----------------------------\n");
