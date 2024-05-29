@@ -124,21 +124,28 @@ public class AreaDiGioco {
 
     private boolean isDiagonallyAdjacentAndValid(int i, int j) {
         int[][] directions = {
-                {-1, -1}, {-1, 1}, {1, -1}, {1, 1}
+            {-1, -1, 3}, // Angolo in basso a destra della carta in alto a sinistra
+            {-1, 1, 2},  // Angolo in basso a sinistra della carta in alto a destra
+            {1, -1, 1},  // Angolo in alto a destra della carta in basso a sinistra
+            {1, 1, 0}    // Angolo in alto a sinistra della carta in basso a destra
         };
-        for (int k = 0; k < directions.length; k++) {
-            int[] direction = directions[k];
+
+        for (int[] direction : directions) {
             int newRow = i + direction[0];
             int newCol = j + direction[1];
+            int angoloDaCoprire = direction[2];
+            
             if (newRow >= 0 && newRow < dimensione && newCol >= 0 && newCol < dimensione && griglia[newRow][newCol] != null) {
                 Carta cartaAdiacente = griglia[newRow][newCol];
-                if (!cartaAdiacente.isAngoloNascosto(cartaAdiacente.getAngolo((k + 2) % 4))) {
+                String angolo = cartaAdiacente.getAngolo(angoloDaCoprire);
+                if (!cartaAdiacente.isAngoloNascosto(angolo) && !angolo.equals("❌")) {
                     return true;
                 }
             }
         }
         return false;
     }
+
     
     public List<Carta> getCarteVisibili() {
         List<Carta> carteVisibili = new ArrayList<>();
@@ -181,11 +188,11 @@ public class AreaDiGioco {
                 // Ottiene l'angolo specifico della carta adiacente
                 String angolo = cartaAdiacente.getAngolo(angoloDaCoprire);
                 // Controlla se l'angolo non è nascosto e non è già coperto
-                if (!cartaAdiacente.isAngoloNascosto(angolo) && !angolo.equals("X")) {
+                if (!cartaAdiacente.isAngoloNascosto(angolo) && !angolo.equals("❌")) {
                     // Decrementa il contatore dell'elemento corrispondente
                     contatori.decrementaContatore(angolo);
                     // Sostituisce l'angolo con il simbolo "❌"
-                    cartaAdiacente.sostituisciAngolo(angoloDaCoprire, "X");
+                    cartaAdiacente.sostituisciAngolo(angoloDaCoprire, "❌");
                 }
             }
         }

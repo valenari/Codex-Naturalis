@@ -119,10 +119,13 @@ public class CartaRisorsa extends Carta {
                 return "  ";
             case "Nascosto":
                 return " ";
+            case "❌":
+                return "❌";
             default:
                 return "";
         }
     }
+
 
     // Metodo per ottenere l'emoji dei punti
     private String getEmojiPunti(int punti) {

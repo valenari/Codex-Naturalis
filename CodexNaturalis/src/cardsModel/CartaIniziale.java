@@ -96,10 +96,13 @@ public class CartaIniziale extends Carta {
                 return "  ";
             case "Nascosto":
                 return " ";
+            case "❌":
+                return "❌";
             default:
                 return "";
         }
     }
+
 
     private String getBordoAngolo(String angolo, boolean sinistra) {
         if (angolo.equals("Nascosto")) {

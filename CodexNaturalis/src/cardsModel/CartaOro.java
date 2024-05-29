@@ -144,7 +144,7 @@ public class CartaOro extends Carta {
             case "Insetto":
                 return "🦋";
             case "Piuma":
-                return " 𓆰";
+                return "𓆰";
             case "Pergamena":
                 return "📜";
             case "Inchiostro":
@@ -153,10 +153,13 @@ public class CartaOro extends Carta {
                 return "  ";
             case "Nascosto":
                 return " ";
+            case "❌":
+                return "❌";
             default:
                 return "";
         }
     }
+
 
     // Metodo per ottenere l'emoji dei punti
     private String getEmojiPunti(int punti) {
