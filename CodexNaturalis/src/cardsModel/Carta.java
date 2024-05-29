@@ -8,7 +8,7 @@ public abstract class Carta {
     private String fronte;
     private String retro;
     private Caselleproibite caselle;
-    private boolean fronteVisibile;
+    private boolean fronteCarta; // true se la carta è sul fronte, false se è sul retro
 
     // Costruttore della classe Carta
     public Carta(int idCarta, String tipoCarta, String fronte, String retro, Caselleproibite caselle) {
@@ -17,93 +17,81 @@ public abstract class Carta {
         this.fronte = fronte;
         this.retro = retro;
         this.caselle = caselle;
-        this.fronteVisibile = true;
-    }
-    
-    public void giraCarta() {
-        this.fronteVisibile = !this.fronteVisibile;
+        this.fronteCarta = true; // La carta è inizialmente sul fronte
     }
 
-    // Getter per idCarta
+    public void giraCarta() {
+        this.fronteCarta = !this.fronteCarta;
+    }
+
+    public boolean isFronte() {
+        return fronteCarta;
+    }
+
+    public void setFronte(boolean fronte) {
+        this.fronteCarta = fronte;
+    }
+
+    // Getter e setter per gli altri attributi
     public int getIdCarta() {
         return idCarta;
     }
 
-    // Setter per idCarta
     public void setIdCarta(int idCarta) {
         this.idCarta = idCarta;
     }
 
-    // Getter per tipoCarta
     public String getTipoCarta() {
         return tipoCarta;
     }
 
-    // Setter per tipoCarta
     public void setTipoCarta(String tipoCarta) {
         this.tipoCarta = tipoCarta;
     }
 
-    // Getter per fronte
     public String getFronte() {
         return fronte;
     }
 
-    // Setter per fronte
     public void setFronte(String fronte) {
         this.fronte = fronte;
     }
 
-    // Getter per retro
     public String getRetro() {
         return retro;
     }
 
-    // Setter per retro
     public void setRetro(String retro) {
         this.retro = retro;
     }
 
-    // Getter per caselle
     public Caselleproibite getCaselle() {
         return caselle;
     }
 
-    // Setter per caselle
     public void setCaselle(Caselleproibite caselle) {
         this.caselle = caselle;
     }
-    
-    public boolean isFronte() {
-        return fronteVisibile;
-    }
 
-    public void setFronte(boolean fronteVisible) {
-        this.fronteVisibile = fronteVisible;
-    }
-
-    // Metodo per verificare se un angolo specifico è nascosto
     public String getAngolo(int indice) {
-        String[] angoli = getFronte().split(" - ");
+        String[] angoli = fronteCarta ? fronte.split(" - ") : retro.split(" - ");
         return angoli[indice];
     }
 
-    // Metodo per verificare se l'angolo è nascosto
     public boolean isAngoloNascosto(String angolo) {
         return "Nascosto".equals(angolo);
     }
-    
-    public void copriAngolo(int indice) {
-        String[] angoli = isFronte() ? fronte.split(" - ") : retro.split(" - ");
-        angoli[indice] = "❌";
-        if (isFronte()) {
-            this.fronte = String.join(" - ", angoli);
+
+    public void sostituisciAngolo(int indice, String sostituto) {
+        String[] angoli = fronteCarta ? fronte.split(" - ") : retro.split(" - ");
+        angoli[indice] = sostituto;
+        if (fronteCarta) {
+            fronte = String.join(" - ", angoli);
         } else {
-            this.retro = String.join(" - ", angoli);
+            retro = String.join(" - ", angoli);
         }
     }
 
-    // Metodo per stampare le informazioni della carta
     public void stampaCarta() {
         System.out.println("ID: " + idCarta);
         System.out.println("Tipo Carta: " + tipoCarta);
@@ -116,8 +104,7 @@ public abstract class Carta {
     public String toString() {
         return "ID: " + idCarta + "\nTipo Carta: " + tipoCarta + "\nFronte: " + fronte + "\nRetro: " + retro + "\nCaselle: " + caselle;
     }
-    
-    // Metodo astratto per stampare il retro della carta
+
     public String toStringRetro() {
         return retro;
     }

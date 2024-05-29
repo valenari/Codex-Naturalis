@@ -58,7 +58,7 @@ public class Contatori {
     private void contaAngoli(Carta carta) {
         String[] angoli = carta.isFronte() ? carta.getFronte().split(" - ") : carta.getRetro().split(" - ");
         for (String angolo : angoli) {
-            if (!angolo.equals("Nascosto") && !angolo.equals("❌")) {
+            if (!angolo.equals("Nascosto") && !angolo.equals("X")) {
                 contatori.put(angolo, contatori.getOrDefault(angolo, 0) + 1);
             }
         }

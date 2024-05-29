@@ -37,8 +37,8 @@ public class AreaDiGioco {
                 if (griglia[i][j] == null && isDiagonallyAdjacentAndValid(i, j)) {
                     if (count == posizione) {
                         griglia[i][j] = carta;
+                        copriAngoliAdiacenti(i, j);
                         espandiGrigliaSeNecessario();
-                        copriAngoloAdiacente(i, j);
                         return;
                     }
                     count++;
@@ -126,30 +126,18 @@ public class AreaDiGioco {
         int[][] directions = {
                 {-1, -1}, {-1, 1}, {1, -1}, {1, 1}
         };
-        for (int[] direction : directions) {
+        for (int k = 0; k < directions.length; k++) {
+            int[] direction = directions[k];
             int newRow = i + direction[0];
             int newCol = j + direction[1];
             if (newRow >= 0 && newRow < dimensione && newCol >= 0 && newCol < dimensione && griglia[newRow][newCol] != null) {
-                if (!isAngoloNascosto(griglia[newRow][newCol], direction)) {
+                Carta cartaAdiacente = griglia[newRow][newCol];
+                if (!cartaAdiacente.isAngoloNascosto(cartaAdiacente.getAngolo((k + 2) % 4))) {
                     return true;
                 }
             }
         }
         return false;
-    }
-
-    private boolean isAngoloNascosto(Carta carta, int[] direction) {
-        String angolo = "";
-        if (direction[0] == -1 && direction[1] == -1) {
-            angolo = carta.getAngolo(3);
-        } else if (direction[0] == -1 && direction[1] == 1) {
-            angolo = carta.getAngolo(2);
-        } else if (direction[0] == 1 && direction[1] == -1) {
-            angolo = carta.getAngolo(1);
-        } else if (direction[0] == 1 && direction[1] == 1) {
-            angolo = carta.getAngolo(0);
-        }
-        return angolo.equals("Nascosto");
     }
     
     public List<Carta> getCarteVisibili() {
@@ -164,29 +152,47 @@ public class AreaDiGioco {
         return carteVisibili;
     }
     
-    private void copriAngoloAdiacente(int i, int j) {
+    private void copriAngoliAdiacenti(int i, int j) {
+        // Definisce le direzioni per i quattro angoli diagonali adiacenti.
+        // Ogni direzione è rappresentata da un array con tre elementi:
+        // - La variazione della riga (newRow)
+        // - La variazione della colonna (newCol)
+        // - L'indice dell'angolo da coprire (angoloDaCoprire)
         int[][] directions = {
-                {-1, -1}, {-1, 1}, {1, -1}, {1, 1}
+            {-1, -1, 3}, // Angolo in basso a destra della carta in alto a sinistra
+            {-1, 1, 2},  // Angolo in basso a sinistra della carta in alto a destra
+            {1, -1, 1},  // Angolo in alto a destra della carta in basso a sinistra
+            {1, 1, 0}    // Angolo in alto a sinistra della carta in basso a destra
         };
-        for (int k = 0; k < directions.length; k++) {
-            int[] direction = directions[k];
+
+        // Cicla attraverso le direzioni definite
+        for (int[] direction : directions) {
+            // Calcola le nuove coordinate della carta adiacente
             int newRow = i + direction[0];
             int newCol = j + direction[1];
+            // Ottiene l'indice dell'angolo da coprire nella carta adiacente
+            int angoloDaCoprire = direction[2];
+
+            // Controlla se le nuove coordinate sono all'interno dei limiti della griglia
+            // e se esiste una carta nella posizione calcolata
             if (newRow >= 0 && newRow < dimensione && newCol >= 0 && newCol < dimensione && griglia[newRow][newCol] != null) {
+                // Ottiene la carta adiacente
                 Carta cartaAdiacente = griglia[newRow][newCol];
-                if (!cartaAdiacente.isAngoloNascosto(cartaAdiacente.getAngolo((k + 2) % 4))) {
-                    contatori.decrementaContatore(cartaAdiacente.getAngolo((k + 2) % 4));
-                    String[] angoli = cartaAdiacente.isFronte() ? cartaAdiacente.getFronte().split(" - ") : cartaAdiacente.getRetro().split(" - ");
-                    angoli[(k + 2) % 4] = "❌";
-                    if (cartaAdiacente.isFronte()) {
-                        cartaAdiacente.setFronte(String.join(" - ", angoli));
-                    } else {
-                        cartaAdiacente.setRetro(String.join(" - ", angoli));
-                    }
+                // Ottiene l'angolo specifico della carta adiacente
+                String angolo = cartaAdiacente.getAngolo(angoloDaCoprire);
+                // Controlla se l'angolo non è nascosto e non è già coperto
+                if (!cartaAdiacente.isAngoloNascosto(angolo) && !angolo.equals("X")) {
+                    // Decrementa il contatore dell'elemento corrispondente
+                    contatori.decrementaContatore(angolo);
+                    // Sostituisce l'angolo con il simbolo "❌"
+                    cartaAdiacente.sostituisciAngolo(angoloDaCoprire, "X");
                 }
             }
         }
     }
+
+
+
 
 	public Carta[][] getGriglia() {
 		return griglia;
