@@ -8,6 +8,7 @@ public abstract class Carta {
     private String fronte;
     private String retro;
     private Caselleproibite caselle;
+    private boolean fronteVisibile;
 
     // Costruttore della classe Carta
     public Carta(int idCarta, String tipoCarta, String fronte, String retro, Caselleproibite caselle) {
@@ -16,12 +17,15 @@ public abstract class Carta {
         this.fronte = fronte;
         this.retro = retro;
         this.caselle = caselle;
+        this.fronteVisibile = true; // Default to fronte visibile
     }
-    
+
     public void giraCarta() {
-        String temp = this.fronte;
-        this.fronte = this.retro;
-        this.retro = temp;
+        this.fronteVisibile = !this.fronteVisibile;
+    }
+
+    public boolean isFronte() {
+        return fronteVisibile;
     }
 
     // Getter per idCarta
@@ -74,7 +78,7 @@ public abstract class Carta {
         this.caselle = caselle;
     }
     
- // Metodo per verificare se un angolo specifico è nascosto
+    // Metodo per verificare se un angolo specifico è nascosto
     public String getAngolo(int indice) {
         String[] angoli = getFronte().split(" - ");
         return angoli[indice];

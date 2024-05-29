@@ -9,12 +9,10 @@ import java.util.List;
 
 public class CartaIniziale extends Carta {
     private List<String> centrale;
-    private boolean fronte;
 
     public CartaIniziale(int idCarta, String fronte, List<String> centrale, Caselleproibite caselle, String retro) {
         super(idCarta, "Iniziale", fronte, retro, caselle);
         this.centrale = centrale;
-        this.fronte = true; // Default to fronte
     }
 
     public List<String> getCentrale() {
@@ -23,18 +21,6 @@ public class CartaIniziale extends Carta {
 
     public void setCentrale(List<String> centrale) {
         this.centrale = centrale;
-    }
-
-    public boolean isFronte() {
-        return fronte;
-    }
-
-    public void setFronte(boolean fronte) {
-        this.fronte = fronte;
-    }
-
-    public void giraCarta() {
-        this.fronte = !this.fronte;
     }
 
     public static List<CartaIniziale> leggiCarteIniziali(String filename) {
@@ -134,7 +120,7 @@ public class CartaIniziale extends Carta {
 
     @Override
     public String toString() {
-        if (!fronte) {
+        if (!isFronte()) {
             return toStringRetro();
         }
 

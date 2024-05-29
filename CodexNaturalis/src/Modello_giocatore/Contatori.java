@@ -9,78 +9,83 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Contatori {
-    private Map<String, Integer> contatoriRegni;
-    private Map<String, Integer> contatoriOggetti;
+    private Map<String, Integer> contatori;
 
+    // Costruttore della classe Contatori
     public Contatori() {
-        this.contatoriRegni = new HashMap<>();
-        this.contatoriOggetti = new HashMap<>();
+        contatori = new HashMap<>();
+        contatori.put("Vegetale", 0);
+        contatori.put("Fungo", 0);
+        contatori.put("Animale", 0);
+        contatori.put("Insetto", 0);
+        contatori.put("Piuma", 0);
+        contatori.put("Pergamena", 0);
+        contatori.put("Inchiostro", 0);
     }
 
+    // Metodo per aggiornare i contatori in base alle carte nell'area di gioco
     public void aggiornaContatori(AreaDiGioco areaDiGioco) {
         resetContatori();
-
         Carta[][] griglia = areaDiGioco.getGriglia();
+
         for (int i = 0; i < griglia.length; i++) {
             for (int j = 0; j < griglia[i].length; j++) {
                 Carta carta = griglia[i][j];
                 if (carta != null) {
-                    contaElementiCarta(carta);
+                    contaAngoli(carta);
+
+                    if (carta instanceof CartaRisorsa) {
+                        CartaRisorsa cartaRisorsa = (CartaRisorsa) carta;
+                        if (!cartaRisorsa.isFronte()) {
+                            contaElementoCentrale(cartaRisorsa.getTipoRegno());
+                        }
+                    } else if (carta instanceof CartaOro) {
+                        CartaOro cartaOro = (CartaOro) carta;
+                        if (!cartaOro.isFronte()) {
+                            contaElementoCentrale(cartaOro.getTipoRegno());
+                        }
+                    } else if (carta instanceof CartaIniziale) {
+                        CartaIniziale cartaIniziale = (CartaIniziale) carta;
+                        if (cartaIniziale.isFronte()) {
+                            for (String elemento : cartaIniziale.getCentrale()) {
+                                contaElementoCentrale(elemento);
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 
+    // Metodo per contare gli elementi sugli angoli delle carte
+    private void contaAngoli(Carta carta) {
+        String[] angoli = carta.isFronte() ? carta.getFronte().split(" - ") : carta.getRetro().split(" - ");
+        for (String angolo : angoli) {
+            if (!angolo.equals("Nascosto")) {
+                contatori.put(angolo, contatori.getOrDefault(angolo, 0) + 1);
+            }
+        }
+    }
+
+    // Metodo per contare l'elemento centrale delle carte risorsa e oro giocate di retro, e gli elementi centrali delle carte iniziali giocate di fronte
+    private void contaElementoCentrale(String elemento) {
+        if (!elemento.equals("Visibile")) {
+            contatori.put(elemento, contatori.getOrDefault(elemento, 0) + 1);
+        }
+    }
+
+    // Metodo per resettare i contatori
     private void resetContatori() {
-        contatoriRegni.clear();
-        contatoriOggetti.clear();
-    }
-
-    private void contaElementiCarta(Carta carta) {
-        if (carta instanceof CartaIniziale) {
-            CartaIniziale cartaIniziale = (CartaIniziale) carta;
-            for (String elemento : cartaIniziale.getCentrale()) {
-                if (isRegno(elemento)) {
-                    incrementaContatoreRegni(elemento);
-                } else if (isOggetto(elemento)) {
-                    incrementaContatoreOggetti(elemento);
-                }
-            }
-        }
-
-        if (carta instanceof CartaRisorsa || carta instanceof CartaOro) {
-            String[] elementi = carta.getFronte().split(" - ");
-            for (String elemento : elementi) {
-                if (isRegno(elemento)) {
-                    incrementaContatoreRegni(elemento);
-                } else if (isOggetto(elemento)) {
-                    incrementaContatoreOggetti(elemento);
-                }
-            }
+        for (String key : contatori.keySet()) {
+            contatori.put(key, 0);
         }
     }
 
-    private boolean isRegno(String elemento) {
-        return elemento.equals("Vegetale") || elemento.equals("Fungo") || elemento.equals("Animale") || elemento.equals("Insetto");
-    }
-
-    private boolean isOggetto(String elemento) {
-        return elemento.equals("Piuma") || elemento.equals("Pergamena") || elemento.equals("Inchiostro");
-    }
-
-    private void incrementaContatoreRegni(String regno) {
-        contatoriRegni.put(regno, contatoriRegni.getOrDefault(regno, 0) + 1);
-    }
-
-    private void incrementaContatoreOggetti(String oggetto) {
-        contatoriOggetti.put(oggetto, contatoriOggetti.getOrDefault(oggetto, 0) + 1);
-    }
-
+    // Metodo per mostrare i valori attuali dei contatori
     public void mostraContatori() {
-        System.out.println("Contatori dei Regni:");
-        contatoriRegni.forEach((key, value) -> System.out.println(key + ": " + value));
-
-        System.out.println("Contatori degli Oggetti:");
-        contatoriOggetti.forEach((key, value) -> System.out.println(key + ": " + value));
+        System.out.println("Contatori:");
+        for (Map.Entry<String, Integer> entry : contatori.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
 }
