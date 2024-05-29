@@ -9,14 +9,28 @@ import cardsModel.CartaIniziale;
 public class AreaDiGioco {
     private Carta[][] griglia;
     private int dimensione;
+    private Contatori contatori;
 
-    public AreaDiGioco(CartaIniziale cartaIniziale) {
+    public AreaDiGioco(CartaIniziale cartaIniziale, Contatori contatori) {
         this.dimensione = 3;
         this.griglia = new Carta[dimensione][dimensione];
         griglia[dimensione / 2][dimensione / 2] = cartaIniziale;
+        this.contatori = contatori;
+    }
+    
+    public CartaIniziale getCartaIniziale() {
+        for (int i = 0; i < griglia.length; i++) {
+            for (int j = 0; j < griglia[i].length; j++) {
+                if (griglia[i][j] instanceof CartaIniziale) {
+                    return (CartaIniziale) griglia[i][j];
+                }
+            }
+        }
+        return null;
     }
 
-    public void posizionaCarta(Carta carta, int posizione) {
+
+    public void posizionaCarta(Carta carta, int posizione, boolean fronte) {
         int count = 1;
         for (int i = 0; i < dimensione; i++) {
             for (int j = 0; j < dimensione; j++) {
@@ -24,6 +38,7 @@ public class AreaDiGioco {
                     if (count == posizione) {
                         griglia[i][j] = carta;
                         espandiGrigliaSeNecessario();
+                        copriAngoloAdiacente(i, j);
                         return;
                     }
                     count++;
@@ -147,6 +162,30 @@ public class AreaDiGioco {
             }
         }
         return carteVisibili;
+    }
+    
+    private void copriAngoloAdiacente(int i, int j) {
+        int[][] directions = {
+                {-1, -1}, {-1, 1}, {1, -1}, {1, 1}
+        };
+        for (int k = 0; k < directions.length; k++) {
+            int[] direction = directions[k];
+            int newRow = i + direction[0];
+            int newCol = j + direction[1];
+            if (newRow >= 0 && newRow < dimensione && newCol >= 0 && newCol < dimensione && griglia[newRow][newCol] != null) {
+                Carta cartaAdiacente = griglia[newRow][newCol];
+                if (!cartaAdiacente.isAngoloNascosto(cartaAdiacente.getAngolo((k + 2) % 4))) {
+                    contatori.decrementaContatore(cartaAdiacente.getAngolo((k + 2) % 4));
+                    String[] angoli = cartaAdiacente.isFronte() ? cartaAdiacente.getFronte().split(" - ") : cartaAdiacente.getRetro().split(" - ");
+                    angoli[(k + 2) % 4] = "❌";
+                    if (cartaAdiacente.isFronte()) {
+                        cartaAdiacente.setFronte(String.join(" - ", angoli));
+                    } else {
+                        cartaAdiacente.setRetro(String.join(" - ", angoli));
+                    }
+                }
+            }
+        }
     }
 
 	public Carta[][] getGriglia() {

@@ -24,7 +24,7 @@ public class Giocatore {
         if (!fronteIniziale) {
             cartaIniziale.giraCarta();
         }
-        this.areaDiGioco = new AreaDiGioco(cartaIniziale);
+        this.areaDiGioco = new AreaDiGioco(cartaIniziale, contatori);
         this.areaDiPesca = new AreaDiPesca(mazzoRisorsa.getCarte(), mazzoOro.getCarte());
 
         // Pesca le prime carte per la mano del giocatore
@@ -58,10 +58,7 @@ public class Giocatore {
     public void giocaCarta(int indiceCartaMano, int posizioneGriglia, boolean fronte) {
         Carta cartaGiocata = manoGiocatore.rimuoviCarta(indiceCartaMano);
         if (cartaGiocata != null) {
-            if (!fronte) {
-                cartaGiocata.giraCarta();
-            }
-            areaDiGioco.posizionaCarta(cartaGiocata, posizioneGriglia);
+            areaDiGioco.posizionaCarta(cartaGiocata, posizioneGriglia, fronte);
         } else {
             System.out.println("Carta non valida.");
         }

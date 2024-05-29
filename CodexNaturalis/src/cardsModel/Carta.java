@@ -17,15 +17,11 @@ public abstract class Carta {
         this.fronte = fronte;
         this.retro = retro;
         this.caselle = caselle;
-        this.fronteVisibile = true; // Default to fronte visibile
+        this.fronteVisibile = true;
     }
-
+    
     public void giraCarta() {
         this.fronteVisibile = !this.fronteVisibile;
-    }
-
-    public boolean isFronte() {
-        return fronteVisibile;
     }
 
     // Getter per idCarta
@@ -78,6 +74,14 @@ public abstract class Carta {
         this.caselle = caselle;
     }
     
+    public boolean isFronte() {
+        return fronteVisibile;
+    }
+
+    public void setFronte(boolean fronteVisible) {
+        this.fronteVisibile = fronteVisible;
+    }
+
     // Metodo per verificare se un angolo specifico è nascosto
     public String getAngolo(int indice) {
         String[] angoli = getFronte().split(" - ");
@@ -87,6 +91,16 @@ public abstract class Carta {
     // Metodo per verificare se l'angolo è nascosto
     public boolean isAngoloNascosto(String angolo) {
         return "Nascosto".equals(angolo);
+    }
+    
+    public void copriAngolo(int indice) {
+        String[] angoli = isFronte() ? fronte.split(" - ") : retro.split(" - ");
+        angoli[indice] = "❌";
+        if (isFronte()) {
+            this.fronte = String.join(" - ", angoli);
+        } else {
+            this.retro = String.join(" - ", angoli);
+        }
     }
 
     // Metodo per stampare le informazioni della carta

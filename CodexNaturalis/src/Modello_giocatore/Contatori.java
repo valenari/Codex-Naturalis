@@ -11,7 +11,6 @@ import java.util.Map;
 public class Contatori {
     private Map<String, Integer> contatori;
 
-    // Costruttore della classe Contatori
     public Contatori() {
         contatori = new HashMap<>();
         contatori.put("Vegetale", 0);
@@ -23,7 +22,6 @@ public class Contatori {
         contatori.put("Inchiostro", 0);
     }
 
-    // Metodo per aggiornare i contatori in base alle carte nell'area di gioco
     public void aggiornaContatori(AreaDiGioco areaDiGioco) {
         resetContatori();
         Carta[][] griglia = areaDiGioco.getGriglia();
@@ -57,31 +55,33 @@ public class Contatori {
         }
     }
 
-    // Metodo per contare gli elementi sugli angoli delle carte
     private void contaAngoli(Carta carta) {
         String[] angoli = carta.isFronte() ? carta.getFronte().split(" - ") : carta.getRetro().split(" - ");
         for (String angolo : angoli) {
-            if (!angolo.equals("Nascosto")) {
+            if (!angolo.equals("Nascosto") && !angolo.equals("❌")) {
                 contatori.put(angolo, contatori.getOrDefault(angolo, 0) + 1);
             }
         }
     }
 
-    // Metodo per contare l'elemento centrale delle carte risorsa e oro giocate di retro, e gli elementi centrali delle carte iniziali giocate di fronte
     private void contaElementoCentrale(String elemento) {
         if (!elemento.equals("Visibile")) {
             contatori.put(elemento, contatori.getOrDefault(elemento, 0) + 1);
         }
     }
 
-    // Metodo per resettare i contatori
+    public void decrementaContatore(String elemento) {
+        if (contatori.containsKey(elemento) && contatori.get(elemento) > 0) {
+            contatori.put(elemento, contatori.get(elemento) - 1);
+        }
+    }
+
     private void resetContatori() {
         for (String key : contatori.keySet()) {
             contatori.put(key, 0);
         }
     }
 
-    // Metodo per mostrare i valori attuali dei contatori
     public void mostraContatori() {
         System.out.println("Contatori:");
         for (Map.Entry<String, Integer> entry : contatori.entrySet()) {
