@@ -21,6 +21,18 @@ public class Main {
 		sc.close();
 		inizializzaMazzi();
 		
+		
+		/*Turno turno = new Turno(giocatori);
+		  
+		  while (!turno.isPartitaTerminata()) {
+            Giocatore giocatoreCorrente = turno.getGiocatoreCorrente();
+            System.out.println("È il turno di: " + giocatoreCorrente.getNome());
+            
+             turno.controllaPunteggio();
+            if (!turno.isPartitaTerminata()) {
+                turno.prossimoTurno();
+               }	
+		 */
 	}
 	
 	public static void inizializzaMazzi() {
