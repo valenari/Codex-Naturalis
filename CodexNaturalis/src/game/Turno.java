@@ -6,6 +6,7 @@ public class Turno {
 		
 	private Giocatore[] giocatori;
 	private int turnoCorrente;
+	private boolean partitaTerminata;
 	
 	public Turno(Giocatore[] giocatori) {
 		this.giocatori = giocatori;
@@ -20,9 +21,15 @@ public class Turno {
 	     turnoCorrente = (turnoCorrente + 1) % giocatori.length;
 	}
 	
-	/*public boolean controlloPunteggio() {
-		if(this.giocatori[turnoCorrente].getPunti()==20) {
-				if()
+	public boolean isPartitaTerminata() {
+        return partitaTerminata;
+    }
+	
+	public void controlloPunteggio() {
+		Giocatore giocatoreCorrente = getGiocatoreCorrente();
+        if (giocatoreCorrente.getPunti() >= 20) {
+            partitaTerminata = true;
+            System.out.println("La partita è terminata! Il vincitore è: " + giocatoreCorrente.getNome());
 		}
-	}*/
+	}
 }
