@@ -20,7 +20,7 @@ public class ObiettiviComuni {
     public void inizializza() {
         obiettivi.clear();
         for (int i = 0; i < 2; i++) {
-            obiettivi.add(mazzoObiettivi.pescaCarta());
+            obiettivi.add(mazzoObiettivi.pescaObiettivo());
         }
     }
 
