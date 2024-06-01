@@ -14,13 +14,14 @@ public class Giocatore {
     private ManoGiocatore manoGiocatore;
     private AreaDiGioco areaDiGioco;
     private AreaDiPesca areaDiPesca;
+    private CartaIniziale cartaIniziale;
 
     public Giocatore(String nome, MazzoCarte mazzoIniziale, MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro, boolean fronteIniziale) {
         this.nome = nome;
         this.punti = 0;
         this.contatori = new Contatori();
         this.manoGiocatore = new ManoGiocatore();
-        CartaIniziale cartaIniziale = (CartaIniziale) mazzoIniziale.pescaCarta();
+        this.cartaIniziale = (CartaIniziale) mazzoIniziale.pescaCarta();
         if (!fronteIniziale) {
             cartaIniziale.giraCarta();
         }

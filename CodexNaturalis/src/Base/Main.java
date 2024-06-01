@@ -17,7 +17,6 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		String risposta = sc.nextLine();
 		if (risposta.equalsIgnoreCase("0"))System.exit(0);
-		System.out.println("pappa");
 		sc.close();
 		inizializzaMazzi();
 		
