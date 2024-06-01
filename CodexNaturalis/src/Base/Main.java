@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import Modello_giocatore.AreaDiGioco;
+import Modello_giocatore.Giocatore;
 import cardsModel.MazzoCarte;
 
 public class Main {
@@ -17,39 +18,21 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		String risposta = sc.nextLine();
 		if (risposta.equalsIgnoreCase("0"))System.exit(0);
-		sc.close();
-		inizializzaMazzi();
 		
 		
-		/*Turno turno = new Turno(giocatori);
-		  
-		  while (!turno.isPartitaTerminata()) {
-            Giocatore giocatoreCorrente = turno.getGiocatoreCorrente();
-            System.out.println("È il turno di: " + giocatoreCorrente.getNome());
-            
-             turno.controllaPunteggio();
-            if (!turno.isPartitaTerminata()) {
-                turno.prossimoTurno();
-               }	
-		 */
-	}
-	
-	public static void inizializzaMazzi() {
 		//Creazione dei diversi mazzi
 		MazzoCarte mazzoIniziale = new MazzoCarte("Iniziale","src/fileCarte/CarteIniziali.txt");
         MazzoCarte mazzoRisorsa = new MazzoCarte("Risorsa","src/fileCarte/CarteRisorsa.txt");
         MazzoCarte mazzoOro = new MazzoCarte("Oro","src/fileCarte/CarteOro.txt");
         //Qui mazzo obbiettivi
-	}
-	
-	public static void creazioneGiocatori() {
+        
+        
 		// Creazione dei Giocatori
         List<String> nomiGiocatori = new ArrayList<>();
-        
         //List<Giocatore> giocatori = new ArrayList<>();
         
+        
         int g;
-        Scanner sc=new Scanner(System.in);
         do{
         	System.out.println("Inserisci il numero di giocatori (almeno 2 e massimo 4)");
             g=sc.nextInt();
@@ -58,13 +41,24 @@ public class Main {
         for(int i=0; i<g; i++) {
         	System.out.println("Inserisci il nome del Giocatore "+(i+1)+":");
         	String n=sc.next();
-        	nomiGiocatori.add(n);
-        }
+        	nomiGiocatori.add(n); }
         sc.close();
-	}
-	public static void creazioneAreeGioco() {
+        
+        
 		// Creazione dell'Area di gioco
         AreaDiGioco area1 = new AreaDiGioco();
+        
+        
+        Turno turno = new Turno();
+		
+		while (!turno.isPartitaTerminata()) {
+			Giocatore giocatoreCorrente = turno.getGiocatoreCorrente();
+			System.out.println("È il turno di: " + giocatoreCorrente.getNome());
+        
+         turno.controllaPunteggio();
+        if (!turno.isPartitaTerminata()) {
+            turno.prossimoTurno();
+           }	
 	}
 
 }
