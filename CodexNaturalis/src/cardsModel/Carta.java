@@ -1,55 +1,34 @@
 package cardsModel;
 
-import Modello_giocatore.Caselleproibite;
-
 public abstract class Carta {
     private int idCarta;
     private String tipoCarta;
     private String fronte;
     private String retro;
-    private Caselleproibite caselle;
     private boolean fronteCarta; // true se la carta è sul fronte, false se è sul retro
 
-    // Costruttore della classe Carta
-    public Carta(int idCarta, String tipoCarta, String fronte, String retro, Caselleproibite caselle) {
+    public Carta(int idCarta, String tipoCarta, String fronte, String retro) {
         this.idCarta = idCarta;
         this.tipoCarta = tipoCarta;
         this.fronte = fronte;
         this.retro = retro;
-        this.caselle = caselle;
         this.fronteCarta = true; // La carta è inizialmente sul fronte
     }
 
     public void giraCarta() {
-        String temp = this.fronte;
-        this.fronte = this.retro;
-        this.retro = temp;
+        this.fronteCarta = !this.fronteCarta;
     }
 
     public boolean isFronte() {
         return fronteCarta;
     }
 
- // Setter per fronte
-    public void setFronte(String fronte) {
-        this.fronte = fronte;
-    }
-
-    // Getter e setter per gli altri attributi
     public int getIdCarta() {
         return idCarta;
     }
 
-    public void setIdCarta(int idCarta) {
-        this.idCarta = idCarta;
-    }
-
     public String getTipoCarta() {
         return tipoCarta;
-    }
-
-    public void setTipoCarta(String tipoCarta) {
-        this.tipoCarta = tipoCarta;
     }
 
     public String getFronte() {
@@ -58,18 +37,6 @@ public abstract class Carta {
 
     public String getRetro() {
         return retro;
-    }
-
-    public void setRetro(String retro) {
-        this.retro = retro;
-    }
-
-    public Caselleproibite getCaselle() {
-        return caselle;
-    }
-
-    public void setCaselle(Caselleproibite caselle) {
-        this.caselle = caselle;
     }
 
     public String getAngolo(int indice) {
@@ -91,17 +58,100 @@ public abstract class Carta {
         }
     }
 
-    public void stampaCarta() {
-        System.out.println("ID: " + idCarta);
-        System.out.println("Tipo Carta: " + tipoCarta);
-        System.out.println("Fronte: " + fronte);
-        System.out.println("Retro: " + retro);
-        System.out.println("Caselle: " + caselle);
+    protected String getEmojiRegno(String regno) {
+        switch (regno) {
+            case "Vegetale":
+                return "☘️";
+            case "Fungo":
+                return "🍄";
+            case "Animale":
+                return "🐺";
+            case "Insetto":
+                return "🦋";
+            default:
+                return "";
+        }
+    }
+
+    protected String getEmojiAngolo(String angolo) {
+        switch (angolo) {
+            case "Vegetale":
+                return "☘️";
+            case "Fungo":
+                return "🍄";
+            case "Animale":
+                return "🐺";
+            case "Insetto":
+                return "🦋";
+            case "Piuma":
+                return "𓆰";
+            case "Pergamena":
+                return "📜";
+            case "Inchiostro":
+                return "🧪";
+            case "Visibile":
+                return "  ";
+            case "Nascosto":
+                return " ";
+            case "❌":
+                return "❌";
+            default:
+                return "";
+        }
+    }
+
+    protected String getEmojiPunti(int punti) {
+        switch (punti) {
+            case 1:
+                return "1";
+            case 2:
+                return "2";
+            case 3:
+                return "3";
+            case 4:
+                return "4";
+            case 5:
+                return "5";
+            default:
+                return "";
+        }
+    }
+
+    protected String getEmojiCriterio(String criterio) {
+        switch (criterio) {
+            case "Piuma":
+                return "𓆰";
+            case "Pergamena":
+                return "📜";
+            case "Inchiostro":
+                return "🧪";
+            case "Angoli":
+                return "『』";
+            default:
+                return "";
+        }
+    }
+
+    protected String getBordoAngolo(String angolo, boolean sinistra) {
+        if ("Nascosto".equals(angolo)) {
+            return "  ";
+        }
+        return sinistra ? "[" : "]";
+    }
+
+    protected String centraStringa(String str, int larghezza) {
+        int spazi = larghezza - str.length();
+        if (spazi <= 0) {
+            return str;
+        }
+        int spaziPrima = spazi / 2;
+        int spaziDopo = spazi - spaziPrima;
+        return " ".repeat(spaziPrima) + str + " ".repeat(spaziDopo);
     }
 
     @Override
     public String toString() {
-        return "ID: " + idCarta + "\nTipo Carta: " + tipoCarta + "\nFronte: " + fronte + "\nRetro: " + retro + "\nCaselle: " + caselle;
+        return String.format("ID: %d\nTipo Carta: %s\nFronte: %s\nRetro: %s", idCarta, tipoCarta, fronte, retro);
     }
 
     public abstract String toStringRetro();

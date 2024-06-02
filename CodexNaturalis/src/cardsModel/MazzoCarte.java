@@ -13,9 +13,7 @@ public class MazzoCarte {
         this.carte = new ArrayList<>();
         this.tipoMazzo = tipoMazzo;
         this.puntatore = 0;
-        //Riempimento Mazzo da file
         this.caricaCarteDaFile(filename);
-        //Mescola il Mazzo
         this.mescolaMazzo();
     }
 
@@ -44,21 +42,35 @@ public class MazzoCarte {
         Collections.shuffle(carte);
     }
 
-    public void caricaCarteDaFile(String filename) {
-        if (tipoMazzo.equals("Risorsa")) {
-            carte.addAll(CartaRisorsa.leggiCarteRisorsa(filename));
-        } else if (tipoMazzo.equals("Oro")) {
-            carte.addAll(CartaOro.leggiCarteOro(filename));
-        } else if (tipoMazzo.equals("Iniziale")) {
-            carte.addAll(CartaIniziale.leggiCarteIniziali(filename));
+    private void caricaCarteDaFile(String filename) {
+        switch (tipoMazzo) {
+            case "Risorsa":
+                carte.addAll(FileReaderUtil.leggiCarteRisorsa(filename));
+                break;
+            case "Oro":
+                carte.addAll(FileReaderUtil.leggiCarteOro(filename));
+                break;
+            case "Iniziale":
+                carte.addAll(FileReaderUtil.leggiCarteIniziali(filename));
+                break;
+            default:
+                throw new IllegalArgumentException("Tipo di mazzo non valido: " + tipoMazzo);
         }
     }
 
     public List<Carta> getCarte() {
-        return carte;
+        return new ArrayList<>(carte);
     }
 
     public String getTipoMazzo() {
         return tipoMazzo;
+    }
+
+    public int getCarteRimanenti() {
+        return carte.size() - puntatore;
+    }
+
+    public boolean isVuoto() {
+        return puntatore >= carte.size();
     }
 }

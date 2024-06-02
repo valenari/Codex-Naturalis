@@ -60,5 +60,5 @@ public class Main {
             turno.prossimoTurno();
            }	
 	}
-
+	}
 }
