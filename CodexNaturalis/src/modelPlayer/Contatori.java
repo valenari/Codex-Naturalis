@@ -14,10 +14,6 @@ public class Contatori {
 
     public Contatori() {
         contatori = new HashMap<>();
-        inizializzaContatori();
-    }
-
-    private void inizializzaContatori() {
         contatori.put("Vegetale", 0);
         contatori.put("Fungo", 0);
         contatori.put("Animale", 0);
@@ -31,8 +27,9 @@ public class Contatori {
         resetContatori();
         Carta[][] griglia = areaDiGioco.getGriglia();
 
-        for (Carta[] righe : griglia) {
-            for (Carta carta : righe) {
+        for (int i = 0; i < griglia.length; i++) {
+            for (int j = 0; j < griglia[i].length; j++) {
+                Carta carta = griglia[i][j];
                 if (carta != null) {
                     contaAngoli(carta);
 
@@ -75,7 +72,9 @@ public class Contatori {
     }
 
     public void decrementaContatore(String elemento) {
-        contatori.put(elemento, Math.max(contatori.getOrDefault(elemento, 0) - 1, 0));
+        if (contatori.containsKey(elemento) && contatori.get(elemento) > 0) {
+            contatori.put(elemento, contatori.get(elemento) - 1);
+        }
     }
 
     private void resetContatori() {
@@ -86,9 +85,11 @@ public class Contatori {
 
     public void mostraContatori() {
         System.out.println("Contatori:");
-        contatori.forEach((key, value) -> System.out.println(key + ": " + value));
+        for (Map.Entry<String, Integer> entry : contatori.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
-
+    
     public boolean verificaRisorse(List<String> risorseRichieste) {
         Map<String, Integer> contatoriTemp = new HashMap<>(contatori);
         for (String risorsa : risorseRichieste) {
@@ -98,5 +99,9 @@ public class Contatori {
             contatoriTemp.put(risorsa, contatoriTemp.get(risorsa) - 1);
         }
         return true;
+    }
+
+    public int getContatore(String elemento) {
+        return contatori.getOrDefault(elemento, 0);
     }
 }

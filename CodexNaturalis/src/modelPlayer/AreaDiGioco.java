@@ -2,20 +2,27 @@ package modelPlayer;
 
 import cardsModel.Carta;
 import cardsModel.CartaIniziale;
+import cardsModel.CartaRisorsa;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AreaDiGioco {
-    private Carta[][] griglia;
+    private Carta[][] griglia; 
     private int dimensione;
     private Contatori contatori;
+    private int angoliCoperti;
 
     public AreaDiGioco(CartaIniziale cartaIniziale, Contatori contatori) {
         this.dimensione = 3;
         this.griglia = new Carta[dimensione][dimensione];
         griglia[dimensione / 2][dimensione / 2] = cartaIniziale;
         this.contatori = contatori;
+        this.angoliCoperti = 0;
+    }
+    
+    public int getDimensione() {
+        return dimensione;
     }
 
     public CartaIniziale getCartaIniziale() {
@@ -35,8 +42,9 @@ public class AreaDiGioco {
             for (int j = 0; j < dimensione; j++) {
                 if (griglia[i][j] == null && isDiagonallyAdjacentAndValid(i, j)) {
                     if (count == posizione) {
+                        
                         griglia[i][j] = carta;
-                        copriAngoliAdiacenti(i, j);
+                        angoliCoperti += copriAngoliAdiacenti(i, j);
                         espandiGrigliaSeNecessario();
                         return;
                     }
@@ -157,7 +165,8 @@ public class AreaDiGioco {
         return carteVisibili;
     }
 
-    private void copriAngoliAdiacenti(int i, int j) {
+    private int copriAngoliAdiacenti(int i, int j) {
+        int angoliCoperti = 0;
         int[][] directions = {
                 {-1, -1, 3}, // Angolo in basso a destra della carta in alto a sinistra
                 {-1, 1, 2},  // Angolo in basso a sinistra della carta in alto a destra
@@ -176,12 +185,18 @@ public class AreaDiGioco {
                 if (!cartaAdiacente.isAngoloNascosto(angolo) && !angolo.equals("❌")) {
                     contatori.decrementaContatore(angolo);
                     cartaAdiacente.sostituisciAngolo(angoloDaCoprire, "❌");
+                    angoliCoperti++;
                 }
             }
         }
+        return angoliCoperti;
     }
 
     public Carta[][] getGriglia() {
         return griglia;
+    }
+
+    public int getAngoliCoperti() {
+        return angoliCoperti;
     }
 }

@@ -3,6 +3,7 @@ package game;
 import modelPlayer.Giocatore;
 
 public class Turno {
+
     private Giocatore[] giocatori;
     private int turnoCorrente;
     private boolean partitaTerminata;
@@ -25,7 +26,7 @@ public class Turno {
         return partitaTerminata;
     }
 
-    public void controlloPunteggio() {
+    public void controllaPunteggio() {
         Giocatore giocatoreCorrente = getGiocatoreCorrente();
         if (giocatoreCorrente.getPunti() >= 20) {
             partitaTerminata = true;

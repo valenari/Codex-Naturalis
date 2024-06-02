@@ -1,4 +1,4 @@
-package Base;
+package test;
 
 import modelPlayer.Giocatore;
 import cardsModel.MazzoCarte;
@@ -8,22 +8,15 @@ import util.StampaCarta;
 
 import java.util.Scanner;
 
-public class Main {
+public class TestGenerale {
     public static void main(String[] args) {
-        System.out.println("\n\t- 🍄 - ☘️ - CODEX NATURALIS - 🐺 - 🦋 -");
-        System.out.println("\t                 📜  𓆰  🧪\n\n");
-
-        System.out.println("Premere qualsiasi tasto per giocare, o premere 0 per uscire");
-        Scanner sc = new Scanner(System.in);
-        String risposta = sc.nextLine();
-        if (risposta.equalsIgnoreCase("0")) System.exit(0);
-
         // Creazione dei diversi mazzi
         MazzoCarte mazzoIniziale = new MazzoCarte("Iniziale", "src/fileCarte/CarteIniziali.txt");
         MazzoCarte mazzoRisorsa = new MazzoCarte("Risorsa", "src/fileCarte/CarteRisorsa.txt");
         MazzoCarte mazzoOro = new MazzoCarte("Oro", "src/fileCarte/CarteOro.txt");
 
         // Chiedi il numero di giocatori
+        Scanner sc = new Scanner(System.in);
         int numeroGiocatori;
         do {
             System.out.println("Inserisci il numero di giocatori (2-4):");
@@ -104,6 +97,7 @@ public class Main {
                 turno.prossimoTurno();
             }
 
+           
         }
 
         sc.close();

@@ -5,9 +5,8 @@ import cardsModel.CartaIniziale;
 import cardsModel.CartaOro;
 import cardsModel.CartaRisorsa;
 import cardsModel.MazzoCarte;
+import modelTavolo.Punteggio;
 import modelTavolo.AreaDiPesca;
-
-import java.util.Scanner;
 
 public class Giocatore {
     private String nome;
@@ -16,14 +15,13 @@ public class Giocatore {
     private ManoGiocatore manoGiocatore;
     private AreaDiGioco areaDiGioco;
     private AreaDiPesca areaDiPesca;
-    private Scanner scanner;
 
     public Giocatore(String nome, CartaIniziale cartaIniziale, MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro, boolean fronteIniziale) {
         this.nome = nome;
         this.punti = 0;
         this.contatori = new Contatori();
         this.manoGiocatore = new ManoGiocatore();
-        this.scanner = new Scanner(System.in);
+
         if (!fronteIniziale) {
             cartaIniziale.giraCarta();
         }
@@ -50,55 +48,47 @@ public class Giocatore {
 
     public void mostraAreaDiGioco() {
         areaDiGioco.visualizzaGriglia();
+        aggiornaContatori();
     }
 
     public void mostraMano() {
         manoGiocatore.stampaMano();
     }
 
-    public void giocaCarta(int indiceCartaMano, int posizioneGriglia, boolean fronte) {
+    public boolean giocaCarta(int indiceCartaMano, int posizioneGriglia, boolean fronte) {
         Carta cartaDaGiocare = manoGiocatore.getCarta(indiceCartaMano);
 
-        // Verifica se è una carta oro e se il giocatore ha abbastanza risorse
         if (cartaDaGiocare instanceof CartaOro && fronte) {
             CartaOro cartaOro = (CartaOro) cartaDaGiocare;
             if (!verificaRisorse(cartaOro)) {
-                System.out.println("Non hai abbastanza risorse per giocare questa carta oro di fronte.");
-                scegliAltraCarta();
-                return;
+                System.out.println("Non hai abbastanza risorse per giocare questa carta oro di fronte. Scegli un'altra carta.");
+                return false;
             }
         }
 
         Carta cartaGiocata = manoGiocatore.rimuoviCarta(indiceCartaMano);
         if (cartaGiocata != null) {
-            if (!fronte) {
+        	if (!fronte) {
                 cartaGiocata.giraCarta();
             }
+        	
             areaDiGioco.posizionaCarta(cartaGiocata, posizioneGriglia, fronte);
+
+            if (fronte) {
+                int puntiGuadagnati = 0;
+                if (cartaGiocata instanceof CartaRisorsa) {
+                    puntiGuadagnati = Punteggio.calcolaPuntiCartaRisorsa((CartaRisorsa) cartaGiocata);
+                } else if (cartaGiocata instanceof CartaOro) {
+                    puntiGuadagnati = Punteggio.calcolaPuntiCartaOro((CartaOro) cartaGiocata, contatori, areaDiGioco);
+                }
+                aggiungiPunti(puntiGuadagnati);
+            }
+            
+
+            return true;
         } else {
             System.out.println("Carta non valida.");
-        }
-    }
-
-    private void scegliAltraCarta() {
-        boolean cartaGiocata = false;
-        while (!cartaGiocata) {
-            System.out.println("\nScegli un'altra carta da giocare (1-3):");
-            int cartaDaGiocare = scanner.nextInt() - 1;
-
-            System.out.println("Vuoi giocare la carta di fronte (1) o di retro (2)?");
-            boolean fronte = scanner.nextInt() == 1;
-
-            System.out.println("Scegli la posizione (numero casella disponibile):");
-            int posizione = scanner.nextInt();
-
-            Carta cartaDaTentare = manoGiocatore.getCarta(cartaDaGiocare);
-            if (!(cartaDaTentare instanceof CartaOro && fronte) || verificaRisorse((CartaOro) cartaDaTentare)) {
-                giocaCarta(cartaDaGiocare, posizione, fronte);
-                cartaGiocata = true;
-            } else {
-                System.out.println("Non hai abbastanza risorse per giocare questa carta oro di fronte. Scegli un'altra carta.");
-            }
+            return false;
         }
     }
 
@@ -106,16 +96,20 @@ public class Giocatore {
         return contatori.verificaRisorse(cartaOro.getRisorseRichieste());
     }
 
+    private void aggiornaContatori() {
+        contatori.aggiornaContatori(areaDiGioco);
+    }
+
     public void mostraAreaDiPesca() {
         areaDiPesca.mostraAreaDiPesca();
     }
 
     public void pescaCarta(int indiceCartaPesca) {
-        Carta cartaPescata = areaDiPesca.pescaCarta(indiceCartaPesca - 1); // Adjusting index for 0-based list
-        if (cartaPescata != null) {
-            manoGiocatore.aggiungiCarta(cartaPescata);
-        } else {
-            System.out.println("Carta non valida o indice fuori dai limiti.");
-        }
+        Carta cartaPescata = areaDiPesca.pescaCarta(indiceCartaPesca);
+        manoGiocatore.aggiungiCarta(cartaPescata);
+    }
+
+    public void mostraContatori() {
+        contatori.mostraContatori();
     }
 }
