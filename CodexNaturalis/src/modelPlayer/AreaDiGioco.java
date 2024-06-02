@@ -199,4 +199,29 @@ public class AreaDiGioco {
     public int getAngoliCoperti() {
         return angoliCoperti;
     }
+
+    public int[] getCentro() {
+        return new int[] { dimensione / 2, dimensione / 2 };
+    }
+    
+    public Carta getCartaInPosizione(int x, int y) {
+        if (x >= 0 && x < dimensione && y >= 0 && y < dimensione) {
+            return griglia[x][y];
+        }
+        return null;
+    }
+
+    public boolean verificaCartaInPosizione(int riga, int colonna, String tipo) {
+        if (riga < 0 || riga >= dimensione || colonna < 0 || colonna >= dimensione) {
+            return false;
+        }
+        Carta carta = griglia[riga][colonna];
+        if (carta == null) {
+            return false;
+        }
+        if (carta instanceof CartaIniziale) {
+            return ((CartaIniziale) carta).getCentrale().contains(tipo);
+        }
+        return carta.getTipoCarta().equals(tipo);
+    }
 }

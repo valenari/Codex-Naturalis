@@ -5,8 +5,11 @@ import cardsModel.CartaIniziale;
 import cardsModel.CartaOro;
 import cardsModel.CartaRisorsa;
 import cardsModel.MazzoCarte;
-import modelTavolo.Punteggio;
+import modelObiettivi.Obiettivo;
 import modelTavolo.AreaDiPesca;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Giocatore {
     private String nome;
@@ -15,19 +18,22 @@ public class Giocatore {
     private ManoGiocatore manoGiocatore;
     private AreaDiGioco areaDiGioco;
     private AreaDiPesca areaDiPesca;
+    private CartaIniziale cartaIniziale;
+    private Obiettivo obiettivoSegreto;
 
-    public Giocatore(String nome, CartaIniziale cartaIniziale, MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro, boolean fronteIniziale) {
+    public Giocatore(String nome, MazzoCarte mazzoIniziale, MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro, boolean fronteIniziale) {
         this.nome = nome;
         this.punti = 0;
         this.contatori = new Contatori();
         this.manoGiocatore = new ManoGiocatore();
-
+        this.cartaIniziale = (CartaIniziale) mazzoIniziale.pescaCarta();
         if (!fronteIniziale) {
             cartaIniziale.giraCarta();
         }
         this.areaDiGioco = new AreaDiGioco(cartaIniziale, contatori);
         this.areaDiPesca = new AreaDiPesca(mazzoRisorsa.getCarte(), mazzoOro.getCarte());
 
+        // Pesca le prime carte per la mano del giocatore
         for (int i = 0; i < 2; i++) {
             manoGiocatore.aggiungiCarta((CartaRisorsa) mazzoRisorsa.pescaCarta());
         }
@@ -61,34 +67,40 @@ public class Giocatore {
         if (cartaDaGiocare instanceof CartaOro && fronte) {
             CartaOro cartaOro = (CartaOro) cartaDaGiocare;
             if (!verificaRisorse(cartaOro)) {
-                System.out.println("Non hai abbastanza risorse per giocare questa carta oro di fronte. Scegli un'altra carta.");
+                System.out.println("Non hai abbastanza risorse per giocare questa carta oro di fronte.");
                 return false;
             }
         }
 
         Carta cartaGiocata = manoGiocatore.rimuoviCarta(indiceCartaMano);
         if (cartaGiocata != null) {
-        	if (!fronte) {
+            if (!fronte) {
                 cartaGiocata.giraCarta();
             }
-        	
             areaDiGioco.posizionaCarta(cartaGiocata, posizioneGriglia, fronte);
-
             if (fronte) {
-                int puntiGuadagnati = 0;
                 if (cartaGiocata instanceof CartaRisorsa) {
-                    puntiGuadagnati = Punteggio.calcolaPuntiCartaRisorsa((CartaRisorsa) cartaGiocata);
+                    aggiungiPunti(((CartaRisorsa) cartaGiocata).getPunti());
                 } else if (cartaGiocata instanceof CartaOro) {
-                    puntiGuadagnati = Punteggio.calcolaPuntiCartaOro((CartaOro) cartaGiocata, contatori, areaDiGioco);
+                    aggiungiPunti(calcolaPuntiCartaOro((CartaOro) cartaGiocata));
                 }
-                aggiungiPunti(puntiGuadagnati);
             }
-            
-
             return true;
         } else {
             System.out.println("Carta non valida.");
             return false;
+        }
+    }
+    
+    private int calcolaPuntiCartaOro(CartaOro cartaOro) {
+        int punti = cartaOro.getPunti();
+        String criterio = cartaOro.getCriterioPunti();
+        if (criterio.equals("Oggetto")) {
+            return punti * contatori.getContatore(cartaOro.getTipoRegno());
+        } else if (criterio.equals("Angoli")) {
+            return punti * areaDiGioco.getAngoliCoperti();
+        } else {
+            return punti;
         }
     }
 
@@ -111,5 +123,26 @@ public class Giocatore {
 
     public void mostraContatori() {
         contatori.mostraContatori();
+    }
+
+    public void setObiettivoSegreto(Obiettivo obiettivoSegreto) {
+        this.obiettivoSegreto = obiettivoSegreto;
+    }
+
+    public Obiettivo getObiettivoSegreto() {
+        return obiettivoSegreto;
+    }
+
+    public int calcolaPuntiObiettivi(List<Obiettivo> obiettiviComuni) {
+        int punti = 0;
+        for (Obiettivo obiettivo : obiettiviComuni) {
+            if (obiettivo.verificaObiettivo(areaDiGioco, contatori)) {
+                punti += obiettivo.getPunti();
+            }
+        }
+        if (obiettivoSegreto.verificaObiettivo(areaDiGioco, contatori)) {
+            punti += obiettivoSegreto.getPunti();
+        }
+        return punti;
     }
 }

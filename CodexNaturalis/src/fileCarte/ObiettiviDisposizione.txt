@@ -1,0 +1,39 @@
+Obbiettivo 1
+Sequenza: Fungo-Fungo-Fungo
+Posizioni: [0,0] [1,1] [2,2]
+Punti: 2
+
+Obbiettivo 2
+Sequenza: Vegetale-Vegetale-Vegetale
+Posizioni: [0,0] [-1,1] [-2,2]
+Punti: 2
+
+Obbiettivo 3
+Sequenza: Animale-Animale-Animale
+Posizioni: [0,0] [1,1] [2,2]
+Punti: 2
+
+Obbiettivo 4
+Sequenza: Insetto-Insetto-Insetto
+Posizioni: [0,0] [-1,1] [-2,2]
+Punti: 2
+
+Obbiettivo 5
+Sequenza: Fungo-Fungo-Vegetale
+Posizioni: [0,0] [0,2] [1,-1]
+Punti: 3
+
+Obbiettivo 6
+Sequenza: Vegetale-Vegetale-Insetto
+Posizioni: [0,0] [0,2] [-1,-1]
+Punti: 3
+
+Obbiettivo 7
+Sequenza: Animale-Animale-Fungo
+Posizioni: [0,0] [0,2] [1,3]
+Punti: 3
+
+Obbiettivo 8
+Sequenza: Insetto-Insetto-Animale
+Posizioni: [0,0] [0,2] [-1,3]
+Punti: 3

@@ -1,11 +1,14 @@
 package Base;
 
+import modelObiettivi.MazzoObiettivi;
+import modelObiettivi.Obiettivo;
 import modelPlayer.Giocatore;
+import modelPlayer.Contatori;
 import cardsModel.MazzoCarte;
-import cardsModel.CartaIniziale;
 import game.Turno;
-import util.StampaCarta;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -13,8 +16,9 @@ public class Main {
         System.out.println("\n\t- 🍄 - ☘️ - CODEX NATURALIS - 🐺 - 🦋 -");
         System.out.println("\t                 📜  𓆰  🧪\n\n");
 
-        System.out.println("Premere qualsiasi tasto per giocare, o premere 0 per uscire");
         Scanner sc = new Scanner(System.in);
+
+        System.out.println("Premere qualsiasi tasto per giocare, o premere 0 per uscire");
         String risposta = sc.nextLine();
         if (risposta.equalsIgnoreCase("0")) System.exit(0);
 
@@ -23,54 +27,60 @@ public class Main {
         MazzoCarte mazzoRisorsa = new MazzoCarte("Risorsa", "src/fileCarte/CarteRisorsa.txt");
         MazzoCarte mazzoOro = new MazzoCarte("Oro", "src/fileCarte/CarteOro.txt");
 
-        // Chiedi il numero di giocatori
-        int numeroGiocatori;
+        // Creazione del mazzo obiettivi
+        String filenameDisposizione = "src/fileCarte/ObiettiviDisposizione.txt";
+        String filenameRisorse = "src/fileCarte/ObiettiviRisorse.txt";
+        MazzoObiettivi mazzoObiettivi = new MazzoObiettivi(filenameDisposizione, filenameRisorse);
+
+        // Creazione dei Giocatori
+        List<Giocatore> giocatori = new ArrayList<>();
+        int g;
         do {
-            System.out.println("Inserisci il numero di giocatori (2-4):");
-            numeroGiocatori = sc.nextInt();
-            if (numeroGiocatori < 2 || numeroGiocatori > 4) {
-                System.out.println("Numero di giocatori non valido. Per favore inserisci un numero tra 2 e 4.");
-            }
-        } while (numeroGiocatori < 2 || numeroGiocatori > 4);
+            System.out.println("Inserisci il numero di giocatori (almeno 2 e massimo 4)");
+            g = sc.nextInt();
+            if (g < 2 || g > 4) System.out.println("ERRORE: il numero di giocatori non è valido");
+        } while (g < 2 || g > 4);
 
-        // Creazione dei giocatori
-        Giocatore[] giocatori = new Giocatore[numeroGiocatori];
-        for (int i = 0; i < numeroGiocatori; i++) {
-            sc.nextLine(); // Consuma il newline rimasto
+        sc.nextLine(); // Consume newline
+
+        for (int i = 0; i < g; i++) {
             System.out.println("Inserisci il nome del Giocatore " + (i + 1) + ":");
-            String nomeGiocatore = sc.nextLine();
-
-            // Pesca una carta iniziale per mostrare fronte e retro
-            CartaIniziale cartaInizialeTemp = (CartaIniziale) mazzoIniziale.pescaCarta();
-            System.out.println("Fronte e Retro della carta iniziale:");
-            StampaCarta.stampaOrizzontalmente(cartaInizialeTemp);
-
+            String nome = sc.nextLine();
             System.out.println("Vuoi posizionare la carta iniziale di fronte (1) o di retro (2)?");
             boolean fronteIniziale = sc.nextInt() == 1;
+            sc.nextLine(); // Consume newline
 
-            if (!fronteIniziale) {
-                cartaInizialeTemp.giraCarta();
+            Giocatore giocatore = new Giocatore(nome, mazzoIniziale, mazzoRisorsa, mazzoOro, fronteIniziale);
+
+            List<Obiettivo> obiettiviGiocatore = mazzoObiettivi.pescaObiettivi(2);
+            System.out.println("Obiettivi segreti per " + nome + ":");
+            for (int j = 0; j < obiettiviGiocatore.size(); j++) {
+                System.out.println((j + 1) + ". " + obiettiviGiocatore.get(j));
             }
 
-            giocatori[i] = new Giocatore(nomeGiocatore, cartaInizialeTemp, mazzoRisorsa, mazzoOro, fronteIniziale);
+            System.out.println("Scegli il tuo obiettivo segreto (1 o 2):");
+            int sceltaObiettivo = sc.nextInt() - 1;
+            sc.nextLine(); // Consume newline
+
+            giocatore.setObiettivoSegreto(obiettiviGiocatore.get(sceltaObiettivo));
+            giocatori.add(giocatore);
         }
 
-        // Creazione e gestione dei turni
-        Turno turno = new Turno(giocatori);
+        // Pesca due obiettivi comuni
+        List<Obiettivo> obiettiviComuni = mazzoObiettivi.pescaObiettivi(2);
+        System.out.println("Obiettivi comuni:");
+        for (Obiettivo obiettivo : obiettiviComuni) {
+            System.out.println(obiettivo);
+        }
+
+        Turno turno = new Turno(giocatori, obiettiviComuni);
 
         while (!turno.isPartitaTerminata()) {
             Giocatore giocatoreCorrente = turno.getGiocatoreCorrente();
             System.out.println("È il turno di: " + giocatoreCorrente.getNome());
 
-            System.out.println("Punteggio: " + giocatoreCorrente.getPunti());
-
-            System.out.println("Area di Gioco:");
             giocatoreCorrente.mostraAreaDiGioco();
-
-            System.out.println("\nMano Giocatore:");
             giocatoreCorrente.mostraMano();
-
-            giocatoreCorrente.mostraContatori();
 
             boolean cartaGiocata = false;
             while (!cartaGiocata) {
@@ -83,8 +93,9 @@ public class Main {
                 System.out.println("Scegli la posizione (numero casella disponibile):");
                 int posizione = sc.nextInt();
 
-                if (giocatoreCorrente.giocaCarta(cartaDaGiocare, posizione, fronte)) {
-                    cartaGiocata = true;
+                cartaGiocata = giocatoreCorrente.giocaCarta(cartaDaGiocare, posizione, fronte);
+                if (!cartaGiocata) {
+                    System.out.println("Non è possibile giocare la carta selezionata. Riprova.");
                 }
             }
 
@@ -93,7 +104,6 @@ public class Main {
 
             System.out.println("\nScegli una carta da pescare (1-6):");
             int cartaDaPescare = sc.nextInt();
-
             giocatoreCorrente.pescaCarta(cartaDaPescare);
 
             System.out.println("\nMano Giocatore aggiornata:");
@@ -103,7 +113,6 @@ public class Main {
             if (!turno.isPartitaTerminata()) {
                 turno.prossimoTurno();
             }
-
         }
 
         sc.close();

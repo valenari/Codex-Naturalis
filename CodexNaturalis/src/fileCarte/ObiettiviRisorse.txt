@@ -1,0 +1,39 @@
+Obbiettivo 9
+Quantità: 3
+Tipo: Fungo
+Punti: 2
+
+Obbiettivo 10
+Quantità: 3
+Tipo: Vegetale
+Punti: 2
+
+Obbiettivo 11
+Quantità: 3
+Tipo: Animale
+Punti: 2
+
+Obbiettivo 12
+Quantità: 3
+Tipo: Insetto
+Punti: 2
+
+Obbiettivo 13
+Quantità: 1 1 1
+Tipo: Piuma Inchiostro Pergamena
+Punti: 3
+
+Obbiettivo 14
+Quantità: 3
+Tipo: Pergamena
+Punti: 2
+
+Obbiettivo 15
+Quantità: 3
+Tipo: Inchiostro
+Punti: 2
+
+Obbiettivo 16
+Quantità: 3
+Tipo: Piuma
+Punti: 2
