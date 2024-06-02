@@ -5,10 +5,9 @@ import cardsModel.CartaIniziale;
 import cardsModel.CartaOro;
 import cardsModel.CartaRisorsa;
 import cardsModel.MazzoCarte;
-import modelObiettivi.Obiettivo;
 import modelTavolo.AreaDiPesca;
+import modelObiettivi.Obiettivo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Giocatore {
@@ -20,6 +19,7 @@ public class Giocatore {
     private AreaDiPesca areaDiPesca;
     private CartaIniziale cartaIniziale;
     private Obiettivo obiettivoSegreto;
+    private int obiettiviRaggiunti;
 
     public Giocatore(String nome, MazzoCarte mazzoIniziale, MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro, boolean fronteIniziale) {
         this.nome = nome;
@@ -27,6 +27,7 @@ public class Giocatore {
         this.contatori = new Contatori();
         this.manoGiocatore = new ManoGiocatore();
         this.cartaIniziale = (CartaIniziale) mazzoIniziale.pescaCarta();
+        this.obiettiviRaggiunti = 0;
         if (!fronteIniziale) {
             cartaIniziale.giraCarta();
         }
@@ -78,32 +79,18 @@ public class Giocatore {
                 cartaGiocata.giraCarta();
             }
             areaDiGioco.posizionaCarta(cartaGiocata, posizioneGriglia, fronte);
-            if (fronte) {
-                if (cartaGiocata instanceof CartaRisorsa) {
-                    aggiungiPunti(((CartaRisorsa) cartaGiocata).getPunti());
-                } else if (cartaGiocata instanceof CartaOro) {
-                    aggiungiPunti(calcolaPuntiCartaOro((CartaOro) cartaGiocata));
-                }
-            }
-            return true;
         } else {
             System.out.println("Carta non valida.");
             return false;
         }
+
+        if (fronte && cartaGiocata instanceof CartaRisorsa) {
+            aggiungiPunti(((CartaRisorsa) cartaGiocata).getPunti());
+        }
+
+        return true;
     }
     
-    private int calcolaPuntiCartaOro(CartaOro cartaOro) {
-        int punti = cartaOro.getPunti();
-        String criterio = cartaOro.getCriterioPunti();
-        if (criterio.equals("Oggetto")) {
-            return punti * contatori.getContatore(cartaOro.getTipoRegno());
-        } else if (criterio.equals("Angoli")) {
-            return punti * areaDiGioco.getAngoliCoperti();
-        } else {
-            return punti;
-        }
-    }
-
     public boolean verificaRisorse(CartaOro cartaOro) {
         return contatori.verificaRisorse(cartaOro.getRisorseRichieste());
     }
@@ -125,24 +112,39 @@ public class Giocatore {
         contatori.mostraContatori();
     }
 
-    public void setObiettivoSegreto(Obiettivo obiettivoSegreto) {
-        this.obiettivoSegreto = obiettivoSegreto;
+    public CartaIniziale getCartaIniziale() {
+        return cartaIniziale;
+    }
+
+    public void setObiettivoSegreto(Obiettivo obiettivo) {
+        this.obiettivoSegreto = obiettivo;
     }
 
     public Obiettivo getObiettivoSegreto() {
         return obiettivoSegreto;
     }
 
-    public int calcolaPuntiObiettivi(List<Obiettivo> obiettiviComuni) {
-        int punti = 0;
-        for (Obiettivo obiettivo : obiettiviComuni) {
-            if (obiettivo.verificaObiettivo(areaDiGioco, contatori)) {
-                punti += obiettivo.getPunti();
-            }
-        }
-        if (obiettivoSegreto.verificaObiettivo(areaDiGioco, contatori)) {
-            punti += obiettivoSegreto.getPunti();
-        }
-        return punti;
+    public int getObiettiviRaggiunti() {
+        return obiettiviRaggiunti;
+    }
+
+    public void incrementaObiettiviRaggiunti() {
+        this.obiettiviRaggiunti++;
+    }
+
+    public AreaDiGioco getAreaDiGioco() {
+        return areaDiGioco;
+    }
+
+    public Contatori getContatori() {
+        return contatori;
+    }
+
+    public boolean isMazzoRisorsaVuoto() {
+        return areaDiPesca.isMazzoRisorsaVuoto();
+    }
+
+    public boolean isMazzoOroVuoto() {
+        return areaDiPesca.isMazzoOroVuoto();
     }
 }

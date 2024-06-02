@@ -1,4 +1,4 @@
-package modelPlayer;
+package util;
 
 public class Punteggio {
 

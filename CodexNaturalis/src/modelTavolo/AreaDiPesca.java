@@ -51,25 +51,17 @@ public class AreaDiPesca {
     public Carta pescaCarta(int indice) {
         Carta cartaPescata = null;
         if (indice == 0) {
-            if (!mazzoRisorsaCoperto.isEmpty()) {
-                cartaPescata = mazzoRisorsaCoperto.remove(0);
-                pescaCartaDalMazzoRisorsa();
-            }
-        } else if (indice >= 1 && indice <= 2) {
-            if (indice - 1 < carteRisorsaVisibili.size()) {
-                cartaPescata = carteRisorsaVisibili.remove(indice - 1);
-                pescaCartaDalMazzoRisorsa();
-            }
+            cartaPescata = mazzoRisorsaCoperto.remove(0);
+            pescaCartaDalMazzoRisorsa();
+        } else if (indice == 1 || indice == 2) {
+            cartaPescata = carteRisorsaVisibili.remove(indice - 1);
+            pescaCartaDalMazzoRisorsa();
         } else if (indice == 3) {
-            if (!mazzoOroCoperto.isEmpty()) {
-                cartaPescata = mazzoOroCoperto.remove(0);
-                pescaCartaDalMazzoOro();
-            }
-        } else if (indice >= 4 && indice <= 5) {
-            if (indice - 4 < carteOroVisibili.size()) {
-                cartaPescata = carteOroVisibili.remove(indice - 4);
-                pescaCartaDalMazzoOro();
-            }
+            cartaPescata = mazzoOroCoperto.remove(0);
+            pescaCartaDalMazzoOro();
+        } else if (indice == 4 || indice == 5) {
+            cartaPescata = carteOroVisibili.remove(indice - 4);
+            pescaCartaDalMazzoOro();
         }
         return cartaPescata;
     }
@@ -80,5 +72,13 @@ public class AreaDiPesca {
 
         System.out.println("\nCarte Oro Visibili:");
         StampaCarta.stampaAreaDiPesca(carteOroVisibili, mazzoOroCoperto, false);
+    }
+
+    public boolean isMazzoRisorsaVuoto() {
+        return mazzoRisorsaCoperto.isEmpty() && carteRisorsaVisibili.isEmpty();
+    }
+
+    public boolean isMazzoOroVuoto() {
+        return mazzoOroCoperto.isEmpty() && carteOroVisibili.isEmpty();
     }
 }
