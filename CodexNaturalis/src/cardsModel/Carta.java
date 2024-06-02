@@ -16,7 +16,9 @@ public abstract class Carta {
     }
 
     public void giraCarta() {
-        this.fronteCarta = !this.fronteCarta;
+    	 String temp = this.fronte;
+         this.fronte = this.retro;
+         this.retro = temp;
     }
 
     public boolean isFronte() {

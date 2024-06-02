@@ -1,4 +1,4 @@
-package Modello_giocatore;
+package modelPlayer;
 
 import cardsModel.Carta;
 import cardsModel.CartaIniziale;
@@ -14,6 +14,10 @@ public class Contatori {
 
     public Contatori() {
         contatori = new HashMap<>();
+        inizializzaContatori();
+    }
+
+    private void inizializzaContatori() {
         contatori.put("Vegetale", 0);
         contatori.put("Fungo", 0);
         contatori.put("Animale", 0);
@@ -27,9 +31,8 @@ public class Contatori {
         resetContatori();
         Carta[][] griglia = areaDiGioco.getGriglia();
 
-        for (int i = 0; i < griglia.length; i++) {
-            for (int j = 0; j < griglia[i].length; j++) {
-                Carta carta = griglia[i][j];
+        for (Carta[] righe : griglia) {
+            for (Carta carta : righe) {
                 if (carta != null) {
                     contaAngoli(carta);
 
@@ -72,9 +75,7 @@ public class Contatori {
     }
 
     public void decrementaContatore(String elemento) {
-        if (contatori.containsKey(elemento) && contatori.get(elemento) > 0) {
-            contatori.put(elemento, contatori.get(elemento) - 1);
-        }
+        contatori.put(elemento, Math.max(contatori.getOrDefault(elemento, 0) - 1, 0));
     }
 
     private void resetContatori() {
@@ -85,11 +86,9 @@ public class Contatori {
 
     public void mostraContatori() {
         System.out.println("Contatori:");
-        for (Map.Entry<String, Integer> entry : contatori.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
+        contatori.forEach((key, value) -> System.out.println(key + ": " + value));
     }
-    
+
     public boolean verificaRisorse(List<String> risorseRichieste) {
         Map<String, Integer> contatoriTemp = new HashMap<>(contatori);
         for (String risorsa : risorseRichieste) {

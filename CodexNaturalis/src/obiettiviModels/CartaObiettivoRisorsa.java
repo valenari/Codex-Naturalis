@@ -1,6 +1,5 @@
 package obiettiviModels;
 
-import Modello_giocatore.Caselleproibite;
 import cardsModel.Carta;
 
 import java.io.BufferedReader;
@@ -58,7 +57,6 @@ public class CartaObiettivoRisorsa {
             int quantita = 0;
             String tipo = null;
             int punti = 0;
-            Caselleproibite caselle = Caselleproibite.NULL; // Placeholder, modificare secondo necessità
 
             while ((linea = br.readLine()) != null) {
                 if (linea.startsWith("Obbiettivo ")) {

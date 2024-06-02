@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import util.FileReaderUtil;
+
 public class MazzoCarte {
     private List<Carta> carte;
     private int puntatore;

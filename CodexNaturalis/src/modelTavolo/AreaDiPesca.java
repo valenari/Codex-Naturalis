@@ -1,8 +1,8 @@
 package modelTavolo;
 
+import cardsModel.Carta;
 import cardsModel.CartaOro;
 import cardsModel.CartaRisorsa;
-import cardsModel.Carta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,16 +49,16 @@ public class AreaDiPesca {
 
     public Carta pescaCarta(int indice) {
         Carta cartaPescata = null;
-        if (indice == 0) {
+        if (indice == 0 && !mazzoRisorsaCoperto.isEmpty()) {
             cartaPescata = mazzoRisorsaCoperto.remove(0);
             pescaCartaDalMazzoRisorsa();
-        } else if (indice == 1 || indice == 2) {
+        } else if ((indice == 1 || indice == 2) && indice - 1 < carteRisorsaVisibili.size()) {
             cartaPescata = carteRisorsaVisibili.remove(indice - 1);
             pescaCartaDalMazzoRisorsa();
-        } else if (indice == 3) {
+        } else if (indice == 3 && !mazzoOroCoperto.isEmpty()) {
             cartaPescata = mazzoOroCoperto.remove(0);
             pescaCartaDalMazzoOro();
-        } else if (indice == 4 || indice == 5) {
+        } else if ((indice == 4 || indice == 5) && indice - 4 < carteOroVisibili.size()) {
             cartaPescata = carteOroVisibili.remove(indice - 4);
             pescaCartaDalMazzoOro();
         }
@@ -67,48 +67,9 @@ public class AreaDiPesca {
 
     public void mostraAreaDiPesca() {
         System.out.println("Carte Risorsa Visibili:");
-        stampaCarteOrizzontalmente(carteRisorsaVisibili, mazzoRisorsaCoperto, true);
+        util.StampaCarta.stampaAreaDiPesca(carteRisorsaVisibili, mazzoRisorsaCoperto, true);
 
         System.out.println("\nCarte Oro Visibili:");
-        stampaCarteOrizzontalmente(carteOroVisibili, mazzoOroCoperto, false);
-    }
-
-    private void stampaCarteOrizzontalmente(List<? extends Carta> carte, List<? extends Carta> mazzoCoperto, boolean isRisorsa) {
-        List<String[]> carteStringhe = new ArrayList<>();
-        int maxLines = 0;
-
-        if (!mazzoCoperto.isEmpty()) {
-            carteStringhe.add(aggiungiNumeroAStringa(mazzoCoperto.get(0).toStringRetro().split("\n"), isRisorsa ? 1 : 4));
-            maxLines = Math.max(maxLines, carteStringhe.get(0).length);
-        }
-
-        for (int i = 0; i < carte.size(); i++) {
-            String[] righe = aggiungiNumeroAStringa(carte.get(i).toString().split("\n"), isRisorsa ? i + 2 : i + 5);
-            carteStringhe.add(righe);
-            maxLines = Math.max(maxLines, righe.length);
-        }
-
-        for (int line = 0; line < maxLines; line++) {
-            for (int i = 0; i < carteStringhe.size(); i++) {
-                String[] righe = carteStringhe.get(i);
-                if (line < righe.length) {
-                    System.out.print(righe[line]);
-                } else {
-                    System.out.print(" ".repeat(28));
-                }
-                System.out.print("\t");
-            }
-            System.out.println();
-        }
-    }
-
-    private String[] aggiungiNumeroAStringa(String[] righe, int numero) {
-        String numeroStringa = "{" + numero + "}";
-        int centro = righe[righe.length - 1].length() / 2;
-        int start = centro - numeroStringa.length() / 2;
-        StringBuilder sb = new StringBuilder(righe[righe.length - 1]);
-        sb.replace(start, start + numeroStringa.length(), numeroStringa);
-        righe[righe.length - 1] = sb.toString();
-        return righe;
+        util.StampaCarta.stampaAreaDiPesca(carteOroVisibili, mazzoOroCoperto, false);
     }
 }
