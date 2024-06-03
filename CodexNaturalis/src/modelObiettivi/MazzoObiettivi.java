@@ -7,10 +7,10 @@ import java.util.Stack;
 public class MazzoObiettivi {
     private Stack<Obiettivo> mazzo;
 
-    public MazzoObiettivi(String fileDisposizione, String fileRisorse) {
-        CaricatoreObiettivi caricatore = new CaricatoreObiettivi();
-        List<Obiettivo> obiettiviDisposizione = caricatore.caricaObiettiviDisposizione(fileDisposizione);
-        List<Obiettivo> obiettiviRisorse = caricatore.caricaObiettiviRisorse(fileRisorse);
+    public MazzoObiettivi(){
+    	CaricatoreObiettivi caricatoreObiettivi = new CaricatoreObiettivi();
+        List<Obiettivo> obiettiviDisposizione = caricatoreObiettivi.caricaObiettiviDisposizione("src/fileCarte/ObiettiviDisposizione.txt");
+        List<Obiettivo> obiettiviRisorse = caricatoreObiettivi.caricaObiettiviRisorse("src/fileCarte/ObiettiviRisorse.txt");
 
         mazzo = new Stack<>();
         mazzo.addAll(obiettiviDisposizione);
