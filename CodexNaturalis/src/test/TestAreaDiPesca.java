@@ -1,53 +1,31 @@
 package test;
 
-import cardsModel.*;
+import cardsModel.MazzoCarte;
 import modelTavolo.AreaDiPesca;
-import util.StampaCarta;
-
-import java.util.Random;
 
 public class TestAreaDiPesca {
     public static void main(String[] args) {
-        // Creazione dei mazzi di carte
-        MazzoCarte mazzoRisorsa = new MazzoCarte("Risorsa", "src/fileCarte/CarteRisorsaTest.txt");
-        MazzoCarte mazzoOro = new MazzoCarte("Oro", "src/fileCarte/CarteOroTest.txt");
+        // Creazione dei diversi mazzi
+        MazzoCarte mazzoRisorsa = new MazzoCarte("Risorsa", "src/fileCarte/CarteRisorsa.txt");
+        MazzoCarte mazzoOro = new MazzoCarte("Oro", "src/fileCarte/CarteOro.txt");
 
-        // Creazione dell'area di pesca
-        AreaDiPesca areaDiPesca = new AreaDiPesca(mazzoRisorsa.getCarte(), mazzoOro.getCarte());
+        // Creazione dell'Area di Pesca
+        AreaDiPesca areaDiPesca = new AreaDiPesca(mazzoRisorsa, mazzoOro);
 
-        // Verifica della corretta inizializzazione delle carte visibili
-        System.out.println("Carte Risorsa Visibili Iniziali:");
-        StampaCarta.stampaAreaDiPesca(areaDiPesca.getCarteRisorsaVisibili(), areaDiPesca.getMazzoRisorsaCoperto(), true);
-        System.out.println("\nCarte Oro Visibili Iniziali:");
-        StampaCarta.stampaAreaDiPesca(areaDiPesca.getCarteOroVisibili(), areaDiPesca.getMazzoOroCoperto(), false);
+        // Mostra l'area di pesca iniziale
+        System.out.println("Area di Pesca Iniziale:");
+        areaDiPesca.mostraAreaDiPesca();
 
-        // Creazione di un oggetto Random per pescate casuali
-        Random random = new Random();
-
-        // Eseguiamo un ciclo per pescare carte casualmente
-        for (int i = 0; i < 5; i++) {
-            // Pescata casuale di una carta risorsa o oro
-            int tipoCarta = random.nextInt(2); // 0 per Risorsa, 1 per Oro
-            int indiceCarta = random.nextInt(3) + (tipoCarta == 0 ? 1 : 4); // Indici validi per pesca
-
-            Carta cartaPescata = areaDiPesca.pescaCarta(indiceCarta);
-
-            // Stampa della carta pescata e aggiornamento delle carte visibili
-            if (tipoCarta == 0) {
-                System.out.println("\nCarta Risorsa Pescata:");
-                System.out.println(cartaPescata);
-                System.out.println("\nCarte Risorsa Visibili Dopo Pesca:");
-                StampaCarta.stampaAreaDiPesca(areaDiPesca.getCarteRisorsaVisibili(), areaDiPesca.getMazzoRisorsaCoperto(), true);
-            } else {
-                System.out.println("\nCarta Oro Pescata:");
-                System.out.println(cartaPescata);
-                System.out.println("\nCarte Oro Visibili Dopo Pesca:");
-                StampaCarta.stampaAreaDiPesca(areaDiPesca.getCarteOroVisibili(), areaDiPesca.getMazzoOroCoperto(), false);
-            }
+        // Pesca più carte randomicamente per testare
+        for (int i = 0; i < 10; i++) {
+            int indicePesca = (int) (Math.random() * 7) + 1; // Pesca da 1 a 7
+            System.out.println("\nPescando carta con indice {" + indicePesca + "}");
+            areaDiPesca.pescaCarta(indicePesca);
+            areaDiPesca.mostraAreaDiPesca();
         }
 
-        // Verifica del metodo mostraAreaDiPesca finale
-        System.out.println("\nArea di Pesca Completa:");
+        // Mostra l'area di pesca dopo diverse pescate
+        System.out.println("\nArea di Pesca dopo diverse pescate:");
         areaDiPesca.mostraAreaDiPesca();
     }
 }

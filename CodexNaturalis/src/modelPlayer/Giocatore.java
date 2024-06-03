@@ -6,9 +6,6 @@ import cardsModel.CartaOro;
 import cardsModel.CartaRisorsa;
 import cardsModel.MazzoCarte;
 import modelTavolo.AreaDiPesca;
-import modelObiettivi.Obiettivo;
-
-import java.util.List;
 
 public class Giocatore {
     private String nome;
@@ -18,21 +15,18 @@ public class Giocatore {
     private AreaDiGioco areaDiGioco;
     private AreaDiPesca areaDiPesca;
     private CartaIniziale cartaIniziale;
-    private Obiettivo obiettivoSegreto;
-    private int obiettiviRaggiunti;
 
-    public Giocatore(String nome, MazzoCarte mazzoIniziale, MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro, boolean fronteIniziale) {
+    public Giocatore(String nome, MazzoCarte mazzoIniziale, MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro, AreaDiPesca areaDiPesca, boolean fronteIniziale) {
         this.nome = nome;
         this.punti = 0;
         this.contatori = new Contatori();
         this.manoGiocatore = new ManoGiocatore();
         this.cartaIniziale = (CartaIniziale) mazzoIniziale.pescaCarta();
-        this.obiettiviRaggiunti = 0;
         if (!fronteIniziale) {
             cartaIniziale.giraCarta();
         }
         this.areaDiGioco = new AreaDiGioco(cartaIniziale, contatori);
-        this.areaDiPesca = new AreaDiPesca(mazzoRisorsa.getCarte(), mazzoOro.getCarte());
+        this.areaDiPesca = areaDiPesca;
 
         // Pesca le prime carte per la mano del giocatore
         for (int i = 0; i < 2; i++) {
@@ -62,14 +56,14 @@ public class Giocatore {
         manoGiocatore.stampaMano();
     }
 
-    public boolean giocaCarta(int indiceCartaMano, int posizioneGriglia, boolean fronte) {
+    public void giocaCarta(int indiceCartaMano, int posizioneGriglia, boolean fronte) {
         Carta cartaDaGiocare = manoGiocatore.getCarta(indiceCartaMano);
 
         if (cartaDaGiocare instanceof CartaOro && fronte) {
             CartaOro cartaOro = (CartaOro) cartaDaGiocare;
             if (!verificaRisorse(cartaOro)) {
                 System.out.println("Non hai abbastanza risorse per giocare questa carta oro di fronte.");
-                return false;
+                return;
             }
         }
 
@@ -81,14 +75,7 @@ public class Giocatore {
             areaDiGioco.posizionaCarta(cartaGiocata, posizioneGriglia, fronte);
         } else {
             System.out.println("Carta non valida.");
-            return false;
         }
-
-        if (fronte && cartaGiocata instanceof CartaRisorsa) {
-            aggiungiPunti(((CartaRisorsa) cartaGiocata).getPunti());
-        }
-
-        return true;
     }
     
     public boolean verificaRisorse(CartaOro cartaOro) {
@@ -110,41 +97,5 @@ public class Giocatore {
 
     public void mostraContatori() {
         contatori.mostraContatori();
-    }
-
-    public CartaIniziale getCartaIniziale() {
-        return cartaIniziale;
-    }
-
-    public void setObiettivoSegreto(Obiettivo obiettivo) {
-        this.obiettivoSegreto = obiettivo;
-    }
-
-    public Obiettivo getObiettivoSegreto() {
-        return obiettivoSegreto;
-    }
-
-    public int getObiettiviRaggiunti() {
-        return obiettiviRaggiunti;
-    }
-
-    public void incrementaObiettiviRaggiunti() {
-        this.obiettiviRaggiunti++;
-    }
-
-    public AreaDiGioco getAreaDiGioco() {
-        return areaDiGioco;
-    }
-
-    public Contatori getContatori() {
-        return contatori;
-    }
-
-    public boolean isMazzoRisorsaVuoto() {
-        return areaDiPesca.isMazzoRisorsaVuoto();
-    }
-
-    public boolean isMazzoOroVuoto() {
-        return areaDiPesca.isMazzoOroVuoto();
     }
 }

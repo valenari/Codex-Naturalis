@@ -2,6 +2,7 @@ package modelTavolo;
 
 import cardsModel.CartaOro;
 import cardsModel.CartaRisorsa;
+import cardsModel.MazzoCarte;
 import cardsModel.Carta;
 import util.StampaCarta;
 
@@ -11,18 +12,12 @@ import java.util.List;
 public class AreaDiPesca {
     private List<CartaRisorsa> carteRisorsaVisibili;
     private List<CartaOro> carteOroVisibili;
-    private List<CartaRisorsa> mazzoRisorsaCoperto;
-    private List<CartaOro> mazzoOroCoperto;
+    private List<Carta> mazzoRisorsaCoperto;
+    private List<Carta> mazzoOroCoperto;
 
-    public AreaDiPesca(List<Carta> carteRisorsa, List<Carta> carteOro) {
-        this.mazzoRisorsaCoperto = new ArrayList<>();
-        this.mazzoOroCoperto = new ArrayList<>();
-        for (Carta carta : carteRisorsa) {
-            this.mazzoRisorsaCoperto.add((CartaRisorsa) carta);
-        }
-        for (Carta carta : carteOro) {
-            this.mazzoOroCoperto.add((CartaOro) carta);
-        }
+    public AreaDiPesca(MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro) {
+        this.mazzoRisorsaCoperto = new ArrayList<>(mazzoRisorsa.getCarte());
+        this.mazzoOroCoperto = new ArrayList<>(mazzoOro.getCarte());
         this.carteRisorsaVisibili = new ArrayList<>();
         this.carteOroVisibili = new ArrayList<>();
 
@@ -30,38 +25,42 @@ public class AreaDiPesca {
     }
 
     private void pescaCarteIniziali() {
-        pescaCartaDalMazzoRisorsa();
-        pescaCartaDalMazzoRisorsa();
-        pescaCartaDalMazzoOro();
-        pescaCartaDalMazzoOro();
+        for (int i = 0; i < 2; i++) {
+            pescaCartaDalMazzoRisorsa();
+            pescaCartaDalMazzoOro();
+        }
     }
 
     private void pescaCartaDalMazzoRisorsa() {
         if (!mazzoRisorsaCoperto.isEmpty()) {
-            carteRisorsaVisibili.add(mazzoRisorsaCoperto.remove(0));
+            Carta carta = mazzoRisorsaCoperto.remove(0);
+            if (carta instanceof CartaRisorsa) {
+                carteRisorsaVisibili.add((CartaRisorsa) carta);
+            }
         }
     }
 
     private void pescaCartaDalMazzoOro() {
         if (!mazzoOroCoperto.isEmpty()) {
-            carteOroVisibili.add(mazzoOroCoperto.remove(0));
+            Carta carta = mazzoOroCoperto.remove(0);
+            if (carta instanceof CartaOro) {
+                carteOroVisibili.add((CartaOro) carta);
+            }
         }
     }
 
     public Carta pescaCarta(int indice) {
         Carta cartaPescata = null;
-        if (indice == 0) {
-            cartaPescata = mazzoRisorsaCoperto.remove(0);
-            pescaCartaDalMazzoRisorsa();
-        } else if (indice == 1 || indice == 2) {
+        if ((indice == 1 || indice == 2) && carteRisorsaVisibili.size() >= indice) {
             cartaPescata = carteRisorsaVisibili.remove(indice - 1);
             pescaCartaDalMazzoRisorsa();
-        } else if (indice == 3) {
+        } else if (indice == 3 && !mazzoOroCoperto.isEmpty()) {
             cartaPescata = mazzoOroCoperto.remove(0);
-            pescaCartaDalMazzoOro();
-        } else if (indice == 4 || indice == 5) {
+        } else if ((indice == 4 || indice == 5) && carteOroVisibili.size() >= (indice - 3)) {
             cartaPescata = carteOroVisibili.remove(indice - 4);
             pescaCartaDalMazzoOro();
+        } else if (indice == 6 && !mazzoOroCoperto.isEmpty()) {
+            cartaPescata = mazzoOroCoperto.remove(0);
         }
         return cartaPescata;
     }
@@ -82,7 +81,7 @@ public class AreaDiPesca {
         return mazzoOroCoperto.isEmpty() && carteOroVisibili.isEmpty();
     }
     
- // Metodi aggiuntivi per il test
+    // Metodi aggiuntivi per il test
     public List<CartaRisorsa> getCarteRisorsaVisibili() {
         return carteRisorsaVisibili;
     }
@@ -91,11 +90,11 @@ public class AreaDiPesca {
         return carteOroVisibili;
     }
 
-    public List<CartaRisorsa> getMazzoRisorsaCoperto() {
+    public List<Carta> getMazzoRisorsaCoperto() {
         return mazzoRisorsaCoperto;
     }
 
-    public List<CartaOro> getMazzoOroCoperto() {
+    public List<Carta> getMazzoOroCoperto() {
         return mazzoOroCoperto;
     }
 }
