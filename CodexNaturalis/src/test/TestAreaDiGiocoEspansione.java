@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class TestAreaDiGioco {
+public class TestAreaDiGiocoEspansione {
 
     public static void main(String[] args) {
         // Creazione della griglia di gioco
@@ -18,12 +18,14 @@ public class TestAreaDiGioco {
         CartaIniziale cartaIniziale = new CartaIniziale(1, "Vegetale - Animale - Insetto - Fungo", Arrays.asList("Fungo", "Fungo"), "Animale - Vegetale - Fungo - Insetto");
         AreaDiGioco areaDiGioco = new AreaDiGioco(cartaIniziale, contatori);
 
-        // Aggiunta di carte risorsa alla griglia per testare il posizionamento
+        // Aggiunta di carte risorsa alla griglia per testare l'espansione
         List<CartaRisorsa> carteDaAggiungere = Arrays.asList(
             new CartaRisorsa(2, "Vegetale - Vegetale - Vegetale - Vegetale", "Vegetale", 0),
             new CartaRisorsa(3, "Fungo - Fungo - Fungo - Fungo", "Fungo", 0),
             new CartaRisorsa(4, "Animale - Animale - Animale - Animale", "Animale", 0),
-            new CartaRisorsa(5, "Insetto - Insetto - Insetto - Insetto", "Insetto", 0)
+            new CartaRisorsa(5, "Insetto - Insetto - Insetto - Insetto", "Insetto", 0),
+            new CartaRisorsa(6, "Vegetale - Vegetale - Vegetale - Vegetale", "Vegetale", 0),
+            new CartaRisorsa(7, "Fungo - Fungo - Fungo - Fungo", "Fungo", 0)
         );
 
         Scanner scanner = new Scanner(System.in);
@@ -59,7 +61,8 @@ public class TestAreaDiGioco {
         for (int i = 0; i < griglia.length; i++) {
             for (int j = 0; j < griglia[i].length; j++) {
                 if (griglia[i][j] != null) {
-                	String tipoRegno = griglia[i][j] instanceof CartaRisorsa ? ((CartaRisorsa) griglia[i][j]).getTipoRegno() : "Iniziale";
+                    String tipoRegno = griglia[i][j] instanceof CartaRisorsa ? ((CartaRisorsa) griglia[i][j]).getTipoRegno() : "Iniziale";
+                    System.out.printf("Posizione (%d,%d): %s - %s\n", i, j, griglia[i][j].getTipoCarta(), tipoRegno);
                 } else {
                     System.out.printf("Posizione (%d,%d): vuoto\n", i, j);
                 }

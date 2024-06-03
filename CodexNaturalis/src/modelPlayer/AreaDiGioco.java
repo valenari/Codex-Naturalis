@@ -36,22 +36,22 @@ public class AreaDiGioco {
         return null;
     }
 
-    public void posizionaCarta(Carta carta, int posizione, boolean fronte) {
+    public boolean posizionaCarta(Carta carta, int posizione, boolean fronte) {
         int count = 1;
         for (int i = 0; i < dimensione; i++) {
             for (int j = 0; j < dimensione; j++) {
                 if (griglia[i][j] == null && isDiagonallyAdjacentAndValid(i, j)) {
                     if (count == posizione) {
-                        
                         griglia[i][j] = carta;
                         angoliCoperti += copriAngoliAdiacenti(i, j);
                         espandiGrigliaSeNecessario();
-                        return;
+                        return true;
                     }
                     count++;
                 }
             }
         }
+        return false;
     }
 
     private void espandiGrigliaSeNecessario() {
@@ -129,7 +129,7 @@ public class AreaDiGioco {
         }
     }
 
-    private boolean isDiagonallyAdjacentAndValid(int i, int j) {
+    public boolean isDiagonallyAdjacentAndValid(int i, int j) {
         int[][] directions = {
                 {-1, -1, 3}, // Angolo in basso a destra della carta in alto a sinistra
                 {-1, 1, 2},  // Angolo in basso a sinistra della carta in alto a destra

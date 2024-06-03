@@ -3,32 +3,64 @@ package modelObiettivi;
 import modelPlayer.AreaDiGioco;
 import modelPlayer.Contatori;
 import cardsModel.Carta;
+import cardsModel.CartaRisorsa;
 
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ObiettivoDisposizione extends Obiettivo {
     private List<String> sequenza;
     private List<int[]> posizioni;
+    private Set<Carta> carteUsate;
 
     public ObiettivoDisposizione(String descrizione, int punti, List<String> sequenza, List<int[]> posizioni) {
         super(descrizione, punti);
         this.sequenza = sequenza;
         this.posizioni = posizioni;
+        this.carteUsate = new HashSet<>();
     }
 
     @Override
     public boolean verificaObiettivo(AreaDiGioco areaDiGioco, Contatori contatori) {
-        int centroX = areaDiGioco.getCentro()[0];
-        int centroY = areaDiGioco.getCentro()[1];
+        int dimensione = areaDiGioco.getDimensione();
+        Carta[][] griglia = areaDiGioco.getGriglia();
 
-        for (int[] posizione : posizioni) {
-            int x = centroX + posizione[0];
-            int y = centroY + posizione[1];
-            Carta carta = areaDiGioco.getCartaInPosizione(x, y);
-            if (carta == null || !carta.getTipoCarta().equals(sequenza.get(posizioni.indexOf(posizione)))) {
+        boolean obiettivoRaggiunto = false;
+
+        for (int i = 0; i < dimensione; i++) {
+            for (int j = 0; j < dimensione; j++) {
+                if (verificaSequenza(griglia, i, j)) {
+                    obiettivoRaggiunto = true;
+                }
+            }
+        }
+        return obiettivoRaggiunto;
+    }
+
+    private boolean verificaSequenza(Carta[][] griglia, int x, int y) {
+        for (int k = 0; k < sequenza.size(); k++) {
+            int[] posizione = posizioni.get(k);
+            int newX = x + posizione[0];
+            int newY = y - posizione[1];
+
+            if (newX < 0 || newY < 0 || newX >= griglia.length || newY >= griglia[0].length) {
+                return false;
+            }
+
+            Carta carta = griglia[newX][newY];
+            if (carta == null || !(carta instanceof CartaRisorsa) || !((CartaRisorsa) carta).getTipoRegno().equals(sequenza.get(k)) || carteUsate.contains(carta)) {
                 return false;
             }
         }
+
+        for (int k = 0; k < sequenza.size(); k++) {
+            int[] posizione = posizioni.get(k);
+            int newX = x + posizione[0];
+            int newY = y - posizione[1];
+            carteUsate.add(griglia[newX][newY]);
+        }
+
         return true;
     }
 
