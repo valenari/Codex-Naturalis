@@ -27,7 +27,7 @@ public class TestSinglePlayer {
         giocatori.add(giocatore);
 
         // Creazione del turno
-        Turno turno = new Turno(giocatori, mazzoRisorsa, mazzoOro);
+        Turno turno = new Turno(giocatori);
 
         // Simulazione di una partita completa
         while (!turno.isPartitaTerminata()) {
@@ -44,7 +44,7 @@ public class TestSinglePlayer {
 
             // Mostra l'area di pesca
             System.out.println("Area di pesca:");
-            giocatoreCorrente.mostraAreaDiPesca();
+            areaDiPesca.mostraAreaDiPesca();
 
             // Simula pesca di una carta
             System.out.println("Il giocatore pesca una carta dall'area di pesca...");

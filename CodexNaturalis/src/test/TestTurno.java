@@ -27,7 +27,7 @@ public class TestTurno {
         giocatori.add(giocatore1);
 
         // Creazione del turno
-        Turno turno = new Turno(giocatori, mazzoRisorsa, mazzoOro);
+        Turno turno = new Turno(giocatori);
 
         // Loop dei turni
         while (!turno.isPartitaTerminata()) {
@@ -47,7 +47,7 @@ public class TestTurno {
 
             // Mostra l'area di pesca
             System.out.println("Area di pesca:");
-            giocatoreCorrente.mostraAreaDiPesca();
+            areaDiPesca.mostraAreaDiPesca();
 
             // Pesca una carta
             System.out.println("Il giocatore pesca una carta dall'area di pesca...");

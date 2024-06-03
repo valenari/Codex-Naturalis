@@ -118,4 +118,10 @@ public class CartaOro extends Carta {
         sb.append("----------------------------\n");
         return sb.toString();
     }
+    
+    public int calcolaPunti() {
+        int punti = 0;
+        // Logica per calcolare i punti
+        return punti;
+    }
 }

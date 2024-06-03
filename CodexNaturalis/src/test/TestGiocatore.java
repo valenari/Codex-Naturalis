@@ -35,7 +35,7 @@ public class TestGiocatore {
         
         // Mostra l'area di pesca
         System.out.println("\nArea di pesca iniziale:");
-        giocatore.mostraAreaDiPesca();
+        areaDiPesca.mostraAreaDiPesca();
         
      // Pesca una carta dall'area di pesca
         System.out.println("\nPesca una carta dall'area di pesca:");
