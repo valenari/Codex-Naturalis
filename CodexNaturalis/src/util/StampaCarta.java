@@ -52,12 +52,12 @@ public class StampaCarta {
         }
     }
 
-    public static void stampaAreaDiPesca(List<? extends Carta> carteVisibili, List<? extends Carta> mazzoCoperto, boolean isRisorsa) {
+    public static void stampaAreaDiPesca(List<? extends Carta> carteVisibili, Carta cartaCoperta, boolean isRisorsa) {
         List<String[]> carteStringhe = new ArrayList<>();
         int maxLines = 0;
 
-        if (!mazzoCoperto.isEmpty()) {
-            carteStringhe.add(aggiungiNumeroAStringa(mazzoCoperto.get(0).toStringRetro().split("\n"), isRisorsa ? 1 : 4));
+        if (cartaCoperta != null) {
+            carteStringhe.add(aggiungiNumeroAStringa(cartaCoperta.toStringRetro().split("\n"), isRisorsa ? 1 : 4));
             maxLines = Math.max(maxLines, carteStringhe.get(0).length);
         }
 

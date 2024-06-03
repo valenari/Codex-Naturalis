@@ -12,12 +12,14 @@ import java.util.List;
 public class AreaDiPesca {
     private List<CartaRisorsa> carteRisorsaVisibili;
     private List<CartaOro> carteOroVisibili;
-    private List<Carta> mazzoRisorsaCoperto;
-    private List<Carta> mazzoOroCoperto;
+    private CartaRisorsa cartaRisorsaCoperta;
+    private CartaOro cartaOroCoperta;
+    private MazzoCarte mazzoRisorsa;
+    private MazzoCarte mazzoOro;
 
     public AreaDiPesca(MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro) {
-        this.mazzoRisorsaCoperto = new ArrayList<>(mazzoRisorsa.getCarte());
-        this.mazzoOroCoperto = new ArrayList<>(mazzoOro.getCarte());
+        this.mazzoRisorsa = mazzoRisorsa;
+        this.mazzoOro = mazzoOro;
         this.carteRisorsaVisibili = new ArrayList<>();
         this.carteOroVisibili = new ArrayList<>();
 
@@ -29,11 +31,13 @@ public class AreaDiPesca {
             pescaCartaDalMazzoRisorsa();
             pescaCartaDalMazzoOro();
         }
+        aggiornaCartaCopertaRisorsa();
+        aggiornaCartaCopertaOro();
     }
 
     private void pescaCartaDalMazzoRisorsa() {
-        if (!mazzoRisorsaCoperto.isEmpty()) {
-            Carta carta = mazzoRisorsaCoperto.remove(0);
+        if (!mazzoRisorsa.isVuoto()) {
+            Carta carta = mazzoRisorsa.pescaCarta();
             if (carta instanceof CartaRisorsa) {
                 carteRisorsaVisibili.add((CartaRisorsa) carta);
             }
@@ -41,11 +45,27 @@ public class AreaDiPesca {
     }
 
     private void pescaCartaDalMazzoOro() {
-        if (!mazzoOroCoperto.isEmpty()) {
-            Carta carta = mazzoOroCoperto.remove(0);
+        if (!mazzoOro.isVuoto()) {
+            Carta carta = mazzoOro.pescaCarta();
             if (carta instanceof CartaOro) {
                 carteOroVisibili.add((CartaOro) carta);
             }
+        }
+    }
+
+    private void aggiornaCartaCopertaRisorsa() {
+        if (!mazzoRisorsa.isVuoto()) {
+            cartaRisorsaCoperta = (CartaRisorsa) mazzoRisorsa.pescaCarta();
+        } else {
+            cartaRisorsaCoperta = null;
+        }
+    }
+
+    private void aggiornaCartaCopertaOro() {
+        if (!mazzoOro.isVuoto()) {
+            cartaOroCoperta = (CartaOro) mazzoOro.pescaCarta();
+        } else {
+            cartaOroCoperta = null;
         }
     }
 
@@ -53,34 +73,48 @@ public class AreaDiPesca {
         Carta cartaPescata = null;
         if ((indice == 1 || indice == 2) && carteRisorsaVisibili.size() >= indice) {
             cartaPescata = carteRisorsaVisibili.remove(indice - 1);
-            pescaCartaDalMazzoRisorsa();
-        } else if (indice == 3 && !mazzoOroCoperto.isEmpty()) {
-            cartaPescata = mazzoOroCoperto.remove(0);
+            if (cartaRisorsaCoperta != null) {
+                carteRisorsaVisibili.add(cartaRisorsaCoperta);
+                aggiornaCartaCopertaRisorsa();
+            } else {
+                pescaCartaDalMazzoRisorsa();
+            }
+        } else if (indice == 3) {
+            cartaPescata = cartaOroCoperta;
+            aggiornaCartaCopertaOro();
         } else if ((indice == 4 || indice == 5) && carteOroVisibili.size() >= (indice - 3)) {
             cartaPescata = carteOroVisibili.remove(indice - 4);
-            pescaCartaDalMazzoOro();
-        } else if (indice == 6 && !mazzoOroCoperto.isEmpty()) {
-            cartaPescata = mazzoOroCoperto.remove(0);
+            if (cartaOroCoperta != null) {
+                carteOroVisibili.add(cartaOroCoperta);
+                aggiornaCartaCopertaOro();
+            } else {
+                pescaCartaDalMazzoOro();
+            }
         }
+
+        if (cartaPescata != null) {
+            cartaPescata.giraCarta(); // Gira la carta pescata sul fronte
+        }
+
         return cartaPescata;
     }
 
     public void mostraAreaDiPesca() {
         System.out.println("Carte Risorsa Visibili:");
-        StampaCarta.stampaAreaDiPesca(carteRisorsaVisibili, mazzoRisorsaCoperto, true);
+        StampaCarta.stampaAreaDiPesca(carteRisorsaVisibili, cartaRisorsaCoperta, true);
 
         System.out.println("\nCarte Oro Visibili:");
-        StampaCarta.stampaAreaDiPesca(carteOroVisibili, mazzoOroCoperto, false);
+        StampaCarta.stampaAreaDiPesca(carteOroVisibili, cartaOroCoperta, false);
     }
 
     public boolean isMazzoRisorsaVuoto() {
-        return mazzoRisorsaCoperto.isEmpty() && carteRisorsaVisibili.isEmpty();
+        return mazzoRisorsa.isVuoto() && carteRisorsaVisibili.isEmpty();
     }
 
     public boolean isMazzoOroVuoto() {
-        return mazzoOroCoperto.isEmpty() && carteOroVisibili.isEmpty();
+        return mazzoOro.isVuoto() && carteOroVisibili.isEmpty();
     }
-    
+
     // Metodi aggiuntivi per il test
     public List<CartaRisorsa> getCarteRisorsaVisibili() {
         return carteRisorsaVisibili;
@@ -90,11 +124,11 @@ public class AreaDiPesca {
         return carteOroVisibili;
     }
 
-    public List<Carta> getMazzoRisorsaCoperto() {
-        return mazzoRisorsaCoperto;
+    public CartaRisorsa getCartaRisorsaCoperta() {
+        return cartaRisorsaCoperta;
     }
 
-    public List<Carta> getMazzoOroCoperto() {
-        return mazzoOroCoperto;
+    public CartaOro getCartaOroCoperta() {
+        return cartaOroCoperta;
     }
 }

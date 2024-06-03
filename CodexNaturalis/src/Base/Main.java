@@ -24,9 +24,6 @@ public class Main {
         MazzoCarte mazzoRisorsa = new MazzoCarte("Risorsa", "src/fileCarte/CarteRisorsaTest.txt");
         MazzoCarte mazzoOro = new MazzoCarte("Oro", "src/fileCarte/CarteOroTest.txt");
 
-        // Creazione dell'area di pesca
-        AreaDiPesca areaDiPesca = new AreaDiPesca(mazzoRisorsa, mazzoOro);
-
         // Creazione dei Giocatori
         List<Giocatore> giocatori = new ArrayList<>();
         int numeroGiocatori;
@@ -43,23 +40,37 @@ public class Main {
             String nomeGiocatore = sc.next();
             System.out.println("Vuoi posizionare la carta iniziale di fronte (1) o di retro (2)?");
             boolean fronteIniziale = sc.nextInt() == 1;
-            giocatori.add(new Giocatore(nomeGiocatore, mazzoIniziale, mazzoRisorsa, mazzoOro, areaDiPesca, fronteIniziale));
+            giocatori.add(new Giocatore(nomeGiocatore, mazzoIniziale, mazzoRisorsa, mazzoOro, fronteIniziale));
         }
+        
+        // Creazione dell'area di pesca
+        AreaDiPesca areaDiPesca = new AreaDiPesca(mazzoRisorsa, mazzoOro);
 
         sc.close();
 
-        Turno turno = new Turno(giocatori);
+        Turno turno = new Turno(giocatori, mazzoRisorsa, mazzoOro, areaDiPesca);
 
         while (!turno.isPartitaTerminata()) {
             Giocatore giocatoreCorrente = turno.getGiocatoreCorrente();
             System.out.println("È il turno di: " + giocatoreCorrente.getNome());
 
             // Logica di gioco per ogni turno
+            // Simulazione di azioni di gioco:
+            // - Pesca di una carta
+            // - Gioca una carta
+            // - Aggiornamento dei punteggi
+
+            // Pesca una carta
+            giocatoreCorrente.pescaCarta(1);
+            // Posizionamento di una carta (esempio con posizionamento casuale, in pratica dovrebbe essere interattivo)
+            giocatoreCorrente.giocaCarta(0, 1, true);
 
             turno.controllaPunteggio();
             if (!turno.isPartitaTerminata()) {
                 turno.prossimoTurno();
             }
         }
+
+        System.out.println("La partita è terminata.");
     }
 }

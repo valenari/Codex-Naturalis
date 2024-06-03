@@ -30,9 +30,15 @@ public class Giocatore {
 
         // Pesca le prime carte per la mano del giocatore
         for (int i = 0; i < 2; i++) {
-            manoGiocatore.aggiungiCarta((CartaRisorsa) mazzoRisorsa.pescaCarta());
+            CartaRisorsa cartaRisorsa = (CartaRisorsa) mazzoRisorsa.pescaCarta();
+            if (cartaRisorsa != null) {
+                manoGiocatore.aggiungiCarta(cartaRisorsa);
+            }
         }
-        manoGiocatore.aggiungiCarta((CartaOro) mazzoOro.pescaCarta());
+        CartaOro cartaOro = (CartaOro) mazzoOro.pescaCarta();
+        if (cartaOro != null) {
+            manoGiocatore.aggiungiCarta(cartaOro);
+        }
     }
 
     public String getNome() {
@@ -77,7 +83,7 @@ public class Giocatore {
             System.out.println("Carta non valida.");
         }
     }
-    
+
     public boolean verificaRisorse(CartaOro cartaOro) {
         return contatori.verificaRisorse(cartaOro.getRisorseRichieste());
     }
@@ -92,7 +98,9 @@ public class Giocatore {
 
     public void pescaCarta(int indiceCartaPesca) {
         Carta cartaPescata = areaDiPesca.pescaCarta(indiceCartaPesca);
-        manoGiocatore.aggiungiCarta(cartaPescata);
+        if (cartaPescata != null) {
+            manoGiocatore.aggiungiCarta(cartaPescata);
+        }
     }
 
     public void mostraContatori() {

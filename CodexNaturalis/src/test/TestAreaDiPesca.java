@@ -18,7 +18,7 @@ public class TestAreaDiPesca {
 
         // Pesca più carte randomicamente per testare
         for (int i = 0; i < 10; i++) {
-            int indicePesca = (int) (Math.random() * 7) + 1; // Pesca da 1 a 7
+            int indicePesca = (int) (Math.random() * 6) + 1; // Pesca da 1 a 6
             System.out.println("\nPescando carta con indice {" + indicePesca + "}");
             areaDiPesca.pescaCarta(indicePesca);
             areaDiPesca.mostraAreaDiPesca();
