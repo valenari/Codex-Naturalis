@@ -81,4 +81,21 @@ public class AreaDiPesca {
     public boolean isMazzoOroVuoto() {
         return mazzoOroCoperto.isEmpty() && carteOroVisibili.isEmpty();
     }
+    
+ // Metodi aggiuntivi per il test
+    public List<CartaRisorsa> getCarteRisorsaVisibili() {
+        return carteRisorsaVisibili;
+    }
+
+    public List<CartaOro> getCarteOroVisibili() {
+        return carteOroVisibili;
+    }
+
+    public List<CartaRisorsa> getMazzoRisorsaCoperto() {
+        return mazzoRisorsaCoperto;
+    }
+
+    public List<CartaOro> getMazzoOroCoperto() {
+        return mazzoOroCoperto;
+    }
 }

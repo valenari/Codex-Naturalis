@@ -13,8 +13,11 @@ public class ManoGiocatore {
     }
 
     public void aggiungiCarta(Carta carta) {
+    	//System.out.println("Aggiungendo carta: \n" + carta); Riga per debug
         if (carteInMano.size() < 3) {
             carteInMano.add(carta);
+        } else {
+            System.out.println("Non puoi aggiungere più di tre carte nella mano.");
         }
     }
 
@@ -26,17 +29,13 @@ public class ManoGiocatore {
     }
 
     public void stampaMano() {
-       
         List<String[]> carteStringhe = new ArrayList<>();
         int maxLines = 0;
 
         for (int i = 0; i < carteInMano.size(); i++) {
-            Carta carta = carteInMano.get(i);
-            if (carta != null) {
-                String[] righe = aggiungiNumeroAStringa(carta.toString().split("\n"), i + 1);
-                carteStringhe.add(righe);
-                maxLines = Math.max(maxLines, righe.length);
-            }
+            String[] righe = aggiungiNumeroAStringa(carteInMano.get(i).toString().split("\n"), i + 1);
+            carteStringhe.add(righe);
+            maxLines = Math.max(maxLines, righe.length);
         }
 
         for (int line = 0; line < maxLines; line++) {
@@ -64,9 +63,10 @@ public class ManoGiocatore {
     }
 
     public Carta getCarta(int indice) {
-        if (indice >= 0 && indice < carteInMano.size()) {
-            return carteInMano.get(indice);
-        }
-        return null;
+        return carteInMano.get(indice);
+    }
+
+    public int getNumeroCarte() {
+        return carteInMano.size();
     }
 }

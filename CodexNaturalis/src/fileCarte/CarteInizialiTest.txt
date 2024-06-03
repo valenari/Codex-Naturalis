@@ -1,0 +1,9 @@
+Id: 1
+Fronte: Vegetale - Nascosto - Animale - Nascosto
+Centrale: Vegetale - Animale
+Retro: Visibile - Visibile - Visibile - Visibile
+
+Id: 2
+Fronte: Fungo - Nascosto - Insetto - Nascosto
+Centrale: Fungo - Insetto
+Retro: Visibile - Visibile - Visibile - Visibile

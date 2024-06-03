@@ -1,0 +1,29 @@
+N° Risorsa: 1
+Regno: Vegetale
+Angoli Fronte: Visibile - Nascosto - Vegetale - Nascosto
+Punti: 2
+
+N° Risorsa: 2
+Regno: Fungo
+Angoli Fronte: Visibile - Nascosto - Fungo - Nascosto
+Punti: 3
+
+N° Risorsa: 3
+Regno: Insetto
+Angoli Fronte: Visibile - Nascosto - Insetto - Nascosto
+Punti: 1
+
+N° Risorsa: 4
+Regno: Animale
+Angoli Fronte: Visibile - Nascosto - Animale - Nascosto
+Punti: 4
+
+N° Risorsa: 5
+Regno: Vegetale
+Angoli Fronte: Nascosto - Vegetale - Nascosto - Visibile
+Punti: 5
+
+N° Risorsa: 6
+Regno: Fungo
+Angoli Fronte: Fungo - Nascosto - Visibile - Nascosto
+Punti: 2
