@@ -3,11 +3,6 @@ package Base;
 import modelPlayer.Giocatore;
 import modelTavolo.AreaDiPesca;
 import cardsModel.MazzoCarte;
-<<<<<<< Updated upstream
-=======
-import modelObiettivi.Obiettivo;
-import modelObiettivi.MazzoObiettivi;
->>>>>>> Stashed changes
 import game.Turno;
 import modelObiettivi.CaricatoreObiettivi;
 import modelObiettivi.Obiettivo;
@@ -27,19 +22,9 @@ public class Main {
         if (risposta.equalsIgnoreCase("0")) System.exit(0);
 
         // Creazione dei diversi mazzi
-<<<<<<< Updated upstream
         MazzoCarte mazzoIniziale = new MazzoCarte("Iniziale", "src/fileCarte/CarteIniziali.txt");
         MazzoCarte mazzoRisorsa = new MazzoCarte("Risorsa", "src/fileCarte/CarteRisorsa.txt");
         MazzoCarte mazzoOro = new MazzoCarte("Oro", "src/fileCarte/CarteOro.txt");
-=======
-        MazzoCarte mazzoIniziale = new MazzoCarte("Iniziale", "src/fileCarte/CarteInizialiTest.txt");
-        MazzoCarte mazzoRisorsa = new MazzoCarte("Risorsa", "src/fileCarte/CarteRisorsaTest.txt");
-        MazzoCarte mazzoOro = new MazzoCarte("Oro", "src/fileCarte/CarteOroTest.txt");
-        MazzoObiettivi mazzoObiettivi = new MazzoObiettivi();
-        
-        // Creazione dell'area di pesca
-        AreaDiPesca areaDiPesca = new AreaDiPesca(mazzoRisorsa, mazzoOro);
->>>>>>> Stashed changes
 
         // Creazione dei Giocatori
         List<Giocatore> giocatori = new ArrayList<>();
@@ -72,21 +57,14 @@ public class Main {
 
         // Selezione degli obiettivi comuni
         List<Obiettivo> obiettiviComuni = new ArrayList<>();
-<<<<<<< Updated upstream
         for (int i = 0; i < 2; i++) {
             obiettiviComuni.add(obiettiviRisorsa.get(i));
         }
 
-=======
-        obiettiviComuni.add(mazzoObiettivi.pescaObiettivo());
-        obiettiviComuni.add(mazzoObiettivi.pescaObiettivo());
-        
->>>>>>> Stashed changes
         System.out.println("Obiettivi comuni:");
         for (Obiettivo obiettivo : obiettiviComuni) {
             System.out.println(obiettivo);
         }
-<<<<<<< Updated upstream
 
         // Selezione dell'obiettivo segreto per ogni giocatore
         for (Giocatore giocatore : giocatori) {
@@ -94,21 +72,6 @@ public class Main {
             List<Obiettivo> obiettiviSegreti = new ArrayList<>();
             for (int i = 0; i < 2; i++) {
                 obiettiviSegreti.add(obiettiviRisorsa.get(i + 2));
-=======
-        
-        Obiettivo scelta1, scelta2;
-        for (Giocatore giocatore : giocatori) {
-        	scelta1=mazzoObiettivi.pescaObiettivo();
-        	scelta2=mazzoObiettivi.pescaObiettivo();
-            System.out.println(giocatore.getNome() + ", scegli il tuo obiettivo segreto:");
-            System.out.println("1. " + scelta1.getDescrizione());
-            System.out.println("2. " + scelta2.getDescrizione());
-            int sceltaObiettivo = sc.nextInt();
-            if (sceltaObiettivo == 1) {
-                giocatore.setObiettivoSegreto(scelta1);
-            } else {
-                giocatore.setObiettivoSegreto(scelta2);
->>>>>>> Stashed changes
             }
             for (int i = 0; i < obiettiviSegreti.size(); i++) {
                 System.out.println((i + 1) + ". " + obiettiviSegreti.get(i));
