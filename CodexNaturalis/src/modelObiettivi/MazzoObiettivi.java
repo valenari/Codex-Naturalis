@@ -1,57 +1,42 @@
 package modelObiettivi;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 public class MazzoObiettivi {
-    private List<Obiettivo> obiettivi;
-    private int puntatore;
+    private Stack<Obiettivo> mazzo;
 
-    public MazzoObiettivi(String filenameDisposizione, String filenameRisorse) {
-        this.obiettivi = new ArrayList<>();
-        this.puntatore = 0;
-        this.caricaObiettiviDaFile(filenameDisposizione, filenameRisorse);
-        this.mescolaMazzo();
-    }
+    public MazzoObiettivi(String fileDisposizione, String fileRisorse) {
+        CaricatoreObiettivi caricatore = new CaricatoreObiettivi();
+        List<Obiettivo> obiettiviDisposizione = caricatore.caricaObiettiviDisposizione(fileDisposizione);
+        List<Obiettivo> obiettiviRisorse = caricatore.caricaObiettiviRisorse(fileRisorse);
 
-    public void aggiungiObiettivo(Obiettivo obiettivo) {
-        obiettivi.add(obiettivo);
-    }
-
-    public Obiettivo pescaObiettivo() {
-        if (puntatore < obiettivi.size()) {
-            return obiettivi.get(puntatore++);
-        }
-        return null;
-    }
-
-    public List<Obiettivo> pescaObiettivi(int numero) {
-        List<Obiettivo> pescati = new ArrayList<>();
-        for (int i = 0; i < numero && puntatore < obiettivi.size(); i++) {
-            pescati.add(obiettivi.get(puntatore++));
-        }
-        return pescati;
+        mazzo = new Stack<>();
+        mazzo.addAll(obiettiviDisposizione);
+        mazzo.addAll(obiettiviRisorse);
+        
+        mescolaMazzo();
     }
 
     public void mescolaMazzo() {
-        Collections.shuffle(obiettivi);
+        Collections.shuffle(mazzo);
     }
 
-    private void caricaObiettiviDaFile(String filenameDisposizione, String filenameRisorse) {
-        obiettivi.addAll(CaricatoreObiettivi.caricaObiettiviDisposizione(filenameDisposizione));
-        obiettivi.addAll(CaricatoreObiettivi.caricaObiettiviRisorse(filenameRisorse));
+    public Obiettivo pescaObiettivo() {
+        if (!mazzo.isEmpty()) {
+            return mazzo.pop();
+        }
+        return null; // O gestisci l'eventualità che il mazzo sia vuoto
     }
 
-    public List<Obiettivo> getObiettivi() {
-        return new ArrayList<>(obiettivi);
+    public boolean isMazzoVuoto() {
+        return mazzo.isEmpty();
     }
 
-    public int getObiettiviRimanenti() {
-        return obiettivi.size() - puntatore;
-    }
-
-    public boolean isVuoto() {
-        return puntatore >= obiettivi.size();
+    public void mostraMazzo() {
+        for (Obiettivo obiettivo : mazzo) {
+            System.out.println(obiettivo);
+        }
     }
 }

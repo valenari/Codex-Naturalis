@@ -3,7 +3,10 @@ package modelObiettivi;
 import modelPlayer.AreaDiGioco;
 import modelPlayer.Contatori;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ObiettivoRisorse extends Obiettivo {
     private List<String> tipiRisorse;
@@ -25,12 +28,37 @@ public class ObiettivoRisorse extends Obiettivo {
 
     @Override
     public boolean verificaObiettivo(AreaDiGioco areaDiGioco, Contatori contatori) {
-        for (int i = 0; i < tipiRisorse.size(); i++) {
-            if (contatori.getContatore(tipiRisorse.get(i)) < quantita.get(i)) {
-                return false;
+        Map<String, Integer> contatoriTemp = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : contatori.getContatori().entrySet()) {
+            contatoriTemp.put(entry.getKey(), entry.getValue());
+        }
+
+        int punteggioTotale = 0;
+        boolean obiettivoSoddisfatto = true;
+
+        while (obiettivoSoddisfatto) {
+            obiettivoSoddisfatto = true;
+            for (int i = 0; i < tipiRisorse.size(); i++) {
+                String risorsa = tipiRisorse.get(i);
+                int quantitaRichiesta = quantita.get(i);
+
+                if (contatoriTemp.getOrDefault(risorsa, 0) < quantitaRichiesta) {
+                    obiettivoSoddisfatto = false;
+                    break;
+                }
+            }
+
+            if (obiettivoSoddisfatto) {
+                punteggioTotale += getPunti();
+                for (int i = 0; i < tipiRisorse.size(); i++) {
+                    String risorsa = tipiRisorse.get(i);
+                    int quantitaRichiesta = quantita.get(i);
+                    contatoriTemp.put(risorsa, contatoriTemp.get(risorsa) - quantitaRichiesta);
+                }
             }
         }
-        return true;
+
+        return punteggioTotale > 0;
     }
 
     @Override

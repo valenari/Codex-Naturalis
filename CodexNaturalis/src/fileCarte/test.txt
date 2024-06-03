@@ -1,0 +1,35 @@
+
+
+Test per gli Obiettivi
+ObiettivoDisposizione Test
+
+Creazione di un obiettivo di disposizione e verifica della corretta inizializzazione.
+Verifica del metodo verificaObiettivoDisposizione con diverse configurazioni della griglia.
+ObiettivoRisorsa Test
+
+Creazione di un obiettivo di risorsa e verifica della corretta inizializzazione.
+Verifica del metodo verificaObiettivoRisorsa con diverse configurazioni dei contatori.
+Test per il Caricamento degli Obiettivi
+CaricatoreObiettivi Test
+Caricamento degli obiettivi dal file e verifica della corretta lettura e inizializzazione degli obiettivi.
+Verifica della corretta distinzione tra obiettivi di disposizione e obiettivi di risorsa.
+Test per il Mazzo
+MazzoCarte Test
+
+Creazione di un mazzo di carte e verifica della corretta inizializzazione.
+Pesca di carte e verifica dell'aggiornamento del mazzo.
+Mescolamento delle carte e verifica della casualità.
+MazzoObiettivi Test
+
+Creazione di un mazzo di obiettivi e verifica della corretta inizializzazione.
+Pesca di obiettivi e verifica dell'aggiornamento del mazzo.
+Mescolamento degli obiettivi e verifica della casualità.
+Test per i Turni
+Turno Test
+Creazione di una sequenza di turni e verifica della corretta gestione dei turni.
+Verifica della logica di fine partita quando un giocatore raggiunge 20 punti.
+Verifica della logica di fine partita quando i mazzi si esauriscono.
+Test di Integrazione
+Test di Integrazione Gioco
+Simulazione di una partita completa con 2-4 giocatori, verifica della corretta interazione tra tutte le classi.
+Verifica del corretto aggiornamento dei punteggi, delle risorse, degli obiettivi, e della fine della partita.

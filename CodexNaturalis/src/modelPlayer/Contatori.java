@@ -104,4 +104,19 @@ public class Contatori {
     public int getContatore(String elemento) {
         return contatori.getOrDefault(elemento, 0);
     }
+    
+    public void aggiungiRisorsa(String tipo) {
+        contatori.put(tipo, contatori.getOrDefault(tipo, 0) + 1);
+    }
+    
+    public Map<String, Integer> getContatori() {
+        return new HashMap<>(contatori);
+    }
+    
+    //metodo per debug
+    
+    public void incrementaContatore(String elemento, int quantita) {
+        contatori.put(elemento, contatori.getOrDefault(elemento, 0) + quantita);
+    }
+
 }

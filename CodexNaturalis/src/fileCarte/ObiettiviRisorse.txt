@@ -24,16 +24,16 @@ Tipo: Piuma Inchiostro Pergamena
 Punti: 3
 
 Obbiettivo 14
-Quantità: 3
+Quantità: 2
 Tipo: Pergamena
 Punti: 2
 
 Obbiettivo 15
-Quantità: 3
+Quantità: 2
 Tipo: Inchiostro
 Punti: 2
 
 Obbiettivo 16
-Quantità: 3
+Quantità: 2
 Tipo: Piuma
 Punti: 2
