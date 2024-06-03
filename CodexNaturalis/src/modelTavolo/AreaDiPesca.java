@@ -71,7 +71,7 @@ public class AreaDiPesca {
 
     public Carta pescaCarta(int indice) {
         Carta cartaPescata = null;
-        if ((indice == 1 || indice == 2) && carteRisorsaVisibili.size() >= indice) {
+        if ((indice == 2 || indice == 3) && carteRisorsaVisibili.size() >= indice) {
             cartaPescata = carteRisorsaVisibili.remove(indice - 1);
             if (cartaRisorsaCoperta != null) {
                 carteRisorsaVisibili.add(cartaRisorsaCoperta);
@@ -79,10 +79,11 @@ public class AreaDiPesca {
             } else {
                 pescaCartaDalMazzoRisorsa();
             }
-        } else if (indice == 3) {
-            cartaPescata = cartaOroCoperta;
+        } else if (indice == 1) {
+            cartaPescata = cartaRisorsaCoperta;
+            cartaPescata.giraCarta();
             aggiornaCartaCopertaOro();
-        } else if ((indice == 4 || indice == 5) && carteOroVisibili.size() >= (indice - 3)) {
+        } else if ((indice == 5 || indice == 6) && carteOroVisibili.size() >= (indice - 3)) {
             cartaPescata = carteOroVisibili.remove(indice - 4);
             if (cartaOroCoperta != null) {
                 carteOroVisibili.add(cartaOroCoperta);
@@ -90,6 +91,10 @@ public class AreaDiPesca {
             } else {
                 pescaCartaDalMazzoOro();
             }
+        }else if (indice == 4) {
+            cartaPescata = cartaOroCoperta;
+            cartaPescata.giraCarta();
+            aggiornaCartaCopertaOro();
         }
 
         if (cartaPescata != null) {

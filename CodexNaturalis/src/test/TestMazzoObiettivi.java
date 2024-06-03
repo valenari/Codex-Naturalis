@@ -6,7 +6,7 @@ import modelObiettivi.Obiettivo;
 public class TestMazzoObiettivi {
     public static void main(String[] args) {
         // Creazione del mazzo di obiettivi
-        MazzoObiettivi mazzo = new MazzoObiettivi("src/fileCarte/ObiettiviDisposizione.txt", "src/fileCarte/ObiettiviRisorse.txt");
+        MazzoObiettivi mazzo = new MazzoObiettivi();
 
         // Verifica della corretta inizializzazione
         System.out.println("Mazzo di obiettivi inizializzato:");

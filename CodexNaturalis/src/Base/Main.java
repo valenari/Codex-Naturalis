@@ -5,6 +5,7 @@ import modelTavolo.AreaDiPesca;
 import cardsModel.MazzoCarte;
 import game.Turno;
 import modelObiettivi.CaricatoreObiettivi;
+import modelObiettivi.MazzoObiettivi;
 import modelObiettivi.Obiettivo;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class Main {
         MazzoCarte mazzoIniziale = new MazzoCarte("Iniziale", "src/fileCarte/CarteIniziali.txt");
         MazzoCarte mazzoRisorsa = new MazzoCarte("Risorsa", "src/fileCarte/CarteRisorsa.txt");
         MazzoCarte mazzoOro = new MazzoCarte("Oro", "src/fileCarte/CarteOro.txt");
+        MazzoObiettivi mazzoObiettivi = new MazzoObiettivi();
 
         // Creazione dei Giocatori
         List<Giocatore> giocatori = new ArrayList<>();
@@ -50,16 +52,10 @@ public class Main {
             giocatori.add(giocatore);
         }
 
-        // Caricamento degli obiettivi
-        CaricatoreObiettivi caricatoreObiettivi = new CaricatoreObiettivi();
-        List<Obiettivo> obiettiviDisposizione = caricatoreObiettivi.caricaObiettiviDisposizione("src/fileCarte/ObiettiviDisposizione.txt");
-        List<Obiettivo> obiettiviRisorsa = caricatoreObiettivi.caricaObiettiviRisorse("src/fileCarte/ObiettiviRisorse.txt");
-
         // Selezione degli obiettivi comuni
         List<Obiettivo> obiettiviComuni = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            obiettiviComuni.add(obiettiviRisorsa.get(i));
-        }
+        obiettiviComuni.add(mazzoObiettivi.pescaObiettivo());
+        obiettiviComuni.add(mazzoObiettivi.pescaObiettivo());
 
         System.out.println("Obiettivi comuni:");
         for (Obiettivo obiettivo : obiettiviComuni) {
@@ -67,17 +63,22 @@ public class Main {
         }
 
         // Selezione dell'obiettivo segreto per ogni giocatore
+        
+        for (int i = 0; i < numeroGiocatori; i++) {
+        Obiettivo scelta1, scelta2;
         for (Giocatore giocatore : giocatori) {
-            System.out.println("Giocatore " + giocatore.getNome() + ", scegli il tuo obiettivo segreto:");
-            List<Obiettivo> obiettiviSegreti = new ArrayList<>();
-            for (int i = 0; i < 2; i++) {
-                obiettiviSegreti.add(obiettiviRisorsa.get(i + 2));
+        	scelta1=mazzoObiettivi.pescaObiettivo();
+        	scelta2=mazzoObiettivi.pescaObiettivo();
+            System.out.println(giocatore.getNome() + ", scegli il tuo obiettivo segreto:");
+            System.out.println("1. " + scelta1);
+            System.out.println("2. " + scelta2);
+            int sceltaObiettivo = sc.nextInt();
+            if (sceltaObiettivo == 1) {
+                giocatore.setObiettivoSegreto(scelta1);
+            } else {
+                giocatore.setObiettivoSegreto(scelta2);
             }
-            for (int i = 0; i < obiettiviSegreti.size(); i++) {
-                System.out.println((i + 1) + ". " + obiettiviSegreti.get(i));
-            }
-            int scelta = sc.nextInt() - 1;
-            giocatore.setObiettivoSegreto(obiettiviSegreti.get(scelta));
+            
         }
 
         Turno turno = new Turno(giocatori, areaDiPesca, mazzoRisorsa, mazzoOro);
@@ -90,7 +91,7 @@ public class Main {
             giocatoreCorrente.mostraAreaDiGioco();
             giocatoreCorrente.mostraMano();
             System.out.println("Scegli una carta da giocare:");
-            int sceltaCarta = sc.nextInt() - 1;
+            int sceltaCarta = sc.nextInt();
             System.out.println("Scegli la posizione nella griglia:");
             int posizioneGriglia = sc.nextInt();
             System.out.println("Vuoi giocare la carta sul fronte (1) o sul retro (2)?");
@@ -98,7 +99,7 @@ public class Main {
 
             while (!giocatoreCorrente.giocaCarta(sceltaCarta, posizioneGriglia, fronte)) {
                 System.out.println("Selezione non valida. Scegli un'altra carta da giocare:");
-                sceltaCarta = sc.nextInt() - 1;
+                sceltaCarta = sc.nextInt();
                 System.out.println("Scegli la posizione nella griglia:");
                 posizioneGriglia = sc.nextInt();
                 System.out.println("Vuoi giocare la carta sul fronte (1) o sul retro (2)?");
@@ -120,9 +121,11 @@ public class Main {
         }
 
         System.out.println("La partita è terminata!");
-        turno.calcolaPuntiFinali(obiettiviDisposizione);
+        turno.calcolaPuntiFinali(obiettiviComuni);
+        
         turno.dichiaraVincitore();
 
         sc.close();
+    }
     }
 }

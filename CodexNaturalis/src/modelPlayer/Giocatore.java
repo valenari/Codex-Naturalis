@@ -79,6 +79,8 @@ public class Giocatore {
                 cartaGiocata.giraCarta();
             }
             areaDiGioco.posizionaCarta(cartaGiocata, posizioneGriglia, fronte);
+            
+            if (fronte) {
             int punti = cartaGiocata instanceof CartaRisorsa ? ((CartaRisorsa) cartaGiocata).getPunti() : 0;
 
             if (cartaGiocata instanceof CartaOro) {
@@ -88,6 +90,7 @@ public class Giocatore {
                  punti = cartaOro.calcolaPunti(angoliCoperti, oggettiVisibili);
             }
             aggiungiPunti(punti);
+            }
             return true;
         } else {
             System.out.println("Carta non valida.");
