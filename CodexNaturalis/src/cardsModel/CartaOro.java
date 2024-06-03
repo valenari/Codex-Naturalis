@@ -101,7 +101,7 @@ public class CartaOro extends Carta {
         ));
 
         sb.append(String.format("[%26s]\n", ""));
-        sb.append(String.format("[%s]\n", centraStringa(getEmojiRegno(tipoRegno), 26)));
+        sb.append(String.format("[%s]\n", centraStringa("["+ getEmojiRegno(tipoRegno)+"]", 26)));
         sb.append(String.format("[%26s]\n", ""));
 
         String angoloDxBasso = getBordoAngolo(angoli[3], true) + getEmojiAngolo(angoli[3]);

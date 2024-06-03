@@ -37,9 +37,9 @@ public class CartaIniziale extends Carta {
                 getBordoAngolo(angoli[1], true), getEmojiAngolo(angoli[1])
         ));
 
-        sb.append(String.format("[%s]\n", centraStringa(centraleList.size() > 0 ? getEmojiRegno(centraleList.get(0)) : "", 26)));
-        sb.append(String.format("[%s]\n", centraStringa(centraleList.size() > 1 ? getEmojiRegno(centraleList.get(1)) : "", 26)));
-        sb.append(String.format("[%s]\n", centraStringa(centraleList.size() > 2 ? getEmojiRegno(centraleList.get(2)) : "", 26)));
+        sb.append(String.format("[%s]\n", centraStringa((centraleList.size() > 0 ? "["+getEmojiRegno(centraleList.get(0))+"]" : ""), 26)));
+        sb.append(String.format("[%s]\n", centraStringa((centraleList.size() > 1 ? "["+getEmojiRegno(centraleList.get(1))+"]" : ""), 26)));
+        sb.append(String.format("[%s]\n", centraStringa((centraleList.size() > 2 ? "["+getEmojiRegno(centraleList.get(2))+"]" : ""), 26)));
 
         sb.append(String.format("[%s%s%20s%s%s]\n",
                 getEmojiAngolo(angoli[2]), getBordoAngolo(angoli[2], false),
