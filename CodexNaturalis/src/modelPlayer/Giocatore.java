@@ -79,9 +79,15 @@ public class Giocatore {
                 cartaGiocata.giraCarta();
             }
             areaDiGioco.posizionaCarta(cartaGiocata, posizioneGriglia, fronte);
+            int punti = cartaGiocata instanceof CartaRisorsa ? ((CartaRisorsa) cartaGiocata).getPunti() : 0;
+
             if (cartaGiocata instanceof CartaOro) {
-                aggiungiPunti(((CartaOro) cartaGiocata).calcolaPunti());
+            	 CartaOro cartaOro = (CartaOro) cartaGiocata;
+                 int angoliCoperti = areaDiGioco.getAngoliCoperti();
+                 int oggettiVisibili = contatori.getContatore(cartaOro.getTipoRegno());
+                 punti = cartaOro.calcolaPunti(angoliCoperti, oggettiVisibili);
             }
+            aggiungiPunti(punti);
             return true;
         } else {
             System.out.println("Carta non valida.");

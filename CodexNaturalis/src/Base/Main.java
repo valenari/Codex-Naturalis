@@ -3,10 +3,9 @@ package Base;
 import modelPlayer.Giocatore;
 import modelTavolo.AreaDiPesca;
 import cardsModel.MazzoCarte;
-import modelObiettivi.Obiettivo;
-import modelObiettivi.CaricatoreObiettivi;
 import game.Turno;
-import util.StampaCarta;
+import modelObiettivi.CaricatoreObiettivi;
+import modelObiettivi.Obiettivo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,18 +21,10 @@ public class Main {
         String risposta = sc.nextLine();
         if (risposta.equalsIgnoreCase("0")) System.exit(0);
 
-        // Caricamento degli obiettivi
-        CaricatoreObiettivi caricatoreObiettivi = new CaricatoreObiettivi();
-        List<Obiettivo> obiettiviDisposizione = caricatoreObiettivi.caricaObiettiviDisposizione("src/fileObiettivi/ObiettiviDisposizione.txt");
-        List<Obiettivo> obiettiviRisorse = caricatoreObiettivi.caricaObiettiviRisorse("src/fileObiettivi/ObiettiviRisorse.txt");
-
         // Creazione dei diversi mazzi
-        MazzoCarte mazzoIniziale = new MazzoCarte("Iniziale", "src/fileCarte/CarteInizialiTest.txt");
-        MazzoCarte mazzoRisorsa = new MazzoCarte("Risorsa", "src/fileCarte/CarteRisorsaTest.txt");
-        MazzoCarte mazzoOro = new MazzoCarte("Oro", "src/fileCarte/CarteOroTest.txt");
-
-        // Creazione dell'area di pesca
-        AreaDiPesca areaDiPesca = new AreaDiPesca(mazzoRisorsa, mazzoOro);
+        MazzoCarte mazzoIniziale = new MazzoCarte("Iniziale", "src/fileCarte/CarteIniziali.txt");
+        MazzoCarte mazzoRisorsa = new MazzoCarte("Risorsa", "src/fileCarte/CarteRisorsa.txt");
+        MazzoCarte mazzoOro = new MazzoCarte("Oro", "src/fileCarte/CarteOro.txt");
 
         // Creazione dei Giocatori
         List<Giocatore> giocatori = new ArrayList<>();
@@ -46,72 +37,81 @@ public class Main {
                 System.out.println("ERRORE: il numero di giocatori non è valido");
         } while (numeroGiocatori < 2 || numeroGiocatori > 4);
 
+        AreaDiPesca areaDiPesca = new AreaDiPesca(mazzoRisorsa, mazzoOro);
+
         for (int i = 0; i < numeroGiocatori; i++) {
             System.out.println("Inserisci il nome del Giocatore " + (i + 1) + ":");
             String nomeGiocatore = sc.next();
             Giocatore giocatore = new Giocatore(nomeGiocatore, mazzoIniziale, mazzoRisorsa, mazzoOro, areaDiPesca, true);
-            
-            // Stampa della carta iniziale del giocatore
-            System.out.println("Carta iniziale di " + nomeGiocatore + ":");
-            giocatore.mostraCartaIniziale();
-            
+            giocatore.mostraCartaIniziale(); // Stampa della carta iniziale
             System.out.println("Vuoi posizionare la carta iniziale di fronte (1) o di retro (2)?");
             boolean fronteIniziale = sc.nextInt() == 1;
-            if (!fronteIniziale) {
-                giocatore.getCartaIniziale().giraCarta();
-            }
-            
+            giocatore = new Giocatore(nomeGiocatore, mazzoIniziale, mazzoRisorsa, mazzoOro, areaDiPesca, fronteIniziale);
             giocatori.add(giocatore);
         }
 
-        // Assegnazione degli obiettivi
+        // Caricamento degli obiettivi
+        CaricatoreObiettivi caricatoreObiettivi = new CaricatoreObiettivi();
+        List<Obiettivo> obiettiviDisposizione = caricatoreObiettivi.caricaObiettiviDisposizione("src/fileCarte/ObiettiviDisposizione.txt");
+        List<Obiettivo> obiettiviRisorsa = caricatoreObiettivi.caricaObiettiviRisorse("src/fileCarte/ObiettiviRisorse.txt");
+
+        // Selezione degli obiettivi comuni
         List<Obiettivo> obiettiviComuni = new ArrayList<>();
-        obiettiviComuni.add(obiettiviDisposizione.get(0));
-        obiettiviComuni.add(obiettiviDisposizione.get(1));
-        
+        for (int i = 0; i < 2; i++) {
+            obiettiviComuni.add(obiettiviRisorsa.get(i));
+        }
+
         System.out.println("Obiettivi comuni:");
         for (Obiettivo obiettivo : obiettiviComuni) {
-            System.out.println(obiettivo.getDescrizione());
+            System.out.println(obiettivo);
         }
 
+        // Selezione dell'obiettivo segreto per ogni giocatore
         for (Giocatore giocatore : giocatori) {
-            System.out.println(giocatore.getNome() + ", scegli il tuo obiettivo segreto:");
-            System.out.println("1. " + obiettiviDisposizione.get(2).getDescrizione());
-            System.out.println("2. " + obiettiviDisposizione.get(3).getDescrizione());
-            int sceltaObiettivo = sc.nextInt();
-            if (sceltaObiettivo == 1) {
-                giocatore.setObiettivoSegreto(obiettiviDisposizione.get(2));
-            } else {
-                giocatore.setObiettivoSegreto(obiettiviDisposizione.get(3));
+            System.out.println("Giocatore " + giocatore.getNome() + ", scegli il tuo obiettivo segreto:");
+            List<Obiettivo> obiettiviSegreti = new ArrayList<>();
+            for (int i = 0; i < 2; i++) {
+                obiettiviSegreti.add(obiettiviRisorsa.get(i + 2));
             }
+            for (int i = 0; i < obiettiviSegreti.size(); i++) {
+                System.out.println((i + 1) + ". " + obiettiviSegreti.get(i));
+            }
+            int scelta = sc.nextInt() - 1;
+            giocatore.setObiettivoSegreto(obiettiviSegreti.get(scelta));
         }
 
-        Turno turno = new Turno(giocatori);
+        Turno turno = new Turno(giocatori, areaDiPesca, mazzoRisorsa, mazzoOro);
 
         while (!turno.isPartitaTerminata()) {
             Giocatore giocatoreCorrente = turno.getGiocatoreCorrente();
             System.out.println("È il turno di: " + giocatoreCorrente.getNome());
 
             // Logica di gioco per ogni turno
-            boolean cartaGiocataCorrettamente = false;
-            while (!cartaGiocataCorrettamente) {
-                giocatoreCorrente.mostraMano();
-                System.out.println("Scegli una carta da giocare (1-3):");
-                int cartaDaGiocare = sc.nextInt();
-                System.out.println("Scegli una posizione nella griglia:");
-                int posizioneGriglia = sc.nextInt();
-                System.out.println("Vuoi giocarla di fronte (1) o di retro (2)?");
-                boolean fronte = sc.nextInt() == 1;
+            giocatoreCorrente.mostraAreaDiGioco();
+            giocatoreCorrente.mostraMano();
+            System.out.println("Scegli una carta da giocare:");
+            int sceltaCarta = sc.nextInt() - 1;
+            System.out.println("Scegli la posizione nella griglia:");
+            int posizioneGriglia = sc.nextInt();
+            System.out.println("Vuoi giocare la carta sul fronte (1) o sul retro (2)?");
+            boolean fronte = sc.nextInt() == 1;
 
-                cartaGiocataCorrettamente = giocatoreCorrente.giocaCarta(cartaDaGiocare - 1, posizioneGriglia, fronte);
+            while (!giocatoreCorrente.giocaCarta(sceltaCarta, posizioneGriglia, fronte)) {
+                System.out.println("Selezione non valida. Scegli un'altra carta da giocare:");
+                sceltaCarta = sc.nextInt() - 1;
+                System.out.println("Scegli la posizione nella griglia:");
+                posizioneGriglia = sc.nextInt();
+                System.out.println("Vuoi giocare la carta sul fronte (1) o sul retro (2)?");
+                fronte = sc.nextInt() == 1;
             }
 
-            // Pescare una carta
-            System.out.println("Scegli una carta da pescare:");
             areaDiPesca.mostraAreaDiPesca();
-            int cartaDaPescare = sc.nextInt();
-
-            giocatoreCorrente.pescaCarta(cartaDaPescare);
+            System.out.println("Scegli una carta da pescare (1 per carta coperta risorsa, 2-3 per carte visibili risorsa, 4 per carta coperta oro, 5-6 per carte visibili oro):");
+            int sceltaPesca = sc.nextInt();
+            giocatoreCorrente.pescaCarta(sceltaPesca);
+            giocatoreCorrente.mostraMano();
+            
+            System.out.println("Punteggio del giocatore " + giocatoreCorrente.getNome() + ": " + giocatoreCorrente.getPunti());
 
             turno.controllaPunteggio();
             if (!turno.isPartitaTerminata()) {
@@ -120,6 +120,9 @@ public class Main {
         }
 
         System.out.println("La partita è terminata!");
+        turno.calcolaPuntiFinali(obiettiviDisposizione);
         turno.dichiaraVincitore();
+
+        sc.close();
     }
 }

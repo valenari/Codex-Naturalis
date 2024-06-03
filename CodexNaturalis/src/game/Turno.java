@@ -2,6 +2,8 @@ package game;
 
 import modelPlayer.Giocatore;
 import modelObiettivi.Obiettivo;
+import modelTavolo.AreaDiPesca;
+import cardsModel.MazzoCarte;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +12,19 @@ public class Turno {
     private List<Giocatore> giocatori;
     private int indiceGiocatoreCorrente;
     private boolean partitaTerminata;
+    private AreaDiPesca areaDiPesca;
+    private MazzoCarte mazzoRisorsa;
+    private MazzoCarte mazzoOro;
+    private boolean finePartitaInnescata;
 
-    public Turno(List<Giocatore> giocatori) {
+    public Turno(List<Giocatore> giocatori, AreaDiPesca areaDiPesca, MazzoCarte mazzoRisorsa, MazzoCarte mazzoOro) {
         this.giocatori = giocatori;
         this.indiceGiocatoreCorrente = 0;
         this.partitaTerminata = false;
+        this.areaDiPesca = areaDiPesca;
+        this.mazzoRisorsa = mazzoRisorsa;
+        this.mazzoOro = mazzoOro;
+        this.finePartitaInnescata = false;
     }
 
     public Giocatore getGiocatoreCorrente() {
@@ -31,16 +41,19 @@ public class Turno {
 
     public void controllaPunteggio() {
         for (Giocatore giocatore : giocatori) {
-            if (giocatore.getPunti() >= 20) {
-                partitaTerminata = true;
-                return;
+            if (giocatore.getPunti() >= 20 || (mazzoRisorsa.isVuoto() && mazzoOro.isVuoto())) {
+                finePartitaInnescata = true;
+                break;
             }
+        }
+        if (finePartitaInnescata) {
+            partitaTerminata = true;
         }
     }
 
-    public void calcolaPuntiFinali(List<Obiettivo> obiettiviDisposizione) {
+    public void calcolaPuntiFinali(List<Obiettivo> obiettiviComuni) {
         for (Giocatore giocatore : giocatori) {
-            giocatore.calcolaPuntiObiettivi(obiettiviDisposizione);
+            giocatore.calcolaPuntiObiettivi(obiettiviComuni);
         }
 
         int maxPunti = giocatori.stream().mapToInt(Giocatore::getPunti).max().orElse(0);
@@ -75,7 +88,7 @@ public class Turno {
             System.out.println("Il vincitore è: " + vincitori.get(0).getNome());
         }
     }
-    
+
     public void dichiaraVincitore() {
         Giocatore vincitore = null;
         int maxPunti = -1;

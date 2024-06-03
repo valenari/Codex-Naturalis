@@ -119,9 +119,18 @@ public class CartaOro extends Carta {
         return sb.toString();
     }
     
-    public int calcolaPunti() {
-        int punti = 0;
-        // Logica per calcolare i punti
-        return punti;
+    public int calcolaPunti(int angoliCoperti, int oggettiVisibili) {
+        int puntiTotali = punti;
+        switch (criterioPunti) {
+            case "Angoli":
+                puntiTotali += angoliCoperti;
+                break;
+            case "Piuma":
+            case "Inchiostro":
+            case "Pergamena":
+                puntiTotali += oggettiVisibili;
+                break;
+        }
+        return puntiTotali;
     }
 }
