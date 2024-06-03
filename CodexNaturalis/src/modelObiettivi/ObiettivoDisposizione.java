@@ -6,6 +6,7 @@ import cardsModel.Carta;
 import cardsModel.CartaRisorsa;
 
 import java.util.List;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -66,6 +67,15 @@ public class ObiettivoDisposizione extends Obiettivo {
 
     @Override
     public String toString() {
-        return super.toString() + ", Sequenza: " + sequenza + ", Posizioni: " + posizioni;
+    	StringBuilder sb = new StringBuilder();
+    	sb.append(super.toString());
+    	sb.append(", Sequenza: ");
+    	sb.append(sequenza);
+    	sb.append(", Posizioni: ");
+    	for(int[] pos : posizioni) {
+    		sb.append(Arrays.toString(pos));
+    	}
+    	String result = sb.toString();
+        return result;
     }
 }
